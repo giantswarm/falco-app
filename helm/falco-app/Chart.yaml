@@ -17,4 +17,4 @@ icon: https://s.giantswarm.io/app-icons/1/png/default-app-light.png
 name: falco
 sources:
 - https://github.com/some-org/some-repo
-version: 0.0.1
+version: [[ .Version ]]
