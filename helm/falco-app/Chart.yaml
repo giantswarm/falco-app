@@ -16,3 +16,4 @@ icon: https://s.giantswarm.io/app-icons/1/png/default-app-light.png
 name: falco-app
 version: [[ .Version ]]
 type: application
+
