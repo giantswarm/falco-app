@@ -2,9 +2,9 @@
 kind: ClusterRole
 apiVersion: {{ template "rbac.apiVersion" . }}
 metadata:
-  name: {{ template "falco.fullname" .}}
+  name: {{ template "falco-app.fullname" .}}
   labels:
-    app: {{ template "falco.fullname" . }}
+    app: {{ template "falco-app.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -49,9 +49,9 @@ rules:
     resources:
       - podsecuritypolicies
     resourceNames:
-      - {{ template "falco.fullname" . }}
+      - {{ template "falco-app.fullname" . }}
 {{- if .Values.fakeEventGenerator.enabled }}
-      - event-generator-{{ template "falco.fullname" . }}
+      - event-generator-{{ template "falco-app.fullname" . }}
 {{- end }}
     verbs:
       - use

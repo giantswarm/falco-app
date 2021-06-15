@@ -3,9 +3,9 @@
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: {{ template "falco.fullname" . }}
+  name: {{ template "falco-app.fullname" . }}
   labels:
-    app: {{ template "falco.fullname" . }}
+    app: {{ template "falco-app.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -28,9 +28,9 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: event-generator-{{ template "falco.fullname" . }}
+  name: event-generator-{{ template "falco-app.fullname" . }}
   labels:
-    app: {{ template "falco.fullname" . }}-event-generator
+    app: {{ template "falco-app.fullname" . }}-event-generator
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"

@@ -2,43 +2,43 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ template "falco.fullname" .}}
+  name: {{ template "falco-app.fullname" .}}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "falco.fullname" . }}
+    app: {{ template "falco-app.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  {{- if .Values.falco.webserver.nodePort }}
+  {{- if .Values.falco-app.webserver.nodePort }}
   type: NodePort
   {{- end }}
   selector:
-    app: {{ template "falco.fullname" .}}
+    app: {{ template "falco-app.fullname" .}}
   ports:
   - protocol: TCP
-    port: {{ .Values.falco.webserver.listenPort }}
-    {{- with .Values.falco.webserver.nodePort }}
+    port: {{ .Values.falco-app.webserver.listenPort }}
+    {{- with .Values.falco-app.webserver.nodePort }}
     nodePort: {{ . }}
     {{- end }}
 {{- end }}
-{{- if and .Values.falco.grpc.enabled (not .Values.falco.grpc.unixSocketPath)}}
+{{- if and .Values.falco-app.grpc.enabled (not .Values.falco-app.grpc.unixSocketPath)}}
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ template "falco.fullname" .}}-grpc
+  name: {{ template "falco-app.fullname" .}}-grpc
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "falco.fullname" . }}
+    app: {{ template "falco-app.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
   clusterIP: None
   selector:
-    app: {{ template "falco.fullname" .}}
+    app: {{ template "falco-app.fullname" .}}
   ports:
   - protocol: TCP
-    port: {{ .Values.falco.grpc.listenPort }}
+    port: {{ .Values.falco-app.grpc.listenPort }}
 {{- end }}

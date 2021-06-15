@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "falco.fullname" . }}-rules
+  name: {{ template "falco-app.fullname" . }}-rules
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "falco.fullname" . }}
+    app: {{ template "falco-app.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
