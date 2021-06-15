@@ -1,4 +1,4 @@
-{{- if .Values.falco.rbac.create }}
+{{- if .Values.rbac.create }}
 kind: ClusterRoleBinding
 apiVersion: {{ template "rbac.apiVersion" . }}
 metadata:

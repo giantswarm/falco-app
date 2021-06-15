@@ -1,4 +1,4 @@
-{{- if .Values.falco.fakeEventGenerator.enabled }}
+{{- if .Values.fakeEventGenerator.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -10,7 +10,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  replicas:  {{ .Values.falco.fakeEventGenerator.replicas }}
+  replicas:  {{ .Values.fakeEventGenerator.replicas }}
   selector:
     matchLabels:
       app: {{ template "falco.fullname" . }}-event-generator
@@ -25,7 +25,7 @@ spec:
         securityContext:
             privileged: false
         image: falcosecurity/event-generator:latest
-{{- with .Values.falco.fakeEventGenerator.args }}
+{{- with .Values.fakeEventGenerator.args }}
         args:
 {{ toYaml . | indent 10 }}
 {{- end }}

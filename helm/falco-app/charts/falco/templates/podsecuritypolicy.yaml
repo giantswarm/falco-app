@@ -1,4 +1,4 @@
-{{- if .Values.falco.podSecurityPolicy.create}}
+{{- if .Values.podSecurityPolicy.create}}
 ---
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
@@ -23,7 +23,7 @@ spec:
     rule: RunAsAny
   volumes: ['*']
 {{- end }}
-{{- if (and .Values.falco.podSecurityPolicy.create .Values.falco.fakeEventGenerator.enabled) }}
+{{- if (and .Values.podSecurityPolicy.create .Values.fakeEventGenerator.enabled) }}
 ---
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
