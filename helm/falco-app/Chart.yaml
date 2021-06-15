@@ -16,5 +16,5 @@ home: https://github.com/giantswarm/falco-app
 icon: https://s.giantswarm.io/app-icons/1/png/default-app-light.png
 name: falco-app
 sources:
-- https://github.com/falcosecurity/charts
+- https://github.com/giantswarm/falco-app
 version: [[ .Version ]]
