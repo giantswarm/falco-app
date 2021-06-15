@@ -54,7 +54,7 @@ rbac:
 
 podSecurityPolicy:
   # Create a podSecurityPolicy
-  create: false
+  create: true
 
 serviceAccount:
   # Create and use serviceAccount resources
