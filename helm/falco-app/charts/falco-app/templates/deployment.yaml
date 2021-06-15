@@ -2,10 +2,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "falco-app.fullname" . }}-event-generator
+  name: {{ template "falco.fullname" . }}-event-generator
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "falco-app.fullname" . }}-event-generator
+    app: {{ template "falco.fullname" . }}-event-generator
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -13,15 +13,15 @@ spec:
   replicas:  {{ .Values.fakeEventGenerator.replicas }}
   selector:
     matchLabels:
-      app: {{ template "falco-app.fullname" . }}-event-generator
+      app: {{ template "falco.fullname" . }}-event-generator
   template:
     metadata:
       labels:
-        app: {{ template "falco-app.fullname" . }}-event-generator
+        app: {{ template "falco.fullname" . }}-event-generator
     spec:
-      serviceAccountName: {{ template "falco-app.serviceAccountName" .}}
+      serviceAccountName: {{ template "falco.serviceAccountName" .}}
       containers:
-      - name: {{ template "falco-app.fullname" . }}-event-generator
+      - name: {{ template "falco.fullname" . }}-event-generator
         securityContext:
             privileged: false
         image: falcosecurity/event-generator:latest

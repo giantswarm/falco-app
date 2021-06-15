@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "falco-app.name" -}}
+{{- define "falco.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "falco-app.fullname" -}}
+{{- define "falco.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "falco-app.chart" -}}
+{{- define "falco.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "falco-app.serviceAccountName" -}}
+{{- define "falco.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include "falco-app.fullname" .) .Values.serviceAccount.name }}
+    {{ default (include "falco.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
@@ -45,7 +45,7 @@ Create the name of the service account to use
 {{/*
 Return the proper Falco image name
 */}}
-{{- define "falco-app.image" -}}
+{{- define "falco.image" -}}
 {{- $registryName := .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := .Values.image.tag | toString -}}
@@ -68,9 +68,9 @@ Also, we can't use a single if because lazy evaluation is not an option
 {{/*
 Extract the unixSocket's directory path
 */}}
-{{- define "falco-app.unixSocketDir" -}}
-{{- if .Values.falco-app.grpc.unixSocketPath -}}
-{{- .Values.falco-app.grpc.unixSocketPath | trimPrefix "unix://" | dir -}}
+{{- define "falco.unixSocketDir" -}}
+{{- if .Values.falco.grpc.unixSocketPath -}}
+{{- .Values.falco.grpc.unixSocketPath | trimPrefix "unix://" | dir -}}
 {{- end -}}
 {{- end -}}
 

@@ -2,18 +2,18 @@
 kind: ClusterRoleBinding
 apiVersion: {{ template "rbac.apiVersion" . }}
 metadata:
-  name: {{ template "falco-app.fullname" .}}
+  name: {{ template "falco.fullname" .}}
   labels:
-    app: {{ template "falco-app.fullname" . }}
+    app: {{ template "falco.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 subjects:
   - kind: ServiceAccount
-    name: {{ template "falco-app.serviceAccountName" .}}
+    name: {{ template "falco.serviceAccountName" .}}
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ template "falco-app.fullname" .}}
+  name: {{ template "falco.fullname" .}}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}

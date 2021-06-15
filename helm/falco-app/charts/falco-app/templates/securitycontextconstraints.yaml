@@ -5,10 +5,10 @@ metadata:
   annotations:
     kubernetes.io/description: |
       This provides the minimum requirements Falco to run in Openshift.
-  name: {{ template "falco-app.fullname" . }}
+  name: {{ template "falco.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "falco-app.fullname" . }}
+    app: {{ template "falco.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -37,7 +37,7 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{ .Release.Namespace }}:{{ template "falco-app.serviceAccountName" .}}
+- system:serviceaccount:{{ .Release.Namespace }}:{{ template "falco.serviceAccountName" .}}
 volumes:
 - hostPath
 - emptyDir
