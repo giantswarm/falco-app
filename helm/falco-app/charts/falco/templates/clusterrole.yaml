@@ -1,4 +1,4 @@
-{{- if .Values.rbac.create }}
+{{- if .Values.falco.rbac.create }}
 kind: ClusterRole
 apiVersion: {{ template "rbac.apiVersion" . }}
 metadata:
@@ -43,14 +43,14 @@ rules:
       - /healthz/*
     verbs:
       - get
-{{- if .Values.podSecurityPolicy.create }}
+{{- if .Values.falco.podSecurityPolicy.create }}
   - apiGroups:
       - policy
     resources:
       - podsecuritypolicies
     resourceNames:
       - {{ template "falco.fullname" . }}
-{{- if .Values.fakeEventGenerator.enabled }}
+{{- if .Values.falco.fakeEventGenerator.enabled }}
       - event-generator-{{ template "falco.fullname" . }}
 {{- end }}
     verbs:

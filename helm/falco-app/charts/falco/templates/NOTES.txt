@@ -3,7 +3,7 @@ seconds, they are going to start monitoring your containers looking for
 security issues.
 {{printf "\n" }}
 
-{{- if .Values.integrations }}
+{{- if .Values.falco.integrations }}
 WARNING: The following integrations have been deprecated and removed
  - gcscc
  - natsOutput
@@ -15,7 +15,7 @@ No further action should be required.
 {{- end }}
 {{printf "\n" }}
 
-{{- if not .Values.falcosidekick.enabled }}
+{{- if not .Values.falco.falcosidekick.enabled }}
 Tip: 
 You can easily forward Falco events to Slack, Kafka, AWS Lambda and more with falcosidekick. 
 Full list of outputs: https://github.com/falcosecurity/charts/falcosidekick.

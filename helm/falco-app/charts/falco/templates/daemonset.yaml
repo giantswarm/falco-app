@@ -22,89 +22,89 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/rules: {{ include (print $.Template.BasePath "/configmap-rules.yaml") . | sha256sum }}
-        {{- if .Values.certs }}
+        {{- if .Values.falco.certs }}
         checksum/certs: {{ include (print $.Template.BasePath "/secret-certs.yaml") . | sha256sum }}
         {{- end }}
-        {{- if .Values.daemonset.podAnnotations }}
-{{ toYaml .Values.daemonset.podAnnotations | indent 8 }}
+        {{- if .Values.falco.daemonset.podAnnotations }}
+{{ toYaml .Values.falco.daemonset.podAnnotations | indent 8 }}
         {{- end }}
     spec:
       serviceAccountName: {{ template "falco.serviceAccountName" .}}
-      {{- if (and .Values.ebpf.enabled .Values.ebpf.settings.hostNetwork) }}
+      {{- if (and .Values.falco.ebpf.enabled .Values.falco.ebpf.settings.hostNetwork) }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
-{{- if .Values.priorityClassName }}
-      priorityClassName: "{{ .Values.priorityClassName }}"
+{{- if .Values.falco.priorityClassName }}
+      priorityClassName: "{{ .Values.falco.priorityClassName }}"
 {{- end }}
-{{- with .Values.nodeSelector }}
+{{- with .Values.falco.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
 {{- end }}
-{{- with .Values.affinity }}
+{{- with .Values.falco.affinity }}
       affinity:
 {{ toYaml . | indent 8 }}
 {{- end }}
       tolerations:
-{{ toYaml .Values.tolerations | indent 8 }}
-{{- if .Values.image.pullSecrets }}
-      imagePullSecrets: {{ toYaml .Values.image.pullSecrets | nindent 8 }}
+{{ toYaml .Values.falco.tolerations | indent 8 }}
+{{- if .Values.falco.image.pullSecrets }}
+      imagePullSecrets: {{ toYaml .Values.falco.image.pullSecrets | nindent 8 }}
 {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ template "falco.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.falco.image.pullPolicy }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ toYaml .Values.falco.resources | indent 12 }}
           securityContext:
             privileged: true
           args:
             - /usr/bin/falco
-            {{- if .Values.containerd.enabled }}
+            {{- if .Values.falco.containerd.enabled }}
             - --cri
             - /run/containerd/containerd.sock
             {{- end }}
-            {{- if .Values.kubernetesSupport.enabled }} 
+            {{- if .Values.falco.kubernetesSupport.enabled }} 
             - -K
-            - {{ .Values.kubernetesSupport.apiAuth }} 
+            - {{ .Values.falco.kubernetesSupport.apiAuth }} 
             - -k
-            - {{ .Values.kubernetesSupport.apiUrl }} 
+            - {{ .Values.falco.kubernetesSupport.apiUrl }} 
             {{- end }}
             - -pk
-        {{- if .Values.extraArgs }}
-{{ toYaml .Values.extraArgs | indent 12 }}
+        {{- if .Values.falco.extraArgs }}
+{{ toYaml .Values.falco.extraArgs | indent 12 }}
         {{- end }}
           env:
-          {{- if .Values.ebpf.enabled }}
+          {{- if .Values.falco.ebpf.enabled }}
             - name: FALCO_BPF_PROBE
-              value: {{ .Values.ebpf.path }}
+              value: {{ .Values.falco.ebpf.path }}
           {{- end }}
-          {{- if .Values.proxy.httpProxy }}
+          {{- if .Values.falco.proxy.httpProxy }}
             - name: http_proxy
-              value: {{ .Values.proxy.httpProxy }}
+              value: {{ .Values.falco.proxy.httpProxy }}
           {{- end }}
-          {{- if .Values.proxy.httpsProxy }}
+          {{- if .Values.falco.proxy.httpsProxy }}
             - name: https_proxy
-              value: {{ .Values.proxy.httpsProxy }}
+              value: {{ .Values.falco.proxy.httpsProxy }}
           {{- end }}
-          {{- if .Values.proxy.noProxy }}
+          {{- if .Values.falco.proxy.noProxy }}
             - name: no_proxy
-              value: {{ .Values.proxy.noProxy }}
+              value: {{ .Values.falco.proxy.noProxy }}
           {{- end }}
-          {{- if .Values.timezone }}
+          {{- if .Values.falco.timezone }}
             - name: TZ
-              value: {{ .Values.timezone }}
+              value: {{ .Values.falco.timezone }}
           {{- end }}
-          {{- range $key, $value := .Values.daemonset.env }}
+          {{- range $key, $value := .Values.falco.daemonset.env }}
             - name: "{{ $key }}"
               value: "{{ $value }}"
           {{- end }}
           volumeMounts:
-            {{- if .Values.docker.enabled }}
+            {{- if .Values.falco.docker.enabled }}
             - mountPath: /host/var/run/docker.sock
               name: docker-socket
             {{- end}}
-            {{- if .Values.containerd.enabled }}
+            {{- if .Values.falco.containerd.enabled }}
             - mountPath: /host/run/containerd/containerd.sock
               name: containerd-socket
             {{- end}}
@@ -127,36 +127,36 @@ spec:
               readOnly: true
             - mountPath: /etc/falco
               name: config-volume
-            {{- if .Values.customRules }}
+            {{- if .Values.falco.customRules }}
             - mountPath: /etc/falco/rules.d
               name: rules-volume
             {{- end }}
-            {{- if and .Values.falco.grpc.enabled .Values.falco.grpc.unixSocketPath }}
+            {{- if and .Values.falco.falco.grpc.enabled .Values.falco.falco.grpc.unixSocketPath }}
             - mountPath: {{ include "falco.unixSocketDir" . }}
               name: grpc-socket-dir
             {{- end }}
-            {{- if or .Values.falco.webserver.sslEnabled (and .Values.falco.grpc.enabled (not .Values.falco.grpc.unixSocketPath)) }}
+            {{- if or .Values.falco.falco.webserver.sslEnabled (and .Values.falco.falco.grpc.enabled (not .Values.falco.falco.grpc.unixSocketPath)) }}
             - mountPath: /etc/falco/certs
               name: certs-volume
               readOnly: true
             {{- end }}
-            {{- if .Values.extraVolumeMounts }}
-{{ toYaml .Values.extraVolumeMounts | indent 12 }}
+            {{- if .Values.falco.extraVolumeMounts }}
+{{ toYaml .Values.falco.extraVolumeMounts | indent 12 }}
             {{- end }}
-      {{- if .Values.extraInitContainers }}
+      {{- if .Values.falco.extraInitContainers }}
       initContainers:
-{{ toYaml .Values.extraInitContainers | indent 12 }}
+{{ toYaml .Values.falco.extraInitContainers | indent 12 }}
       {{- end }}
       volumes:
-        {{- if .Values.docker.enabled }}
+        {{- if .Values.falco.docker.enabled }}
         - name: docker-socket
           hostPath:
-            path: {{ .Values.docker.socket }}
+            path: {{ .Values.falco.docker.socket }}
         {{- end}}
-        {{- if .Values.containerd.enabled }}
+        {{- if .Values.falco.containerd.enabled }}
         - name: containerd-socket
           hostPath:
-            path: {{ .Values.containerd.socket }}
+            path: {{ .Values.falco.containerd.socket }}
         {{- end}}
         - name: dev-fs
           hostPath:
@@ -188,21 +188,21 @@ spec:
                 path: falco_rules.local.yaml
               - key: application_rules.yaml
                 path: rules.available/application_rules.yaml
-              {{- if .Values.auditLog.enabled }}
+              {{- if .Values.falco.auditLog.enabled }}
               - key: k8s_audit_rules.yaml
                 path: k8s_audit_rules.yaml
               {{- end }}
-        {{- if .Values.customRules }}
+        {{- if .Values.falco.customRules }}
         - name: rules-volume
           configMap:
             name: {{ template "falco.fullname" . }}-rules
         {{- end }}
-        {{- if and .Values.falco.grpc.enabled .Values.falco.grpc.unixSocketPath }}
+        {{- if and .Values.falco.falco.grpc.enabled .Values.falco.falco.grpc.unixSocketPath }}
         - name: grpc-socket-dir
           hostPath:
             path: {{ include "falco.unixSocketDir" . }}
         {{- end }}
-        {{- if or .Values.falco.webserver.sslEnabled (and .Values.falco.grpc.enabled (not .Values.falco.grpc.unixSocketPath)) }}
+        {{- if or .Values.falco.falco.webserver.sslEnabled (and .Values.falco.falco.grpc.enabled (not .Values.falco.falco.grpc.unixSocketPath)) }}
         - name: certs-volume
           secret:
             secretName: {{ template "falco.fullname" . }}-certs
@@ -216,8 +216,8 @@ spec:
               - key: ca.crt
                 path: ca.crt
         {{- end }}
-        {{- if .Values.extraVolumes }}
-{{ toYaml .Values.extraVolumes | indent 8 }}
+        {{- if .Values.falco.extraVolumes }}
+{{ toYaml .Values.falco.extraVolumes | indent 8 }}
         {{- end }}
   updateStrategy:
-{{ toYaml .Values.daemonset.updateStrategy | indent 4 }}
+{{ toYaml .Values.falco.daemonset.updateStrategy | indent 4 }}

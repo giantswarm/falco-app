@@ -23,52 +23,52 @@ data:
     # The files will be read in the order presented here, so make sure if
     # you have overrides they appear in later files.
     rules_file:
-      {{- range .Values.falco.rulesFile }}
+      {{- range .Values.falco.falco.rulesFile }}
       - {{ . }}
       {{- end }}
 
     # If true, the times displayed in log messages and output messages
     # will be in ISO 8601. By default, times are displayed in the local
     # time zone, as governed by /etc/localtime.
-    time_format_iso_8601: {{ .Values.falco.timeFormatISO8601 }}
+    time_format_iso_8601: {{ .Values.falco.falco.timeFormatISO8601 }}
 
     # Whether to output events in json or text
-    {{- if .Values.falcosidekick.enabled }}
+    {{- if .Values.falco.falcosidekick.enabled }}
     json_output: true
     {{- else }}
-    json_output: {{ .Values.falco.jsonOutput }}
+    json_output: {{ .Values.falco.falco.jsonOutput }}
     {{- end }}
 
     # When using json output, whether or not to include the "output" property
     # itself (e.g. "File below a known binary directory opened for writing
     # (user=root ....") in the json output.
 
-    {{- if .Values.falcosidekick.enabled }}
+    {{- if .Values.falco.falcosidekick.enabled }}
     json_include_output_property: true
     {{- else }}
-    json_include_output_property: {{ .Values.falco.jsonIncludeOutputProperty }}
+    json_include_output_property: {{ .Values.falco.falco.jsonIncludeOutputProperty }}
     {{- end }}
 
     # Send information logs to stderr and/or syslog Note these are *not* security
     # notification logs! These are just Falco lifecycle (and possibly error) logs.
-    log_stderr: {{ .Values.falco.logStderr }}
-    log_syslog: {{ .Values.falco.logSyslog }}
+    log_stderr: {{ .Values.falco.falco.logStderr }}
+    log_syslog: {{ .Values.falco.falco.logSyslog }}
 
     # Minimum log level to include in logs. Note: these levels are
     # separate from the priority field of rules. This refers only to the
     # log level of falco's internal logging. Can be one of "emergency",
     # "alert", "critical", "error", "warning", "notice", "info", "debug".
-    log_level: {{ .Values.falco.logLevel }}
+    log_level: {{ .Values.falco.falco.logLevel }}
 
     # Minimum rule priority level to load and run. All rules having a
     # priority more severe than this level will be loaded/run.  Can be one
     # of "emergency", "alert", "critical", "error", "warning", "notice",
     # "info", "debug".
-    priority: {{ .Values.falco.priority }}
+    priority: {{ .Values.falco.falco.priority }}
 
     # Whether or not output to any of the output channels below is
     # buffered. Defaults to false
-    buffered_outputs: {{ .Values.falco.bufferedOutputs }}
+    buffered_outputs: {{ .Values.falco.falco.bufferedOutputs }}
 
     # Falco uses a shared buffer between the kernel and userspace to pass
     # system call information. When falco detects that this buffer is
@@ -84,11 +84,11 @@ data:
     # with a burst of 10 messages.
     syscall_event_drops:
       actions:
-        {{- range .Values.falco.syscallEventDrops.actions }}
+        {{- range .Values.falco.falco.syscallEventDrops.actions }}
         - {{ . }}
         {{- end }}
-      rate: {{ .Values.falco.syscallEventDrops.rate  }}
-      max_burst: {{ .Values.falco.syscallEventDrops.maxBurst }}
+      rate: {{ .Values.falco.falco.syscallEventDrops.rate  }}
+      max_burst: {{ .Values.falco.falco.syscallEventDrops.maxBurst }}
 
     # Falco continuously monitors outputs performance. When an output channel does not allow
     # to deliver an alert within a given deadline, an error is reported indicating
@@ -105,7 +105,7 @@ data:
     # With a 2000ms default, the notification consumer can block the Falco output
     # for up to 2 seconds without reaching the timeout.
 
-    output_timeout: {{ .Values.falco.output_timeout }}
+    output_timeout: {{ .Values.falco.falco.output_timeout }}
 
     # A throttling mechanism implemented as a token bucket limits the
     # rate of falco notifications. This throttling is controlled by the following configuration
@@ -119,14 +119,14 @@ data:
     # afterward. It would gain the full burst back after 1000 seconds of
     # no activity.
     outputs:
-      rate: {{ .Values.falco.outputs.rate }}
-      max_burst: {{ .Values.falco.outputs.maxBurst }}
+      rate: {{ .Values.falco.falco.outputs.rate }}
+      max_burst: {{ .Values.falco.falco.outputs.maxBurst }}
 
     # Where security notifications should go.
     # Multiple outputs can be enabled.
 
     syslog_output:
-      enabled: {{ .Values.falco.syslogOutput.enabled }}
+      enabled: {{ .Values.falco.falco.syslogOutput.enabled }}
 
     # If keep_alive is set to true, the file will be opened once and
     # continuously written to, with each output message on its own
@@ -137,12 +137,12 @@ data:
     # SIGUSR1.
 
     file_output:
-      enabled: {{ .Values.falco.fileOutput.enabled }}
-      keep_alive: {{ .Values.falco.fileOutput.keepAlive }}
-      filename: {{ .Values.falco.fileOutput.filename }}
+      enabled: {{ .Values.falco.falco.fileOutput.enabled }}
+      keep_alive: {{ .Values.falco.falco.fileOutput.keepAlive }}
+      filename: {{ .Values.falco.falco.fileOutput.filename }}
 
     stdout_output:
-      enabled: {{ .Values.falco.stdoutOutput.enabled }}
+      enabled: {{ .Values.falco.falco.stdoutOutput.enabled }}
 
     # Falco contains an embedded webserver that can be used to accept K8s
     # Audit Events. These config options control the behavior of that
@@ -156,11 +156,11 @@ data:
     # $ sudo cp falco.pem /etc/falco/falco.pem
 
     webserver:
-      enabled: {{ .Values.falco.webserver.enabled }}
-      listen_port: {{ .Values.falco.webserver.listenPort }}
-      k8s_audit_endpoint: {{ .Values.falco.webserver.k8sAuditEndpoint }}
-      ssl_enabled: {{ .Values.falco.webserver.sslEnabled }}
-      ssl_certificate: {{ .Values.falco.webserver.sslCertificate }}
+      enabled: {{ .Values.falco.falco.webserver.enabled }}
+      listen_port: {{ .Values.falco.falco.webserver.listenPort }}
+      k8s_audit_endpoint: {{ .Values.falco.falco.webserver.k8sAuditEndpoint }}
+      ssl_enabled: {{ .Values.falco.falco.webserver.sslEnabled }}
+      ssl_certificate: {{ .Values.falco.falco.webserver.sslCertificate }}
 
     # Possible additional things you might want to do with program output:
     #   - send to a slack webhook:
@@ -178,28 +178,28 @@ data:
     # Also, the program will be closed and reopened if falco is signaled with
     # SIGUSR1.
     program_output:
-      enabled: {{ .Values.falco.programOutput.enabled }}
-      keep_alive: {{ .Values.falco.programOutput.keepAlive }}
+      enabled: {{ .Values.falco.falco.programOutput.enabled }}
+      keep_alive: {{ .Values.falco.falco.programOutput.keepAlive }}
       program: |
-{{ .Values.falco.programOutput.program | indent 8 }}
+{{ .Values.falco.falco.programOutput.program | indent 8 }}
 
     http_output:
-      enabled: {{ if .Values.falcosidekick.enabled }}true{{ else }}{{ .Values.falco.httpOutput.enabled }}{{ end }}
-      url: {{ if .Values.falcosidekick.enabled }}http://{{ template "falco.fullname" . }}-falcosidekick{{ if .Values.falcosidekick.fullfqdn }}.{{ .Release.Namespace }}.svc.cluster.local{{ end }}:{{ .Values.falcosidekick.listenport | default "2801" }}{{ else }}{{ .Values.falco.httpOutput.url }}{{ end }}
+      enabled: {{ if .Values.falco.falcosidekick.enabled }}true{{ else }}{{ .Values.falco.falco.httpOutput.enabled }}{{ end }}
+      url: {{ if .Values.falco.falcosidekick.enabled }}http://{{ template "falco.fullname" . }}-falcosidekick{{ if .Values.falco.falcosidekick.fullfqdn }}.{{ .Release.Namespace }}.svc.cluster.local{{ end }}:{{ .Values.falco.falcosidekick.listenport | default "2801" }}{{ else }}{{ .Values.falco.falco.httpOutput.url }}{{ end }}
 
     grpc:
-      enabled: {{ .Values.falco.grpc.enabled }}
-      threadiness: {{ .Values.falco.grpc.threadiness }}
-      {{- if .Values.falco.grpc.unixSocketPath }}
-      bind_address: "{{ .Values.falco.grpc.unixSocketPath }}"
+      enabled: {{ .Values.falco.falco.grpc.enabled }}
+      threadiness: {{ .Values.falco.falco.grpc.threadiness }}
+      {{- if .Values.falco.falco.grpc.unixSocketPath }}
+      bind_address: "{{ .Values.falco.falco.grpc.unixSocketPath }}"
       {{ else }}
-      bind_address: "0.0.0.0:{{ .Values.falco.grpc.listenPort }}"
-      private_key: {{ .Values.falco.grpc.privateKey }}
-      cert_chain: {{ .Values.falco.grpc.certChain }}
-      root_certs: {{ .Values.falco.grpc.rootCerts }}
+      bind_address: "0.0.0.0:{{ .Values.falco.falco.grpc.listenPort }}"
+      private_key: {{ .Values.falco.falco.grpc.privateKey }}
+      cert_chain: {{ .Values.falco.falco.grpc.certChain }}
+      root_certs: {{ .Values.falco.falco.grpc.rootCerts }}
       {{- end }}
 
     grpc_output:
-      enabled: {{ .Values.falco.grpcOutput.enabled }}
+      enabled: {{ .Values.falco.falco.grpcOutput.enabled }}
 
 {{ (.Files.Glob "rules/*").AsConfig | indent 2 }}

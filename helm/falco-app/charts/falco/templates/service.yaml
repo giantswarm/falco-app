@@ -1,4 +1,4 @@
-{{- if .Values.auditLog.enabled }}
+{{- if .Values.falco.auditLog.enabled }}
 kind: Service
 apiVersion: v1
 metadata:
@@ -10,19 +10,19 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  {{- if .Values.falco.webserver.nodePort }}
+  {{- if .Values.falco.falco.webserver.nodePort }}
   type: NodePort
   {{- end }}
   selector:
     app: {{ template "falco.fullname" .}}
   ports:
   - protocol: TCP
-    port: {{ .Values.falco.webserver.listenPort }}
-    {{- with .Values.falco.webserver.nodePort }}
+    port: {{ .Values.falco.falco.webserver.listenPort }}
+    {{- with .Values.falco.falco.webserver.nodePort }}
     nodePort: {{ . }}
     {{- end }}
 {{- end }}
-{{- if and .Values.falco.grpc.enabled (not .Values.falco.grpc.unixSocketPath)}}
+{{- if and .Values.falco.falco.grpc.enabled (not .Values.falco.falco.grpc.unixSocketPath)}}
 ---
 kind: Service
 apiVersion: v1
@@ -40,5 +40,5 @@ spec:
     app: {{ template "falco.fullname" .}}
   ports:
   - protocol: TCP
-    port: {{ .Values.falco.grpc.listenPort }}
+    port: {{ .Values.falco.falco.grpc.listenPort }}
 {{- end }}
