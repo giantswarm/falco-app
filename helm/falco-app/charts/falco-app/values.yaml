@@ -60,7 +60,7 @@ serviceAccount:
   # Create and use serviceAccount resources
   create: true
   # Use this value as serviceAccountName
-  name:
+  name: falco-user
 
 fakeEventGenerator:
   enabled: false
