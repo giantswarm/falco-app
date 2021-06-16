@@ -1,2 +1,8 @@
 global:
   registry: quay.io
+
+falco:
+  podSecurityPolicy:
+    create: true
+  serviceAccount:
+    name: falco-user

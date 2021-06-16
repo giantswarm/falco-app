@@ -6,7 +6,6 @@ Giant Swarm offers a falco App which can be installed in workload clusters.
 Here we define the falco chart with its templates and default configuration.
 
 **What is this app?**
-
 **Why did we add it?**
 **Who can use it?**
 
