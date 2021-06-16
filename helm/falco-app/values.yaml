@@ -6,7 +6,7 @@ falco:
     create: true
   serviceAccount:
     name: falco-user
-  falco:  
+  falco:
     grpc:
       enabled: true
 
