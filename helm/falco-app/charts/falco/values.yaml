@@ -290,7 +290,7 @@ falco:
   # You can configure the address to bind and expose it.
   # By modifying the threadiness configuration you can fine-tune the number of threads (and context) it will use.
   grpc:
-    enabled: true
+    enabled: false
     threadiness: 0
 
     # gRPC unix socket with no authentication
