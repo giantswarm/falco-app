@@ -11,13 +11,6 @@ falco:
       enabled: true
     grpcOutput:
       enabled: true
-  customRules:
-    {}
-    # Example:
-    #
-    # rules-traefik.yaml: |-
-    #   [ rule body ]
-
 
 falco-exporter:
   podSecurityPolicy:
