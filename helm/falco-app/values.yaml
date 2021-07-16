@@ -1,7 +1,8 @@
-global:
-  imageRegistry: docker.io
-registry:
-  domain: docker.io
+# global:
+#   imageRegistry: docker.io
+
+# image:
+#   registry: docker.io
 
 falco:
   podSecurityPolicy:
