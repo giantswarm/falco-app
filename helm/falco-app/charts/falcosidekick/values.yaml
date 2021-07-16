@@ -5,6 +5,7 @@
 replicaCount: 2
 
 image:
+  registry: docker.io
   repository: giantswarm/falcosidekick
   tag: 2.22.0
   pullPolicy: IfNotPresent

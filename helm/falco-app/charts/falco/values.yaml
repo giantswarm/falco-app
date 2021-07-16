@@ -1,7 +1,7 @@
 # Default values for Falco.
 
 image:
-  registry: quay.io
+  registry: docker.io
   repository: giantswarm/falco
   tag: 0.28.1
   pullPolicy: IfNotPresent

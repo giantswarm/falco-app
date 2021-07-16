@@ -1,5 +1,5 @@
 global:
-  registry: quay.io
+  registry: docker.io
 
 falco:
   podSecurityPolicy:
