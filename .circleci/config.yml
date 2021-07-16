@@ -22,7 +22,7 @@ workflows:
           app_name: "falco-app"
           app_collection_repo: "aws-app-collection"
           requires:
-            - push-falco-app-chart-to-control-plane-catalog
+            - push-falco-app-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -35,7 +35,7 @@ workflows:
           app_name: "falco-app"
           app_collection_repo: "azure-app-collection"
           requires:
-            - push-falco-app-chart-to-control-plane-catalog
+            - push-falco-app-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -48,7 +48,7 @@ workflows:
           app_name: "falco-app"
           app_collection_repo: "kvm-app-collection"
           requires:
-            - push-falco-app-chart-to-control-plane-catalog
+            - push-falco-app-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
@@ -61,7 +61,7 @@ workflows:
           app_name: "falco-app"
           app_collection_repo: "vmware-app-collection"
           requires:
-            - push-falco-app-chart-to-control-plane-catalog
+            - push-falco-app-to-control-plane-catalog
           filters:
             branches:
               ignore: /.*/
