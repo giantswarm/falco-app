@@ -1,8 +1,8 @@
 # Default values for Falco.
 
 image:
-  registry: docker.io
-  repository: falcosecurity/falco
+  registry: quay.io
+  repository: giantswarm/falco
   tag: 0.28.1
   pullPolicy: IfNotPresent
   pullSecrets: []
