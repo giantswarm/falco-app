@@ -3,6 +3,8 @@ global:
     registry: docker.io
 
 falco:
+  image:
+    repository: giantswarm/falco
   podSecurityPolicy:
     create: true
   serviceAccount:
@@ -14,6 +16,8 @@ falco:
       enabled: true
 
 falco-exporter:
+  image:
+    repository: giantswarm/falco-exporter
   podSecurityPolicy:
     create: true
   serviceAccount:
@@ -25,3 +29,7 @@ falco-exporter:
     requests:
       cpu: 100m
       memory: 128Mi
+
+falcosidekick:
+  image:
+    repository: giantswarm/falcosidekick
