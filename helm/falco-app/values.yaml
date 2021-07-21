@@ -1,9 +1,6 @@
-global:
-  image:
-    registry: docker.io
-
 falco:
   image:
+    registry: docker.io
     repository: giantswarm/falco
   podSecurityPolicy:
     create: true
@@ -17,6 +14,7 @@ falco:
 
 falco-exporter:
   image:
+    registry: docker.io
     repository: giantswarm/falco-exporter
   podSecurityPolicy:
     create: true
@@ -32,4 +30,5 @@ falco-exporter:
 
 falcosidekick:
   image:
+    registry: docker.io
     repository: giantswarm/falcosidekick
