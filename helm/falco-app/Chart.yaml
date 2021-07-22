@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: 0.0.1
 annotations:
   application.giantswarm.io/team: "ludacris"
-  config.giantswarm.io/version: 1.x.x
+  config.giantswarm.io/version: falco-api-allowlist
 dependencies:
 - name: falco
   version: 1.15.3
