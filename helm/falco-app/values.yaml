@@ -4,7 +4,7 @@ falco:
     repository: giantswarm/falco
   podSecurityPolicy:
     create: true
-  priorityClassName: system-node-critical
+  priorityClassName: giantswarm-critical
   falco:
     grpc:
       enabled: true
