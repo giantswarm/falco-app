@@ -29,3 +29,5 @@ falcosidekick:
   image:
     registry: docker.io
     repository: giantswarm/falcosidekick
+  webui.darkmode: true
+  webui.enabled: true
