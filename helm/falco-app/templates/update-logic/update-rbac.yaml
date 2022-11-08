@@ -2,16 +2,16 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "trivy-operator.crdInstall" . }}
+  name: {{ include "falco-helpers.crdInstall" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-3"
-    {{- include "trivy-operator.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "falco-helpers.CRDInstallAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: {{ include "trivy-operator.crdInstall" . | quote }}
-    {{- include "trivy-operator.selectorLabels" . | nindent 4 }}
-    role: {{ include "trivy-operator.CRDInstallSelector" . | quote }}
+    app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+    {{- include "falco-helpers.selectorLabels" . | nindent 4 }}
+    role: {{ include "falco-helpers.CRDInstallSelector" . | quote }}
 rules:
 - apiGroups:
   - ""
@@ -40,29 +40,29 @@ rules:
   resources:
   - podsecuritypolicies
   resourceNames:
-  - {{ include "trivy-operator.crdInstall" . }}
+  - {{ include "falco-helpers.crdInstall" . }}
   verbs:
   - use
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "trivy-operator.crdInstall" . }}
+  name: {{ include "falco-helpers.crdInstall" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-2"
-    {{- include "trivy-operator.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "falco-helpers.CRDInstallAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: {{ include "trivy-operator.crdInstall" . | quote }}
-    {{- include "trivy-operator.labels" . | nindent 4 }}
-    role: {{ include "trivy-operator.CRDInstallSelector" . | quote }}
+    app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+    role: {{ include "falco-helpers.CRDInstallSelector" . | quote }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "trivy-operator.crdInstall" . }}
+  name: {{ include "falco-helpers.crdInstall" . }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include "trivy-operator.crdInstall" . }}
+    name: {{ include "falco-helpers.crdInstall" . }}
     namespace: {{ .Release.Namespace | quote }}
 {{- end }}

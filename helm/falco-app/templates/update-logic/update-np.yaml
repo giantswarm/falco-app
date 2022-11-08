@@ -2,21 +2,21 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: {{ include "trivy-operator.crdInstall" . }}
+  name: {{ include "falco-helpers.crdInstall" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-7"
-    {{- include "trivy-operator.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "falco-helpers.CRDInstallAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: {{ include "trivy-operator.crdInstall" . | quote }}
-    {{- include "trivy-operator.selectorLabels" . | nindent 4 }}
-    role: {{ include "trivy-operator.CRDInstallSelector" . | quote }}
+    app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+    {{- include "falco-helpers.selectorLabels" . | nindent 4 }}
+    role: {{ include "falco-helpers.CRDInstallSelector" . | quote }}
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ include "trivy-operator.crdInstall" . | quote }}
-      {{- include "trivy-operator.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+      {{- include "falco-helpers.selectorLabels" . | nindent 6 }}
   # allow egress traffic to the Kubernetes API
   egress:
   - ports:
