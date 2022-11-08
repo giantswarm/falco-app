@@ -22,7 +22,7 @@ spec:
       securityContext:
         runAsUser: 65534
         runAsGroup: 65534
-        {{- with .Values.podSecurityContext }}
+        {{- with .Values.updateLogic.podSecurityContext }}
         {{- . | toYaml | nindent 8 }}
         {{- end }}
       tolerations:
@@ -48,28 +48,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-        volumeMounts:
-{{- range $path, $_ := .Files.Glob "crds/**" }}
-        - name: {{ $path | base | trimSuffix ".yaml" | replace "_" "-" | replace "." "-" }}
-          mountPath: /data/{{ $path | base }}
-          subPath: {{ $path | base }}
-{{- end }}
         resources: {{- toYaml .Values.crds.resources | nindent 10 }}
-        {{- with .Values.securityContext }}
+        {{- with .Values.updateLogic.securityContext }}
         securityContext:
           {{- . | toYaml | nindent 10 }}
         {{- end }}
-      volumes:
-{{ $currentScope := . }}
-{{- range $path, $_ := .Files.Glob "crds/**" }}
-    {{- with $currentScope }}
-      - name: {{ $path | base | trimSuffix ".yaml" | replace "_" "-" | replace "." "-" }}
-        configMap:
-          name: {{ include "falco-helpers.crdInstall" . }}-{{ $path | base | trimSuffix ".yaml" | replace "_" "-" | replace "." "-" }}
-          items:
-          - key: content
-            path: {{ $path | base }}
-{{- end }}
-{{- end }}
       restartPolicy: Never
   backoffLimit: 4
