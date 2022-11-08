@@ -37,3 +37,8 @@ falcosidekick:
   image:
     registry: docker.io
     repository: giantswarm/falcosidekick
+
+updateLogic:
+  image:
+    registry: docker.io
+    tag: 1.24.1

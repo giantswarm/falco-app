@@ -30,7 +30,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: kubectl
-        image: "{{ .Values.image.registry }}/giantswarm/docker-kubectl:{{ .Values.crds.image.tag }}"
+        image: "{{ .Values.updateLogic.image.registry }}/giantswarm/docker-kubectl:{{ .Values.updateLogic.image.tag }}"
         command:
         - sh
         - -c
