@@ -1,24 +1,24 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "falco-helpers.crdInstall" . }}
+  name: {{ include "falco-helpers.updateLogic" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-1"
-    {{- include "falco-helpers.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "falco-helpers.UpdateLogicAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+    app.kubernetes.io/component: {{ include "falco-helpers.updateLogic" . | quote }}
     {{- include "falco.selectorLabels" . | nindent 4 }}
-    role: {{ include "falco-helpers.CRDInstallSelector" . | quote }}
+    role: {{ include "falco-helpers.UpdateLogicSelector" . | quote }}
 spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+        app.kubernetes.io/component: {{ include "falco-helpers.updateLogic" . | quote }}
         {{- include "falco.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "falco-helpers.crdInstall" . }}
+      serviceAccountName: {{ include "falco-helpers.updateLogic" . }}
       securityContext:
         runAsUser: 65534
         runAsGroup: 65534

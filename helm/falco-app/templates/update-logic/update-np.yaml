@@ -1,20 +1,20 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: {{ include "falco-helpers.crdInstall" . }}
+  name: {{ include "falco-helpers.updateLogic" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-7"
-    {{- include "falco-helpers.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "falco-helpers.UpdateLogicAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+    app.kubernetes.io/component: {{ include "falco-helpers.updateLogic" . | quote }}
     {{- include "falco.selectorLabels" . | nindent 4 }}
-    role: {{ include "falco-helpers.CRDInstallSelector" . | quote }}
+    role: {{ include "falco-helpers.UpdateLogicSelector" . | quote }}
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
+      app.kubernetes.io/component: {{ include "falco-helpers.updateLogic" . | quote }}
       {{- include "falco.selectorLabels" . | nindent 6 }}
   # allow egress traffic to the Kubernetes API
   egress:
