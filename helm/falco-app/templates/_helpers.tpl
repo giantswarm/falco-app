@@ -58,20 +58,20 @@ heritage: {{ $.Release.Service | quote }}
 {{/*
 CRD installation helpers used by Giant Swarm.
 */}}
-{{- define "trivy-operator.crdInstall" -}}
+{{- define "falco-helpers.crdInstall" -}}
 {{- printf "%s-%s" ( default .Chart.Name .Values.nameOverride | trunc 63 ) "crd-install" | replace "+" "_" | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 The team label here only applies to CRD install resources and is to keep the linter happy until we can set this on upstream charts.
 */}}
-{{- define "trivy-operator.CRDInstallAnnotations" -}}
+{{- define "falco-helpers.CRDInstallAnnotations" -}}
 "helm.sh/hook": "pre-install,pre-upgrade"
 "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
 application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 {{- end -}}
 
 {{/* Create a label which can be used to select any orphaned crd-install hook resources */}}
-{{- define "trivy-operator.CRDInstallSelector" -}}
+{{- define "falco-helpers.CRDInstallSelector" -}}
 {{- printf "%s" "crd-install-hook" -}}
 {{- end -}}
