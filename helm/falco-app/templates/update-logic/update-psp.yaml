@@ -9,7 +9,7 @@ metadata:
     {{- include "falco-helpers.CRDInstallAnnotations" . | nindent 4 }}
   labels:
     app.kubernetes.io/component: {{ include "falco-helpers.crdInstall" . | quote }}
-    {{- include "falco-helpers.selectorLabels" . | nindent 4 }}
+    {{- include "falco.selectorLabels" . | nindent 4 }}
     role: {{ include "falco-helpers.CRDInstallSelector" . | quote }}
 spec:
   privileged: false
