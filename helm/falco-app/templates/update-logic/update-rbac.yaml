@@ -1,4 +1,3 @@
-{{- if .Values.crds.install }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -65,4 +64,3 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "falco-helpers.crdInstall" . }}
     namespace: {{ .Release.Namespace | quote }}
-{{- end }}
