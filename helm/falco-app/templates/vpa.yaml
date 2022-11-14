@@ -3,20 +3,20 @@
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: {{ include "resource.default.name" . }}
-  namespace: {{ include "resource.default.namespace" . }}
+  name: {{ template "falco-helpers.fullname" . }}-vpa
+  namespace: {{ include "falco-helpers.namespace" . }}
   labels:
   {{- include "falco-helpers.labels" . | nindent 4 }}
 spec:
   resourcePolicy:
     containerPolicies:
-      - containerName: {{ include "name" . }}
+      - containerName: {{ include "falco-helpers.fullname" . }}
         controlledValues: RequestsAndLimits
         mode: Auto
   targetRef:
     apiVersion: apps/v1
-    kind: Deployment
-    name:  {{ include "resource.default.name" . }}
+    kind: DaemonSet
+    name:  {{ include "falco-helpers.fullname" . }}
   updatePolicy:
     updateMode: Auto
 {{ end }}
