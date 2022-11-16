@@ -2,7 +2,7 @@ podSecurityPolicy:
   create: true
 
 verticalPodAutoscaler:
-  enabled: true
+  enabled: false
 
 falco:
   image:
