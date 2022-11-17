@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: [[ .Version ]]
 annotations:
   application.giantswarm.io/team: "shield"
-  config.giantswarm.io/version: 1.x.x
+  config.giantswarm.io/version: "localize-falco-loader-image"
 dependencies:
 - name: falco
   version: 2.2.0
