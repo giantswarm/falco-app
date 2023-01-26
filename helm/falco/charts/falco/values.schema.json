@@ -331,7 +331,7 @@
                         "type": "object",
                         "properties": {
                             "init_config": {
-                                "type": "null"
+                                "type": ["null", "string"]
                             },
                             "library_path": {
                                 "type": "string"
@@ -540,7 +540,7 @@
             "type": "object"
         },
         "podPriorityClassName": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "podSecurityContext": {
             "type": "object"
@@ -603,7 +603,7 @@
             }
         },
         "services": {
-            "type": "null"
+            "type": ["null", "object"]
         },
         "tolerations": {
             "type": "array",

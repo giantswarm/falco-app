@@ -91,12 +91,12 @@
                     "type": "boolean"
                 },
                 "name": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 }
             }
         },
         "priorityClassName": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "probesPort": {
             "type": "integer"
@@ -230,7 +230,7 @@
                     }
                 },
                 "nodePort": {
-                    "type": "null"
+                    "type": ["null", "integer"]
                 },
                 "port": {
                     "type": "integer"
@@ -253,7 +253,7 @@
                     "type": "boolean"
                 },
                 "name": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 }
             }
         },
