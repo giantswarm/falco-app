@@ -1,7 +1,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-- path: helm/falco-app/charts
+- path: helm/falco/charts
   contents:
   - path: .
     git:
