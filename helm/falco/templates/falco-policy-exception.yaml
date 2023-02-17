@@ -17,6 +17,6 @@
           namespaces:
           - {{ include "falco-helpers.namespace" . }}
           names:
-          - {{ include "falco-helpers.fullname" . }}*
-          - {{ include "falco-helpers.fullname" . }}-falco-exporter*
-          - {{ include "falco-helpers.fullname" . }}-falcosidekick*
+          - falco*
+          - falco-falco-exporter*
+          - falco-falcosidekick*
