@@ -45,3 +45,5 @@ falcosidekick:
   image:
     registry: docker.io
     repository: giantswarm/falcosidekick
+  webui:
+    enabled: true
