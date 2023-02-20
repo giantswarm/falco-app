@@ -8,6 +8,7 @@ spec:
   - policyName: disallow-host-path
     ruleNames:
     - host-path
+    - autogen-host-path
   match:
     any:
     - resources:
