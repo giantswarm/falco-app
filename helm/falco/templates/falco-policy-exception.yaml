@@ -17,6 +17,7 @@ spec:
         kinds:
         - DaemonSet
         - Deployment
+        - Pod
         namespaces:
         - {{ include "falco-helpers.namespace" . }}
         names:
