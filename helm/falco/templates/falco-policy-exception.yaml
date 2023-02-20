@@ -3,6 +3,8 @@ kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-disallow-host-path-exception
   namespace: {{ include "falco-helpers.namespace" . }}
+  annotations:
+    "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
   exceptions:
   - policyName: disallow-host-path
