@@ -1,3 +1,4 @@
+{{- if .Capabilities.APIVersions.Has "kyverno.io/v2alpha1/PolicyException" -}}
 apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
@@ -21,9 +22,9 @@ spec:
         namespaces:
         - {{ include "falco-helpers.namespace" . }}
         names:
-        - falco*
-        - falco-falco-exporter*
-        - falco-falcosidekick*
+        - {{ include "falco-helpers.fullname" . }}*
+        - {{ include "falco-helpers.fullname" . }}-falco-exporter*
+        - {{ include "falco-helpers.fullname" . }}-falcosidekick*
 ---
 apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
@@ -47,4 +48,5 @@ spec:
         namespaces:
         - {{ include "falco-helpers.namespace" . }}
         names:
-        - falco*
+        - {{ include "falco-helpers.fullname" . }}*
+{{- end -}}
