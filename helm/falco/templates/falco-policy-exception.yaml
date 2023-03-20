@@ -49,4 +49,35 @@ spec:
         - {{ include "falco-helpers.namespace" . }}
         names:
         - {{ include "falco-helpers.fullname" . }}*
+---
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: {{ include "falco-helpers.fullname" . }}-disallow-privilege-escalation-capabilities
+  namespace: {{ include "falco-helpers.namespace" . }}
+  annotations:
+    "helm.sh/hook": "pre-install,pre-upgrade"
+spec:
+  exceptions:
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - privilege-escalation
+    - autogen-privilege-escalation
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - require-drop-all
+    - autogen-require-drop-all
+  match:
+    any:
+    - resources:
+        kinds:
+        - DaemonSet
+        - Deployment
+        - Pod
+        namespaces:
+        - {{ include "falco-helpers.namespace" . }}
+        names:
+        - {{ include "falco-helpers.fullname" . }}*
+        - {{ include "falco-helpers.fullname" . }}-falco-exporter*
+        - {{ include "falco-helpers.fullname" . }}-falcosidekick*
 {{- end -}}
