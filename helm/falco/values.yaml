@@ -4,6 +4,10 @@ podSecurityPolicy:
 verticalPodAutoscaler:
   enabled: false
 
+kyvernoExceptions:
+  # Momentarily enabled for testing
+  enabled: true
+
 falco:
   image:
     registry: docker.io
