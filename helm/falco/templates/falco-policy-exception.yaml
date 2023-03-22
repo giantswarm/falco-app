@@ -4,7 +4,7 @@ apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-exceptions
-  namespace: {{ include "falco-helpers.namespace" . }}
+  namespace: {{ .Values.kyvernoExceptions.namespace | default (include "falco-helpers.namespace" .) }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
@@ -52,7 +52,7 @@ apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falco-exporter-exceptions
-  namespace: {{ include "falco-helpers.namespace" . }}
+  namespace: {{ .Values.kyvernoExceptions.namespace | default (include "falco-helpers.namespace" .) }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
@@ -96,7 +96,7 @@ apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falcosidekick-exceptions
-  namespace: {{ include "falco-helpers.namespace" . }}
+  namespace: {{ .Values.kyvernoExceptions.namespace | default (include "falco-helpers.namespace" .) }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
