@@ -1,10 +1,10 @@
-{{- if .Values.kyvernoExceptions.enabled }}
+{{- if .Values.kyvernoPolicyExceptions.enabled }}
   {{- if .Capabilities.APIVersions.Has "kyverno.io/v2alpha1/PolicyException" -}}
 apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-exceptions
-  namespace: {{ .Values.kyvernoExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
@@ -52,7 +52,7 @@ apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falco-exporter-exceptions
-  namespace: {{ .Values.kyvernoExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
@@ -96,7 +96,7 @@ apiVersion: kyverno.io/v2alpha1
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falcosidekick-exceptions
-  namespace: {{ .Values.kyvernoExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:

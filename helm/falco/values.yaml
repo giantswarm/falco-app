@@ -4,7 +4,7 @@ podSecurityPolicy:
 verticalPodAutoscaler:
   enabled: false
 
-kyvernoExceptions:
+kyvernoPolicyExceptions:
   # Momentarily enabled for testing
   enabled: true
   namespace: ""
