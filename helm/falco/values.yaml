@@ -5,7 +5,6 @@ verticalPodAutoscaler:
   enabled: false
 
 kyvernoPolicyExceptions:
-  # Momentarily enabled for testing
   enabled: true
   namespace: ""
 
