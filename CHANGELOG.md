@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added Kyverno `PolicyExceptions` for PSS adoption.
+- Added Kyverno `PolicyExceptions` for necessary capabilities normally prohibited by PSS policies.
 
 ## [0.5.0] - 2023-02-01
 
