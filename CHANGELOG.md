@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Changed the default `PolicyException` namespace to `giantswarm`.
+
 ## [0.5.1] - 2023-03-28
 
 ### Added
