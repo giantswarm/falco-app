@@ -6,7 +6,7 @@ verticalPodAutoscaler:
 
 kyvernoPolicyExceptions:
   enabled: true
-  namespace: ""
+  namespace: giantswarm
 
 falco:
   image:
