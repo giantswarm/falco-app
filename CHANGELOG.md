@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed the default `PolicyException` namespace to `giantswarm`.
+- Delete the `PolicyException` when uninstalling the app.
 
 ## [0.5.1] - 2023-03-28
 
