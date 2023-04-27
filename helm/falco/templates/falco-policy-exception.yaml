@@ -8,7 +8,7 @@ metadata:
   labels:
     {{- include "falco-helpers.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook": "pre-install,pre-upgrade, post-delete"
 spec:
   exceptions:
   - policyName: disallow-host-path
@@ -59,6 +59,7 @@ metadata:
     {{- include "falco-helpers.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook": "post-delete"
 spec:
   exceptions:
   - policyName: disallow-host-path
