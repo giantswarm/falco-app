@@ -101,6 +101,8 @@ kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falcosidekick-exceptions
   namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  labels:
+    {{- include "falco-helpers.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
