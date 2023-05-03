@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed the default `PolicyException` namespace to `giantswarm`.
+- Replace deprecated toleration `node-role.kubernetes.io/master` with `node-role.kubernetes.io/control-plane` on `falco` and `falco-exporter` Daemonsets.
 
 ## [0.5.1] - 2023-03-28
 
