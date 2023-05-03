@@ -1,0 +1,11 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Bump version...
+      sha: 73117141c0e5b9346a355e85002b7196fddf374a
+      tags:
+      - falco-3.1.4
+    path: .
+  path: helm/falco/charts
+kind: LockConfig
