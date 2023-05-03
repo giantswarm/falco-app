@@ -11,3 +11,5 @@ directories:
       - falco/**
       - falcosidekick/**
       - falco-exporter/**
+    legalPaths: []
+
