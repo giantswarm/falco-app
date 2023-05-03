@@ -21,4 +21,4 @@ maintainers:
 name: falco
 sources:
 - https://github.com/giantswarm/falco-app
-version: [[ .Version ]]
+version: 0.5.1
