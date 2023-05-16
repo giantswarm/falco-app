@@ -4,10 +4,14 @@ podSecurityPolicy:
 verticalPodAutoscaler:
   enabled: false
 
+kyvernoPolicyExceptions:
+  enabled: true
+  namespace: giantswarm
+
 falco:
   image:
     registry: docker.io
-    repository: giantswarm/falco
+    repository: giantswarm/falco-no-driver
   priorityClassName: giantswarm-critical
   driver:
     kind: ebpf
@@ -16,6 +20,9 @@ falco:
         image:
           registry: docker.io
           repository: giantswarm/falco-driver-loader
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
   # ebpf:
   #   enabled: true
   falco:
@@ -68,7 +75,9 @@ falco-exporter:
     requests:
       cpu: 100m
       memory: 128Mi
-
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
 falcosidekick:
   image:
     registry: docker.io

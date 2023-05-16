@@ -7,9 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- Stop pushing to `openstack-app-collection`.
+
+## [0.5.2] - 2023-05-04
+
+### Changed
+
+- Changed the default `PolicyException` namespace to `giantswarm`.
+- Replace deprecated toleration `node-role.kubernetes.io/master` with `node-role.kubernetes.io/control-plane` on `falco` and `falco-exporter` Daemonsets.
+
+## [0.5.1] - 2023-03-28
+
+### Added
+
+- Added Kyverno `PolicyExceptions` for necessary capabilities normally prohibited by PSS policies.
+
+## [0.5.0] - 2023-02-01
+
+### Changed
+
+- Renamed `falco-app` to `falco`.
+
+## [0.4.3] - 2022-12-21
+
 ### Changed
 
 - Update icon url in chart
+- Started using the falco-no-driver image! Reducing lots of vulnerabilities!
 
 ## [0.4.2] - 2022-11-17
 
@@ -82,7 +108,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Push `falco-app` to provider collections (except KVM) when tagged.
 - Use Giant Swarm-managed images.
 
-[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.5.2...HEAD
+[0.5.2]: https://github.com/giantswarm/falco-app/compare/v0.5.1...v0.5.2
+[0.5.1]: https://github.com/giantswarm/falco-app/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/giantswarm/falco-app/compare/v0.4.3...v0.5.0
+[0.4.3]: https://github.com/giantswarm/falco-app/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/giantswarm/falco-app/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/giantswarm/falco-app/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/giantswarm/falco-app/compare/v0.3.2...v0.4.0
