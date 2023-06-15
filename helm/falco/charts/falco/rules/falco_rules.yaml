@@ -1861,14 +1861,9 @@
     registry.k8s.io/ip-masq-agent-amd64,
     registry.k8s.io/kube-proxy,
     registry.k8s.io/prometheus-to-sd,
-    registry.k8s.io/ip-masq-agent-amd64,
-    registry.k8s.io/kube-proxy,
-    registry.k8s.io/prometheus-to-sd,
     public.ecr.aws/falcosecurity/falco,
     quay.io/calico/node,
     sysdig/sysdig,
-    sematext_images,
-    registry.k8s.io/dns/k8s-dns-node-cache,
     registry.k8s.io/dns/k8s-dns-node-cache
     ]
 
@@ -2414,7 +2409,6 @@
      public.ecr.aws/falcosecurity/falco, velero/velero,
      quay.io/jetstack/cert-manager-cainjector, weaveworks/kured,
      quay.io/prometheus-operator/prometheus-operator,
-     registry.k8s.io/ingress-nginx/kube-webhook-certgen,
      registry.k8s.io/ingress-nginx/kube-webhook-certgen, quay.io/spotahome/redis-operator,
      registry.opensource.zalan.do/acid/postgres-operator, registry.opensource.zalan.do/acid/postgres-operator-ui,
      rabbitmqoperator/cluster-operator,
