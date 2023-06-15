@@ -1864,6 +1864,7 @@
     public.ecr.aws/falcosecurity/falco,
     quay.io/calico/node,
     sysdig/sysdig,
+    sematext_images,
     registry.k8s.io/dns/k8s-dns-node-cache
     ]
 
