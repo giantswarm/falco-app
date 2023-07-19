@@ -1,0 +1,12 @@
+dependencies:
+- name: falco
+  repository: ""
+  version: 3.3.0
+- name: falco-exporter
+  repository: ""
+  version: 0.9.6
+- name: falcosidekick
+  repository: ""
+  version: 0.6.1
+digest: sha256:14ee1bcd274c61b3e503eab0578343d80801663809a3726be0b598029768b780
+generated: "2023-07-19T12:29:33.436161046Z"
