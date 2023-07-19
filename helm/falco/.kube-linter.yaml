@@ -1,0 +1,12 @@
+checks:
+  addAllBuiltIn: true
+  exclude:
+  - "unset-memory-requirements"
+  - "unset-cpu-requirements"
+  - "sensitive-host-mounts"
+  - "run-as-non-root"
+  - "privileged-container"
+  - "privilege-escalation-container"
+  - "no-read-only-root-fs"
+  - "no-anti-affinity"
+  - "docker-sock"
