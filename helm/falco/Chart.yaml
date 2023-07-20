@@ -20,5 +20,5 @@ maintainers:
     url: https://github.com/giantswarm/falco-app
 name: falco
 sources:
-  - https://github.com/giantswarm/falco-app
+- https://github.com/giantswarm/falco-app
 version: 0.5.2
