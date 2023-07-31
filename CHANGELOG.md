@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added a `.kube-linter.yaml` file.
 
+### Changed
+
+- Update `falco` to upstream version 0.35.1 / chart version 3.3.0.
+- Update `falco-exporter` to upstream version 0.8.3 / chart version 0.9.6.
+- Update `falcosidekick` to upstream version 2.27.0 / chart version 0.6.1.
+
 ### Removed
 
 - Stop pushing to `openstack-app-collection`.
