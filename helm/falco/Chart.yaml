@@ -1,24 +1,24 @@
 apiVersion: v2
-appVersion: 0.33.0
+appVersion: 0.35.1
 annotations:
   application.giantswarm.io/team: "shield"
   config.giantswarm.io/version: 1.x.x
   ui.giantswarm.io/logo: https://s.giantswarm.io/app-icons/falco/2/logo_dark.svg
 dependencies:
-- name: falco
-  version: 2.2.0
-- name: falco-exporter
-  version: 0.9.1
-- name: falcosidekick
-  version: 0.5.9
+  - name: falco
+    version: 3.3.0
+  - name: falco-exporter
+    version: 0.9.6
+  - name: falcosidekick
+    version: 0.6.1
 description: A Helm chart for falco
 engine: gotpl
 home: https://github.com/giantswarm/falco-app
 icon: https://s.giantswarm.io/app-icons/falco/2/icon_dark.svg
 maintainers:
-- name: Giant Swarm applications team
-  url: https://github.com/giantswarm/falco-app
+  - name: Giant Swarm applications team
+    url: https://github.com/giantswarm/falco-app
 name: falco
 sources:
-- https://github.com/giantswarm/falco-app
+  - https://github.com/giantswarm/falco-app
 version: 0.5.2
