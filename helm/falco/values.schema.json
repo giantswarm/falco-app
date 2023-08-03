@@ -76,6 +76,20 @@
                             "type": "string"
                         }
                     }
+                },
+                "tolerations": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "effect": {
+                                "type": "string"
+                            },
+                            "key": {
+                                "type": "string"
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -125,6 +139,36 @@
                                     "type": "string"
                                 }
                             }
+                        }
+                    }
+                },
+                "tolerations": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "effect": {
+                                "type": "string"
+                            },
+                            "key": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "falcoctl": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string"
+                        },
+                        "repository": {
+                            "type": "string"
                         }
                     }
                 }
