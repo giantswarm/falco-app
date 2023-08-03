@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- set `falcoctl` image to be taken from our own registry. 
+
 ## [0.6.0] - 2023-08-01
 
 ### Added
