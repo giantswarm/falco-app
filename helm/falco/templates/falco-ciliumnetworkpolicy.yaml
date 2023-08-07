@@ -1,0 +1,21 @@
+{{- if .Values.ciliumNetworkPolicy.enabled }}
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "falco-helpers.fullname" . }}
+  namespace: {{ include "falco-helpers.namespace" . }}
+  labels:
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "falco.selectorLabels" . | nindent 6 }}
+  egress:
+    - toEntities:
+        - kube-apiserver
+        - world
+  ingress:
+    - fromEntities:
+        - kube-apiserver
+        - cluster
+{{- end }}
