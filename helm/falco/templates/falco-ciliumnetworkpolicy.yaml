@@ -16,9 +16,9 @@ spec:
         - world
     - toEntities:
         - cluster
-        toPorts:
-          - ports:
-            - port: "1053"
+      toPorts:
+        - ports:
+          - port: "1053"
   ingress:
     - fromEntities:
         - kube-apiserver
