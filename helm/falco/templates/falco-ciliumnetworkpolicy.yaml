@@ -21,6 +21,6 @@ spec:
           - port: "1053"
   ingress:
     - fromEntities:
-        - kube-apiserver
-        - cluster
+      - kube-apiserver
+      - cluster
 {{- end }}
