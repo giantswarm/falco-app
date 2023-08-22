@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix Cilium Network Policy identation.
+- Fix Cilium Network Policy indentation.
 
 ## [0.6.3] - 2023-08-22
 
