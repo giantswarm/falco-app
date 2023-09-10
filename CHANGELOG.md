@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Bring back port 53 for DNS resolution.
+
 ## [0.6.4] - 2023-08-22
 
 ### Fixed
