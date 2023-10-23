@@ -1,6 +1,6 @@
 # DO NOT EDIT. Generated with:
 #
-#    devctl@6.6.0
+#    devctl@6.14.0
 #
 
 #
@@ -21,7 +21,7 @@ on:
 jobs:
   debug_info:
     name: Debug info
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Print github context JSON
         run: |
@@ -30,7 +30,7 @@ jobs:
           EOF
   gather_facts:
     name: Gather facts
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       repo_name: ${{ steps.gather_facts.outputs.repo_name }}
       branch: ${{ steps.gather_facts.outputs.branch }}
@@ -72,7 +72,7 @@ jobs:
           fi
   create_update_pr:
     name: Create update PR
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - gather_facts
     if: ${{ needs.gather_facts.outputs.skip != 'true' }}
@@ -128,4 +128,9 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
           base: "${{ needs.gather_facts.outputs.base }}"
         run: |
-          hub pull-request -f -m "Automated update from upstream" -m "This PR was created by the \`update-chart\` GitHub Actions workflow." -m "- [ ] **:warning: All tests are passing**" -m "- [ ] **:warning: The CHANGELOG.md file has been updated**" -m "- [ ] **:warning: Additional changes in ignored files (see vendir.yml) have been adapted and migrated**" -l "automated-update" -a ${{ github.actor }} -b ${{ env.base }} -h ${{ needs.gather_facts.outputs.branch }}
+          gh pr create --title "Automated update from upstream"  --label "automated-update" --assignee ${{ github.actor }} --base ${{ env.base }} --head ${{ needs.gather_facts.outputs.branch }} --body-file - << EOF
+          This PR was created by the \`update-chart\` GitHub Actions workflow.
+          - [ ] **:warning: All tests are passing**
+          - [ ] **:warning: The CHANGELOG.md file has been updated**
+          - [ ] **:warning: Additional changes in ignored files (see vendir.yml) have been adapted and migrated**
+          EOF
