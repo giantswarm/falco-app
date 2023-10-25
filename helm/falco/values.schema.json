@@ -2,6 +2,14 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
+        "ciliumNetworkPolicy": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
         "falco": {
             "type": "object",
             "properties": {
@@ -96,14 +104,6 @@
         "falco-exporter": {
             "type": "object",
             "properties": {
-                "ciliumNetworkPolicy": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        }
-                    }
-                },	
                 "image": {
                     "type": "object",
                     "properties": {
@@ -198,6 +198,19 @@
                 }
             }
         },
+        "global": {
+            "type": "object",
+            "properties": {
+                "podSecurityStandards": {
+                    "type": "object",
+                    "properties": {
+                        "enforced": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
         "kyvernoPolicyExceptions": {
             "type": "object",
             "properties": {
@@ -206,14 +219,6 @@
                 },
                 "namespace": {
                     "type": "string"
-                }
-            }
-        },
-        "podSecurityPolicy": {
-            "type": "object",
-            "properties": {
-                "create": {
-                    "type": "boolean"
                 }
             }
         },
