@@ -1,8 +1,9 @@
 ciliumNetworkPolicy:
   enabled: false
 
-podSecurityPolicy:
-  create: true
+global:
+  podSecurityStandards:
+    enforced: false
 
 verticalPodAutoscaler:
   enabled: false

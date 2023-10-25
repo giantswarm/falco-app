@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### CHANGED
+
+- Implemented the use of the `global.podSecurityStandards.enforced` toggle.
+
 ## [0.6.5] - 2023-09-10
 
 ### Fixed
