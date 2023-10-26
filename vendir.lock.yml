@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'update(falco/charts): upgrade falco to 0.35.1...'
-      sha: acfb75da7109adaaf14dfb461dd5aacdc9e7760a
+      commitTitle: bump falcosidekick...
+      sha: 16b9bb7784a4487f1713564e2b9f54a976527538
       tags:
-      - falco-3.3.0
+      - falco-3.8.1
     path: .
   path: helm/falco/charts
 kind: LockConfig
