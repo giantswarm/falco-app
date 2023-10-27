@@ -37,6 +37,10 @@ falco:
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
     name: "falco"
+  falcoctl:
+    image:
+      registry: docker.io
+      repository: giantswarm/falcoctl
 
 falco-exporter:
   image:
@@ -59,8 +63,3 @@ falcosidekick:
   image:
     registry: docker.io
     repository: giantswarm/falcosidekick
-
-falcoctl:
-  image:
-    registry: docker.io
-    repository: giantswarm/falcoctl
