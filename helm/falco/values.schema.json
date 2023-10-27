@@ -63,6 +63,22 @@
                         }
                     }
                 },
+                "falcoctl": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "registry": {
+                                    "type": "string"
+                                },
+                                "repository": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
                 "image": {
                     "type": "object",
                     "properties": {
@@ -161,22 +177,6 @@
                             "key": {
                                 "type": "string"
                             }
-                        }
-                    }
-                }
-            }
-        },
-        "falcoctl": {
-            "type": "object",
-            "properties": {
-                "image": {
-                    "type": "object",
-                    "properties": {
-                        "registry": {
-                            "type": "string"
-                        },
-                        "repository": {
-                            "type": "string"
                         }
                     }
                 }

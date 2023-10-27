@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### CHANGED
+### Changed
 
 - Implemented the use of the `global.podSecurityStandards.enforced` toggle.
+- Fixed an issue with the `falcoctl` image value structure.
 
 ## [0.6.5] - 2023-09-10
 
