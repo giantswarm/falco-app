@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.6] - 2023-10-27
+
 ### Changed
 
 - Implemented the use of the `global.podSecurityStandards.enforced` toggle.
@@ -155,7 +157,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Push `falco-app` to provider collections (except KVM) when tagged.
 - Use Giant Swarm-managed images.
 
-[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.6.5...HEAD
+[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.6.6...HEAD
+[0.6.6]: https://github.com/giantswarm/falco-app/compare/v0.6.5...v0.6.6
 [0.6.5]: https://github.com/giantswarm/falco-app/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/giantswarm/falco-app/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/giantswarm/falco-app/compare/v0.6.3...v0.6.3
