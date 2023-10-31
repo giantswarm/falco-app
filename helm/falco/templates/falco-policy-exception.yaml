@@ -9,34 +9,36 @@ metadata:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
   exceptions:
-  - policyName: disallow-host-path
-    ruleNames:
-    - host-path
-    - autogen-host-path
-  - policyName: disallow-privilege-escalation
-    ruleNames:
-    - privilege-escalation
-    - autogen-privilege-escalation
-  - policyName: disallow-capabilities-strict
-    ruleNames:
-    - require-drop-all
-    - autogen-require-drop-all
-  - policyName: require-run-as-nonroot
-    ruleNames:
-    - run-as-non-root
-    - autogen-run-as-non-root
-  - policyName: disallow-privileged-containers
-    ruleNames:
-    - privileged-containers
-    - autogen-privileged-containers
   - policyName: restrict-volume-types
     ruleNames:
     - restricted-volumes
     - autogen-restricted-volumes
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - privilege-escalation
+    - autogen-privilege-escalation
+  - policyName: require-run-as-nonroot
+    ruleNames:
+    - run-as-non-root
+    - autogen-run-as-non-root
+  - policyName: disallow-host-path
+    ruleNames:
+    - host-path
+    - autogen-host-path
   - policyName: restrict-seccomp-strict
     ruleNames:
     - check-seccomp-strict
     - autogen-check-seccomp-strict
+  - policyName: disallow-privileged-containers
+    ruleNames:
+    - privileged-containers
+    - autogen-privileged-containers
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - require-drop-all
+    - adding-capabilities-strict
+    - autogen-require-drop-all
+    - autogen-adding-capabilities-strict
   match:
     any:
     - resources:
@@ -57,26 +59,32 @@ metadata:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
   exceptions:
-  - policyName: disallow-host-path
+  - policyName: disallow-privileged-containers
     ruleNames:
-    - host-path
-    - autogen-host-path
-  - policyName: disallow-privilege-escalation
-    ruleNames:
-    - privilege-escalation
-    - autogen-privilege-escalation
+    - privileged-containers
+    - autogen-privileged-containers
   - policyName: disallow-capabilities-strict
     ruleNames:
     - require-drop-all
+    - adding-capabilities-strict
     - autogen-require-drop-all
-  - policyName: require-run-as-nonroot
-    ruleNames:
-    - run-as-non-root
-    - autogen-run-as-non-root
+    - autogen-adding-capabilities-strict
   - policyName: restrict-volume-types
     ruleNames:
     - restricted-volumes
     - autogen-restricted-volumes
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - privilege-escalation
+    - autogen-privilege-escalation
+  - policyName: require-run-as-nonroot
+    ruleNames:
+    - run-as-non-root
+    - autogen-run-as-non-root
+  - policyName: disallow-host-path
+    ruleNames:
+    - host-path
+    - autogen-host-path
   - policyName: restrict-seccomp-strict
     ruleNames:
     - check-seccomp-strict
@@ -101,18 +109,24 @@ metadata:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
   exceptions:
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - require-drop-all
+    - adding-capabilities-strict
+    - autogen-require-drop-all
+    - autogen-adding-capabilities-strict
   - policyName: disallow-privilege-escalation
     ruleNames:
     - privilege-escalation
     - autogen-privilege-escalation
-  - policyName: disallow-capabilities-strict
-    ruleNames:
-    - require-drop-all
-    - autogen-require-drop-all
   - policyName: require-run-as-nonroot
     ruleNames:
     - run-as-non-root
     - autogen-run-as-non-root
+  - policyName: restrict-seccomp-strict
+    ruleNames:
+    - check-seccomp-strict
+    - autogen-check-seccomp-strict
   match:
     any:
     - resources:
