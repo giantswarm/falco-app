@@ -37,10 +37,22 @@ falco:
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
     name: "falco"
+    rules_file:
+      - /etc/falco/falco_rules.yaml
+      - /etc/falco/falco_rules.local.yaml
+      - /etc/falco/rules.d
+      - /etc/falco/falco-incubating_rules.yaml
+      - /etc/falco/falco-sandbox_rules.yaml
   falcoctl:
     image:
       registry: docker.io
       repository: giantswarm/falcoctl
+    config:
+      artifact:
+        install:
+          refs: [falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2]
+        follow:
+          refs: [falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2]
 
 falco-exporter:
   image:
