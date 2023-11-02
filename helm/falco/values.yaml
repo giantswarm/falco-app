@@ -50,9 +50,9 @@ falco:
     config:
       artifact:
         install:
-          refs: [falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2]
+          refs: [falco-rules:2, falco-incubating-rules:2, falco-sandbox-rules:2]
         follow:
-          refs: [falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2]
+          refs: [falco-rules:2, falco-incubating-rules:2, falco-sandbox-rules:2]
 
 falco-exporter:
   image:
