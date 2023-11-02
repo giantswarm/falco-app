@@ -40,9 +40,9 @@ falco:
     rules_file:
       - /etc/falco/falco_rules.yaml
       - /etc/falco/falco_rules.local.yaml
-      - /etc/falco/rules.d
       - /etc/falco/falco-incubating_rules.yaml
       - /etc/falco/falco-sandbox_rules.yaml
+      - /etc/falco/rules.d
   falcoctl:
     image:
       registry: docker.io
