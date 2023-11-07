@@ -30,6 +30,12 @@ falco:
   # ebpf:
   #   enabled: true
   falco:
+    rules_file:
+      - /etc/falco/falco_rules.yaml
+      - /etc/falco/falco_rules.local.yaml
+      - /etc/falco/falco-incubating_rules.yaml
+      - /etc/falco/falco-sandbox_rules.yaml
+      - /etc/falco/rules.d
     grpc:
       enabled: true
     grpc_output:
@@ -37,12 +43,6 @@ falco:
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
     name: "falco"
-    rules_file:
-      - /etc/falco/falco_rules.yaml
-      - /etc/falco/falco_rules.local.yaml
-      - /etc/falco/falco-incubating_rules.yaml
-      - /etc/falco/falco-sandbox_rules.yaml
-      - /etc/falco/rules.d
   falcoctl:
     image:
       registry: docker.io
