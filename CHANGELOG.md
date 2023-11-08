@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2023-11-08
+
 ### Changed
 
 - Updated `Falco` chart version from `3.3.0` to `3.8.1`.
@@ -189,7 +191,8 @@ For more information, please check the falco [rules page](https://github.com/fal
 - Push `falco-app` to provider collections (except KVM) when tagged.
 - Use Giant Swarm-managed images.
 
-[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.6.7...HEAD
+[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/giantswarm/falco-app/compare/v0.6.7...v0.7.0
 [0.6.7]: https://github.com/giantswarm/falco-app/compare/v0.6.6...v0.6.7
 [0.6.6]: https://github.com/giantswarm/falco-app/compare/v0.6.5...v0.6.6
 [0.6.5]: https://github.com/giantswarm/falco-app/compare/v0.6.4...v0.6.5
