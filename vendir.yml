@@ -6,9 +6,10 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/falco-charts-upstream
-      ref: falco-3.3.0
+      ref: falco-3.8.1
     includePaths:
-      - falco/**
-      - falcosidekick/**
-      - falco-exporter/**
+      - charts/falco/**
+      - charts/falcosidekick/**
+      - charts/falco-exporter/**
+    newRootPath: charts
     legalPaths: []
