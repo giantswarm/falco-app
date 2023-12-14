@@ -134,6 +134,14 @@
                 "podSecurityPolicy": {
                     "type": "object",
                     "properties": {
+                        "annotations": {
+                            "type": "object",
+                            "properties": {
+                                "seccomp.security.alpha.kubernetes.io/allowedProfileNames": {
+                                    "type": "string"
+                                }
+                            }
+                        },
                         "create": {
                             "type": "boolean"
                         }
