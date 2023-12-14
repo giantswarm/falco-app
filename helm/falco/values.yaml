@@ -48,6 +48,7 @@ falco-exporter:
     repository: giantswarm/falco-exporter
   podSecurityPolicy:
     create: true
+    annotations: {seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'}
   resources:
     limits:
       cpu: 100m
