@@ -8,7 +8,7 @@ image:
   # -- The image pull policy.
   pullPolicy: IfNotPresent
   # -- The image registry to pull from.
-  registry: docker.io
+  registry: gsoci.azurecr.io
   # -- The image repository to pull from
   repository: falcosecurity/falco-no-driver
   # -- The image tag to pull. Overrides the image tag whose default is the chart appVersion.
@@ -211,7 +211,7 @@ driver:
         # -- The image pull policy.
         pullPolicy: IfNotPresent
         # -- The image registry to pull from.
-        registry: docker.io
+        registry: gsoci.azurecr.io
         # -- The image repository to pull from.
         repository: falcosecurity/falco-driver-loader
         #  -- Overrides the image tag whose default is the chart appVersion.
@@ -314,8 +314,7 @@ certs:
     # -- CA certificate used by gRPC, webserver and AuditSink validation.
     crt: ""
 # -- Third party rules enabled for Falco. More info on the dedicated section in README.md file.
-customRules:
-  {}
+customRules: {}
   # Although Falco comes with a nice default rule set for detecting weird
   # behavior in containers, our users are going to customize the run-time
   # security rule sets or policies for the specific container images and
@@ -347,7 +346,7 @@ falcoctl:
     # -- The image pull policy.
     pullPolicy: IfNotPresent
     # -- The image registry to pull from.
-    registry: docker.io
+    registry: gsoci.azurecr.io
     # -- The image repository to pull from.
     repository: falcosecurity/falcoctl
     # -- The image tag to pull.
@@ -391,8 +390,8 @@ falcoctl:
     # -- List of indexes that falcoctl downloads and uses to locate and download artiafcts. For more info see:
     # https://github.com/falcosecurity/falcoctl/blob/main/proposals/20220916-rules-and-plugin-distribution.md#index-file-overview
     indexes:
-    - name: falcosecurity
-      url: https://falcosecurity.github.io/falcoctl/index.yaml
+      - name: falcosecurity
+        url: https://falcosecurity.github.io/falcoctl/index.yaml
     # -- Configuration used by the artifact commands.
     artifact:
       # -- List of artifact types that falcoctl will handle. If the configured refs resolves to an artifact whose type is not contained
