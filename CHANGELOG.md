@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
 ## [0.7.1] - 2023-12-14
 
 ### Changed
@@ -82,7 +86,7 @@ For more information, please check the falco [rules page](https://github.com/fal
 
 ### Changed
 
-- set `falcoctl` image to be taken from our own registry. 
+- set `falcoctl` image to be taken from our own registry.
 
 ## [0.6.0] - 2023-08-01
 
