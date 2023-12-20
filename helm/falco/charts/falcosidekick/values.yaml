@@ -10,7 +10,7 @@ replicaCount: 2
 
 image:
   # -- The image registry to pull from
-  registry: gsoci.azurecr.io
+  registry: docker.io
   # -- The image repository to pull from
   repository: falcosecurity/falcosidekick
   # -- The image tag to pull
@@ -965,7 +965,7 @@ webui:
   allowcors: false
   image:
     # -- The web UI image registry to pull from
-    registry: gsoci.azurecr.io
+    registry: docker.io
     # -- The web UI image repository to pull from
     repository: falcosecurity/falcosidekick-ui
     # -- The web UI image tag to pull
@@ -1049,7 +1049,7 @@ webui:
     enabled: true
     image:
       # -- The web UI Redis image registry to pull from
-      registry: gsoci.azurecr.io
+      registry: docker.io
       # -- The web UI Redis image repository to pull from
       repository: redis/redis-stack
       # -- The web UI Redis image tag to pull from

@@ -8,7 +8,7 @@ image:
   # -- The image pull policy.
   pullPolicy: IfNotPresent
   # -- The image registry to pull from.
-  registry: gsoci.azurecr.io
+  registry: docker.io
   # -- The image repository to pull from
   repository: falcosecurity/falco-no-driver
   # -- The image tag to pull. Overrides the image tag whose default is the chart appVersion.
@@ -211,7 +211,7 @@ driver:
         # -- The image pull policy.
         pullPolicy: IfNotPresent
         # -- The image registry to pull from.
-        registry: gsoci.azurecr.io
+        registry: docker.io
         # -- The image repository to pull from.
         repository: falcosecurity/falco-driver-loader
         #  -- Overrides the image tag whose default is the chart appVersion.
@@ -346,7 +346,7 @@ falcoctl:
     # -- The image pull policy.
     pullPolicy: IfNotPresent
     # -- The image registry to pull from.
-    registry: gsoci.azurecr.io
+    registry: docker.io
     # -- The image repository to pull from.
     repository: falcosecurity/falcoctl
     # -- The image tag to pull.
