@@ -189,7 +189,8 @@ config:
     # -- default priority of dropped events, values are emergency|alert|critical|error|warning|notice|informational|debug
     dropeventdefaultpriority: "critical"
     # -- comma separated list of priority re-evaluation thresholds of dropped events composed of a ':' separated integer threshold and string priority. Example: `10000:critical, 100:warning, 1:informational`
-    dropeventthresholds: "10000:critical, 1000:critical, 100:critical, 10:warning, 1:warning"
+    dropeventthresholds: "10000:critical, 1000:critical, 100:critical, 10:warning,
+      1:warning"
     # -- if true, checkcert flag will be ignored (server cert will always be checked)
     mutualtls: false
     # -- check if ssl certificate of the output is valid
@@ -1012,7 +1013,7 @@ webui:
     hosts:
       - host: falcosidekick-ui.local
         paths:
-        - path: /
+          - path: /
     # --  Web UI ingress TLS configuration
     tls: []
     #  - secretName: chart-example-tls
