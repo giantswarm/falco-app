@@ -1,0 +1,20 @@
+{{- if .Values.ciliumNetworkPolicy.enabled }}
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "falco-helpers.fullname" . }}-exporter
+  namespace: {{ include "falco-helpers.namespace" . }}
+  labels:
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: falco
+      app.kubernetes.io/name: falco-exporter
+  ingress:
+    - fromEntities:
+      - cluster
+      toPorts:
+      - ports:
+          - port: "9376"
+{{- end }}
