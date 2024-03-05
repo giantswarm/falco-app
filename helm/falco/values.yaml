@@ -56,6 +56,9 @@ falco-exporter:
     requests:
       cpu: 100m
       memory: 128Mi
+  serviceMonitor:
+    additionalLabels:
+      application.giantswarm.io/team: "shield"
   tolerations:
     - effect: NoSchedule
       key: node-role.kubernetes.io/control-plane
