@@ -39,7 +39,7 @@ healthChecks:
 image:
   registry: docker.io
   repository: falcosecurity/falco-exporter
-  tag: 0.8.3
+  tag: 0.8.7
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
