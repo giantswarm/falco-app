@@ -20,6 +20,13 @@ spec:
         - ports:
           - port: "1053"
           - port: "53"
+    - toEndpoints:
+      - matchLabels:
+          app.kubernetes.io/instance: {{ include "falco-helpers.fullname" . }}
+          app.kubernetes.io/name: falcosidekick
+      toPorts:
+      - ports:
+        - port: "2801"
   ingress:
     - fromEntities:
         - kube-apiserver
