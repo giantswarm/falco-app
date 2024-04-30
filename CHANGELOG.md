@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update Falco CiliumNetworkPolicy to allow communication with Falco Sidekick.
+
 ## [0.8.0] - 2024-01-25
 
 ### Changed
