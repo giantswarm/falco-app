@@ -24,6 +24,17 @@ falco:
         image:
           registry: gsoci.azurecr.io
           repository: giantswarm/falco-driver-loader
+  customRules:
+    gs-root-ca-key-access.yaml: |-
+      - list: root_ca_key_path
+        items: 
+        - "/etc/kubernetes/pki/ca.key"
+      - rule: File Related Operation on Root CA Key Path
+        desc: Detect any file operation on the path to root CA key
+        condition: (fs.path.name pmatch (root_ca_key_path) or fs.path.source pmatch (root_ca_key_path) or fs.path.target pmatch (root_ca_key_path))
+        output: "Some File Related Operation on root CA key (evt.type=%evt.type path=%fs.path.name source=%fs.path.source target=%fs.path.target user.name=%user.name proc.cmdline=%proc.cmdline proc.pcmdline=%proc.pcmdline container.id=%container.id container.name=%container.name image=%container.image.repository)"
+        priority: WARNING
+        source: syscall
   tolerations:
     - effect: NoSchedule
       key: node-role.kubernetes.io/control-plane
@@ -41,6 +52,7 @@ falco:
     image:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
+  tty: true
 
 falco-exporter:
   image:
