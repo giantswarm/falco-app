@@ -32,7 +32,7 @@ falco:
       - rule: File Related Operation on Root CA Key Path
         desc: Detect any file operation on the path to root CA key
         condition: (fs.path.name pmatch (root_ca_key_path) or fs.path.source pmatch (root_ca_key_path) or fs.path.target pmatch (root_ca_key_path))
-        output: "Some File Related Operation on root CA key (evt.type=%evt.type path=%fs.path.name source=%fs.path.source target=%fs.path.target user.name=%user.name proc.cmdline=%proc.cmdline proc.pcmdline=%proc.pcmdline container.id=%container.id container.name=%container.name image=%container.image.repository)"
+        output: "Root CA key file '%fs.path.name' was accessed via operation '%evt.type' (source path '%fs.path.source', target path '%fs.path.target') triggered by the user '%user.name' running '%proc.cmdline' (from '%proc.pcmdline') in container '%container.name' (ID=%container.id) built from image '%container.image.repository'. Additional details (if available):"
         priority: WARNING
         source: syscall
   tolerations:
