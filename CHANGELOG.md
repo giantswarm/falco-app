@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add custom rule to detect access to root CA key file in control plane nodes
+
 ### Changed
 
 - Remove API check on PolicyException.
