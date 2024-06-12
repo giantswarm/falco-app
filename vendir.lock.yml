@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: bump falcosidekick...
-      sha: 16b9bb7784a4487f1713564e2b9f54a976527538
+      commitTitle: 'update(falco): bump k8s-metacollector dependency version to v0.1.1...'
+      sha: b76280cfa5ebd93ab4c09ab5efb3b5b7282e1d71
       tags:
-      - falco-3.8.1
+      - falco-4.4.1
     path: .
   path: helm/falco/charts
 kind: LockConfig
