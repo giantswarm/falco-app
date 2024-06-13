@@ -2,16 +2,17 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "falco-exporter.fullname" . }}
+  name: {{ include "falcosidekick.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "falco-exporter.labels" . | nindent 4 }}
+    {{- include "falcosidekick.labels" . | nindent 4 }}
+    app.kubernetes.io/component: core
     {{- range $key, $value := .Values.serviceMonitor.additionalLabels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-  namespace: {{ .Release.Namespace }}
 spec:
   endpoints:
-  - port: metrics
+  - port: http
     {{- if .Values.serviceMonitor.interval }}
     interval: {{ .Values.serviceMonitor.interval }}
     {{- end }}
@@ -23,5 +24,6 @@ spec:
     {{- end }}
   selector:
     matchLabels:
-      {{- include "falco-exporter.selectorLabels" . | nindent 6 }}
+      {{- include "falcosidekick.labels" . | nindent 6 }}
+      app.kubernetes.io/component: core
 {{- end }}

@@ -6,7 +6,7 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/falco-charts-upstream
-      ref: falco-3.8.1
+      ref: k8s-metacollector-0.1.8
     includePaths:
       - charts/falco/**
       - charts/falcosidekick/**
