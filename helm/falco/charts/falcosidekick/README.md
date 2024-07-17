@@ -17,99 +17,106 @@ It works as a single endpoint for as many as you want `Falco` instances :
 
 `Falcosidekick` manages a large variety of outputs with different purposes.
 
+> **Note**
+Follow the links to get the configuration of each output.
+
 ### Chat
 
-- [**Slack**](https://slack.com)
-- [**Rocketchat**](https://rocket.chat/)
-- [**Mattermost**](https://mattermost.com/)
-- [**Teams**](https://products.office.com/en-us/microsoft-teams/group-chat-software)
-- [**Discord**](https://www.discord.com/)
-- [**Google Chat**](https://workspace.google.com/products/chat/)
-- [**Zoho Cliq**](https://www.zoho.com/cliq/)
-- [**Telegram**](https://telegram.org)
+- [**Slack**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/slack.md)
+- [**Rocketchat**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/rocketchat.md)
+- [**Mattermost**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/mattermost.md)
+- [**Teams**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/teams.md)
+- [**Discord**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/discord.md)
+- [**Google Chat**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/googlechat.md)
+- [**Zoho Cliq**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/cliq.md)
+- [**Telegram**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/telegram.md)
 
 ### Metrics / Observability
 
-- [**Datadog**](https://www.datadoghq.com/)
-- [**Influxdb**](https://www.influxdata.com/products/influxdb-overview/)
-- [**StatsD**](https://github.com/statsd/statsd) (for monitoring of `falcosidekick`)
-- [**DogStatsD**](https://docs.datadoghq.com/developers/dogstatsd/?tab=go) (for monitoring of `falcosidekick`)
-- [**Prometheus**](https://prometheus.io/) (for both events and monitoring of `falcosidekick`)
-- [**Wavefront**](https://www.wavefront.com)
-- [**Spyderbat**](https://www.spyderbat.com)
-- [**TimescaleDB**](https://www.timescale.com/)
-- [**Dynatrace**](https://www.dynatrace.com/)
+- [**Datadog**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/datadog.md)
+- [**Influxdb**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/influxdb.md)
+- [**StatsD**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/statsd.md) (for monitoring of `falcosidekick`)
+- [**DogStatsD**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/dogstatsd.md) (for monitoring of `falcosidekick`)
+- [**Prometheus**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/prometheus.md) (for both events and monitoring of `falcosidekick`)
+- [**Wavefront**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/wavefront.md)
+- [**Spyderbat**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/spyderbat.md)
+- [**TimescaleDB**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/timescaledb.md)
+- [**Dynatrace**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/dynatrace.md)
 
 ### Alerting
 
-- [**AlertManager**](https://prometheus.io/docs/alerting/alertmanager/)
-- [**Opsgenie**](https://www.opsgenie.com/)
-- [**PagerDuty**](https://pagerduty.com/)
-- [**Grafana OnCall**](https://grafana.com/products/oncall/)
+- [**AlertManager**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/alertmanager.md)
+- [**Opsgenie**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/opsgenie.md)
+- [**PagerDuty**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/pagerduty.md)
+- [**Grafana OnCall**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/grafana_oncall.md)
 
 ### Logs
 
-- [**Elasticsearch**](https://www.elastic.co/)
-- [**Loki**](https://grafana.com/oss/loki)
-- [**AWS CloudWatchLogs**](https://aws.amazon.com/cloudwatch/features/)
-- [**Grafana**](https://grafana.com/) (annotations)
-- **Syslog**
-- [**Zincsearch**](https://docs.zincsearch.com/)
-- [**OpenObserve**](https://openobserve.ai)
+- [**Elasticsearch**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/elasticsearch.md)
+- [**Loki**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/loki.md)
+- [**AWS CloudWatchLogs**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/aws_cloudwatch_logs.md)
+- [**Grafana**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/grafana.md)
+- [**Syslog**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/syslog.md)
+- [**Zincsearch**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs//zincsearch.md)
+- [**OpenObserve**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/openobserve.md)
 
 ### Object Storage
 
-- [**AWS S3**](https://aws.amazon.com/s3/features/)
-- [**GCP Storage**](https://cloud.google.com/storage)
-- [**Yandex S3 Storage**](https://cloud.yandex.com/en-ru/services/storage)
+- [**AWS S3**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/aws_s3.md)
+- [**GCP Storage**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/gcp_storage.md)
+- [**Yandex S3 Storage**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/yandex_s3.md)
 
 ### FaaS / Serverless
 
-- [**AWS Lambda**](https://aws.amazon.com/lambda/features/)
-- [**GCP Cloud Run**](https://cloud.google.com/run)
-- [**GCP Cloud Functions**](https://cloud.google.com/functions)
-- [**Fission**](https://fission.io)
-- [**KNative (CloudEvents)**](https://knative.dev)
-- [**Kubeless**](https://kubeless.io/)
-- [**OpenFaaS**](https://www.openfaas.com)
-- [**Tekton**](https://tekton.dev)
+- [**AWS Lambda**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/aws_lambda.md)
+- [**GCP Cloud Run**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/gcp_cloud_run.md)
+- [**GCP Cloud Functions**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/gcp_cloud_functions.md)
+- [**Fission**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/fission.md)
+- [**KNative (CloudEvents)**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/cloudevents.md)
+- [**Kubeless**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/kubeless.md)
+- [**OpenFaaS**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/openfaas.md)
+- [**Tekton**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/tekton.md)
 
 ### Message queue / Streaming
 
-- [**NATS**](https://nats.io/)
-- [**STAN (NATS Streaming)**](https://docs.nats.io/nats-streaming-concepts/intro)
-- [**AWS SQS**](https://aws.amazon.com/sqs/features/)
-- [**AWS SNS**](https://aws.amazon.com/sns/features/)
-- [**AWS Kinesis**](https://aws.amazon.com/kinesis/)
-- [**GCP PubSub**](https://cloud.google.com/pubsub)
-- [**Apache Kafka**](https://kafka.apache.org/)
-- [**Kafka Rest Proxy**](https://docs.confluent.io/platform/current/kafka-rest/index.html)
-- [**RabbitMQ**](https://www.rabbitmq.com/)
-- [**Azure Event Hubs**](https://azure.microsoft.com/en-in/services/event-hubs/)
-- [**Yandex Data Streams**](https://cloud.yandex.com/en/docs/data-streams/)
-- [**MQTT**](https://mqtt.org/)
-- [**Gotify**](https://gotify.net/)
+- [**NATS**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/nats.md)
+- [**STAN (NATS Streaming)**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/stan.md)
+- [**AWS SQS**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/aws_sqs.md)
+- [**AWS SNS**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/aws_sns.md)
+- [**AWS Kinesis**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/aws_kinesis.md)
+- [**GCP PubSub**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/gcp_pub_sub.md)
+- [**Apache Kafka**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/kafka.md)
+- [**Kafka Rest Proxy**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/kafkarest.md)
+- [**RabbitMQ**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/rabbitmq.md)
+- [**Azure Event Hubs**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/azure_event_hub.md)
+- [**Yandex Data Streams**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/yandex_datastreams.md)
+- [**MQTT**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/mqtt.md)
+- [**Gotify**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/gotify.md)
 
 ### Email
 
-- **SMTP**
+- [**SMTP**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/smtp.md)
+
+### Database
+
+- [**Redis**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/redis.md)
 
 ### Web
 
-- **Webhook**
-- [**Node-RED**](https://nodered.org/)
-- [**WebUI**](https://github.com/falcosecurity/falcosidekick-ui) (a Web UI for displaying latest events in real time)
+- [**Webhook**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/webhook.md)
+- [**Node-RED**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/nodered.md)
+- [**WebUI (Falcosidekick UI)**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/falcosidekick-ui.md)
 
 ### SIEM
 
-- [**AWS Security Lake**](https://aws.amazon.com/security-lake/)
+- [**AWS Security Lake**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/aws_security_lake.md)
 
 ### Workflow
 
-- [**n8n**](https://n8n.io/)
+- [**n8n**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/n8n.md)
 
 ### Other
-- [**Policy Report**](https://github.com/kubernetes-sigs/wg-policy-prototypes/tree/master/policy-report/falco-adapter)
+- [**Policy Report**](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/policy_report.md)
 
 ## Adding `falcosecurity` repository
 
@@ -143,7 +150,7 @@ After a few seconds, Falcosidekick should be running.
 
 > **Tip**: List all releases using `helm list`, a release is a name used to track a specific deployment
 
-## Minumiun Kubernetes version
+## Minimum Kubernetes version
 
 The minimum Kubernetes version required is 1.17.x
 
@@ -190,7 +197,9 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.aws.region | string | `""` | AWS Region (optionnal if you use EC2 Instance Profile) |
 | config.aws.rolearn | string | `""` | AWS IAM role ARN for falcosidekick service account to associate with (optionnal if you use EC2 Instance Profile) |
 | config.aws.s3.bucket | string | `""` | AWS S3, bucket name |
+| config.aws.s3.endpoint | string | `""` | Endpoint URL that overrides the default generated endpoint, use this for S3 compatible APIs |
 | config.aws.s3.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
+| config.aws.s3.objectcannedacl | string | `"bucket-owner-full-control"` | Canned ACL (x-amz-acl) to use when creating the object |
 | config.aws.s3.prefix | string | `""` | AWS S3, name of prefix, keys will have format: s3://<bucket>/<prefix>/YYYY-MM-DD/YYYY-MM-DDTHH:mm:ss.s+01:00.json |
 | config.aws.secretaccesskey | string | `""` | AWS Secret Access Key (optionnal if you use EC2 Instance Profile) |
 | config.aws.securitylake.accountid | string | `""` | Account ID |
@@ -205,6 +214,7 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.aws.sns.topicarn | string | `""` | AWS SNS TopicARN, if not empty, AWS SNS output is *enabled* |
 | config.aws.sqs.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.aws.sqs.url | string | `""` | AWS SQS Queue URL, if not empty, AWS SQS output is *enabled* |
+| config.aws.useirsa | bool | `true` | Use IRSA, if true, the rolearn value will be used to set the ServiceAccount annotations and not the env var |
 | config.azure.eventHub.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.azure.eventHub.name | string | `""` | Name of the Hub, if not empty, EventHub is *enabled* |
 | config.azure.eventHub.namespace | string | `""` | Name of the space the Hub is in |
@@ -233,17 +243,26 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.dogstatsd.forwarder | string | `""` | The address for the DogStatsD forwarder, in the form <http://host:port>, if not empty DogStatsD is *enabled* |
 | config.dogstatsd.namespace | string | `"falcosidekick."` | A prefix for all metrics |
 | config.dogstatsd.tags | string | `""` | A comma-separated list of tags to add to all metrics |
+| config.dynatrace.apitoken | string | `""` | Dynatrace API token with the "logs.ingest" scope, more info : https://dt-url.net/8543sda, if not empty, Dynatrace output is enabled |
+| config.dynatrace.apiurl | string | `""` | Dynatrace API url, use https://ENVIRONMENTID.live.dynatrace.com/api for Dynatrace SaaS and https://YOURDOMAIN/e/ENVIRONMENTID/api for Dynatrace Managed, more info : https://dt-url.net/ej43qge |
+| config.dynatrace.checkcert | bool | `true` | check if ssl certificate of the output is valid |
+| config.dynatrace.minimumpriority | string | `""` | minimum priority of event for using this output, order is emergency|alert|critical|error|warning|notice|informational|debug or "" |
 | config.elasticsearch.checkcert | bool | `true` | check if ssl certificate of the output is valid |
+| config.elasticsearch.createindextemplate | bool | `false` | Create an index template (default: false) |
 | config.elasticsearch.customheaders | string | `""` | a list of comma separated custom headers to add, syntax is "key:value,key:value" |
+| config.elasticsearch.flattenfields | bool | `false` | Replace . by _ to avoid mapping conflicts, force to true if createindextemplate==true (default: false) |
 | config.elasticsearch.hostport | string | `""` | Elasticsearch <http://host:port>, if not `empty`, Elasticsearch is *enabled* |
 | config.elasticsearch.index | string | `"falco"` | Elasticsearch index |
 | config.elasticsearch.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.elasticsearch.mutualtls | bool | `false` | if true, checkcert flag will be ignored (server cert will always be checked) |
+| config.elasticsearch.numberofreplicas | int | `3` | Number of replicas set by the index template (default: 3) |
+| config.elasticsearch.numberofshards | int | `3` | Number of shards set by the index template (default: 3) |
 | config.elasticsearch.password | string | `""` | use this password to authenticate to Elasticsearch if the password is not empty |
 | config.elasticsearch.suffix | string | `"daily"` |  |
 | config.elasticsearch.type | string | `"_doc"` | Elasticsearch document type |
 | config.elasticsearch.username | string | `""` | use this username to authenticate to Elasticsearch if the username is not empty |
 | config.existingSecret | string | `""` | Existing secret with configuration |
+| config.extraArgs | list | `[]` | Extra command-line arguments |
 | config.extraEnv | list | `[]` | Extra environment variables |
 | config.fission.checkcert | bool | `true` | check if ssl certificate of the output is valid |
 | config.fission.function | string | `""` | Name of Fission function, if not empty, Fission is enabled |
@@ -392,6 +411,16 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.opsgenie.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.opsgenie.mutualtls | bool | `false` | if true, checkcert flag will be ignored (server cert will always be checked) |
 | config.opsgenie.region | `us` or `eu` | `""` | region of your domain |
+| config.otlp.traces.checkcert | bool | `true` | check if ssl certificate of the output is valid |
+| config.otlp.traces.duration | int | `1000` | Artificial span duration in milliseconds (default: 1000) |
+| config.otlp.traces.endpoint | string | `""` | OTLP endpoint in the form of http://{domain or ip}:4318/v1/traces, if not empty, OTLP Traces output is enabled |
+| config.otlp.traces.extraenvvars | object | `{}` | Extra env vars (override the other settings) |
+| config.otlp.traces.headers | string | `""` | OTLP headers: list of headers to apply to all outgoing traces in the form of "some-key=some-value,other-key=other-value" (default: "") |
+| config.otlp.traces.minimumpriority | string | `""` | minimum priority of event for using this output, order is emergency|alert|critical|error|warning|notice|informational|debug or "" |
+| config.otlp.traces.protocol | string | `""` | OTLP protocol http/json, http/protobuf, grpc (default: "" which uses SDK default: http/json) |
+| config.otlp.traces.synced | bool | `false` | Set to true if you want traces to be sent synchronously (default: false) |
+| config.otlp.traces.timeout | string | `""` | OTLP timeout: timeout value in milliseconds (default: "" which uses SDK default: 10000) |
+| config.outputFieldFormat | string | `""` |  |
 | config.pagerduty.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.pagerduty.region | string | `"us"` | Pagerduty Region, can be 'us' or 'eu' |
 | config.pagerduty.routingkey | string | `""` | Pagerduty Routing Key, if not empty, Pagerduty output is *enabled* |
@@ -401,6 +430,15 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.policyreport.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.policyreport.prunebypriority | bool | `false` | if true; the events with lowest severity are pruned first, in FIFO order |
 | config.prometheus.extralabels | string | `""` | comma separated list of fields to use as labels additionally to rule, source, priority, tags and custom_fields |
+| config.quickwit.apiendpoint | string | `"/api/v1"` | API endpoint (containing the API version, overideable in case of quickwit behind a reverse proxy with URL rewriting) |
+| config.quickwit.autocreateindex | bool | `false` | Autocreate a falco index mapping if it doesn't exists |
+| config.quickwit.checkcert | bool | `true` | check if ssl certificate of the output is valid |
+| config.quickwit.customHeaders | string | `""` | a list of comma separated custom headers to add, syntax is "key:value,key:value" |
+| config.quickwit.hostport | string | `""` | http://{domain or ip}:{port}, if not empty, Quickwit output is enabled |
+| config.quickwit.index | string | `"falco"` | Index |
+| config.quickwit.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
+| config.quickwit.mutualtls | bool | `false` | if true, checkcert flag will be ignored (server cert will always be checked) |
+| config.quickwit.version | string | `"0.7"` | Version of quickwi |
 | config.rabbitmq.minimumpriority | string | `"debug"` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.rabbitmq.queue | string | `""` | Rabbitmq Queue name |
 | config.rabbitmq.url | string | `""` | Rabbitmq URL, if not empty, Rabbitmq output is *enabled* |
@@ -452,11 +490,20 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.stan.mutualtls | bool | `false` | if true, checkcert flag will be ignored (server cert will always be checked) |
 | config.statsd.forwarder | string | `""` | The address for the StatsD forwarder, in the form <http://host:port>, if not empty StatsD is *enabled* |
 | config.statsd.namespace | string | `"falcosidekick."` | A prefix for all metrics |
+| config.sumologic.checkcert | bool | `true` | check if ssl certificate of the output is valid (default: true) |
+| config.sumologic.minimumpriority | string | `""` | minimum priority of event for using this output, order is emergency|alert|critical|error|warning|notice|informational|debug or "" (default) |
+| config.sumologic.name | string | `""` | Override the default Sumologic Source Name |
+| config.sumologic.receiverURL | string | `""` | Sumologic HTTP Source URL, if not empty, Sumologic output is enabled |
+| config.sumologic.sourceCategory | string | `""` | Override the default Sumologic Source Category |
+| config.sumologic.sourceHost | string | `""` | Override the default Sumologic Source Host |
 | config.syslog.format | string | `"json"` | Syslog payload format. It can be either "json" or "cef" |
 | config.syslog.host | string | `""` | Syslog Host, if not empty, Syslog output is *enabled* |
 | config.syslog.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.syslog.port | string | `""` | Syslog endpoint port number |
 | config.syslog.protocol | string | `"tcp"` | Syslog transport protocol. It can be either "tcp" or "udp" |
+| config.talon.address | string | `""` | Talon address, if not empty, Talon output is enabled |
+| config.talon.checkcert | bool | `true` | check if ssl certificate of the output is valid |
+| config.talon.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.teams.activityimage | string | `""` | Teams section image |
 | config.teams.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.teams.outputformat | string | `"all"` | `all` (default), `text` (only text is displayed in Teams), `facts` (only facts are displayed in Teams) |
@@ -476,17 +523,18 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.timescaledb.password | string | `"postgres"` | Password to authenticate with TimescaleDB |
 | config.timescaledb.port | int | `5432` | TimescaleDB port (default: 5432) |
 | config.timescaledb.user | string | `"postgres"` | Username to authenticate with TimescaleDB |
-| config.tlsserver.existingSecret | string | `""` | existing secret with server.crt, server.key and ca.crt files for TLS Server |
-| config.tlsserver.cacrt | string | `""` | ca.crt file for client certification if mutualtls is true |
+| config.tlsclient.cacertfile | string | `"/etc/certs/client/ca.crt"` | CA certificate file for server certification on TLS connections, appended to the system CA pool if not empty |
 | config.tlsserver.cacertfile | string | `"/etc/certs/server/ca.crt"` | CA certification file path for client certification if mutualtls is true |
-| config.tlsserver.servercrt | string | `""` | server.crt file for TLS Server |
+| config.tlsserver.cacrt | string | `""` |  |
 | config.tlsserver.certfile | string | `"/etc/certs/server/server.crt"` | server certification file path for TLS Server |
 | config.tlsserver.deploy | bool | `false` | if true TLS server will be deployed instead of HTTP |
-| config.tlsserver.serverkey | string | `""` | server.key file path for TLS Server |
+| config.tlsserver.existingSecret | string | `""` | existing secret with server.crt, server.key and ca.crt files for TLS Server |
 | config.tlsserver.keyfile | string | `"/etc/certs/server/server.key"` | server key file path for TLS Server |
 | config.tlsserver.mutualtls | bool | `false` | if true mutual TLS server will be deployed instead of TLS, deploy also has to be true |
 | config.tlsserver.notlspaths | string | `"/ping"` | a comma separated list of endpoints, if not empty, and tlsserver.deploy is true, a separate http server will be deployed for the specified endpoints (/ping endpoint needs to be notls for Kubernetes to be able to perform the healthchecks) |
 | config.tlsserver.notlsport | int | `2810` | port to serve http server serving selected endpoints |
+| config.tlsserver.servercrt | string | `""` | server.crt file for TLS Server |
+| config.tlsserver.serverkey | string | `""` | server.key file for TLS Server |
 | config.wavefront.batchsize | int | `10000` | Wavefront batch size. If empty uses the default 10000. Only used when endpointtype is 'direct' |
 | config.wavefront.endpointhost | string | `""` | Wavefront endpoint address (only the host). If not empty, with endpointhost, Wavefront output is *enabled* |
 | config.wavefront.endpointmetricport | int | `2878` | Port to send metrics. Only used when endpointtype is 'proxy' |
@@ -517,17 +565,21 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.zincsearch.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
 | config.zincsearch.password | string | `""` | use this password to authenticate to ZincSearch |
 | config.zincsearch.username | string | `""` | use this username to authenticate to ZincSearch |
+| customAnnotations | object | `{}` | custom annotations to add to all resources |
+| customLabels | object | `{}` | custom labels to add to all resources |
 | extraVolumeMounts | list | `[]` | Extra volume mounts for sidekick deployment |
 | extraVolumes | list | `[]` | Extra volumes for sidekick deployment |
 | fullnameOverride | string | `""` | Override the name |
+| image | object | `{"pullPolicy":"IfNotPresent","registry":"docker.io","repository":"falcosecurity/falcosidekick","tag":"2.29.0"}` | number of old history to retain to allow rollback (If not set, default Kubernetes value is set to 10) revisionHistoryLimit: 1 |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"docker.io"` | The image registry to pull from |
 | image.repository | string | `"falcosecurity/falcosidekick"` | The image repository to pull from |
-| image.tag | string | `"2.28.0"` | The image tag to pull |
+| image.tag | string | `"2.29.0"` | The image tag to pull |
 | imagePullSecrets | list | `[]` | Secrets for the registry |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Whether to create the ingress |
 | ingress.hosts | list | `[{"host":"falcosidekick.local","paths":[{"path":"/"}]}]` | Ingress hosts |
+| ingress.ingressClassName | string | `""` | ingress class name |
 | ingress.tls | list | `[]` | Ingress TLS configuration |
 | nameOverride | string | `""` | Override name |
 | nodeSelector | object | `{}` | Sidekick nodeSelector field |
@@ -537,12 +589,37 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | podSecurityPolicy | object | `{"create":false}` | podSecurityPolicy |
 | podSecurityPolicy.create | bool | `false` | Whether to create a podSecurityPolicy |
 | priorityClassName | string | `""` | Name of the priority class to be used by the Sidekickpods, priority class needs to be created beforehand |
+| prometheusRules.alerts.additionalAlerts | object | `{}` |  |
+| prometheusRules.alerts.alert.enabled | bool | `true` | enable the high rate rule for the alert events |
+| prometheusRules.alerts.alert.rate_interval | string | `"5m"` | rate interval for the high rate rule for the alert events |
+| prometheusRules.alerts.alert.threshold | int | `0` | threshold for the high rate rule for the alert events |
+| prometheusRules.alerts.critical.enabled | bool | `true` | enable the high rate rule for the critical events |
+| prometheusRules.alerts.critical.rate_interval | string | `"5m"` | rate interval for the high rate rule for the critical events |
+| prometheusRules.alerts.critical.threshold | int | `0` | threshold for the high rate rule for the critical events |
+| prometheusRules.alerts.emergency.enabled | bool | `true` | enable the high rate rule for the emergency events |
+| prometheusRules.alerts.emergency.rate_interval | string | `"5m"` | rate interval for the high rate rule for the emergency events |
+| prometheusRules.alerts.emergency.threshold | int | `0` | threshold for the high rate rule for the emergency events |
+| prometheusRules.alerts.error.enabled | bool | `true` | enable the high rate rule for the error events |
+| prometheusRules.alerts.error.rate_interval | string | `"5m"` | rate interval for the high rate rule for the error events |
+| prometheusRules.alerts.error.threshold | int | `0` | threshold for the high rate rule for the error events |
+| prometheusRules.alerts.output.enabled | bool | `true` | enable the high rate rule for the errors with the outputs |
+| prometheusRules.alerts.output.rate_interval | string | `"5m"` | rate interval for the high rate rule for the errors with the outputs |
+| prometheusRules.alerts.output.threshold | int | `0` | threshold for the high rate rule for the errors with the outputs |
+| prometheusRules.alerts.warning.enabled | bool | `true` | enable the high rate rule for the warning events |
+| prometheusRules.alerts.warning.rate_interval | string | `"5m"` | rate interval for the high rate rule for the warning events |
+| prometheusRules.alerts.warning.threshold | int | `0` | threshold for the high rate rule for the warning events |
+| prometheusRules.enabled | bool | `false` | enable the creation of PrometheusRules for alerting |
 | replicaCount | int | `2` | number of running pods |
 | resources | object | `{}` | The resources for falcosdekick pods |
 | securityContext | object | `{}` | Sidekick container securityContext |
 | service.annotations | object | `{}` | Service annotations |
 | service.port | int | `2801` | Service port |
 | service.type | string | `"ClusterIP"` | Service type |
+| serviceMonitor.additionalLabels | object | `{}` | specify Additional labels to be added on the Service Monitor. |
+| serviceMonitor.additionalProperties | object | `{}` | allows setting additional properties on the endpoint such as relabelings, metricRelabelings etc. |
+| serviceMonitor.enabled | bool | `false` | enable the deployment of a Service Monitor for the Prometheus Operator. |
+| serviceMonitor.interval | string | `""` | specify a user defined interval. When not specified Prometheus default interval is used. |
+| serviceMonitor.scrapeTimeout | string | `""` | specify a user defined scrape timeout. When not specified Prometheus default scrape timeout is used. |
 | testConnection.affinity | object | `{}` | Affinity for the test connection pod |
 | testConnection.nodeSelector | object | `{}` | test connection nodeSelector field |
 | testConnection.tolerations | list | `[]` | Tolerations for pod assignment |
@@ -562,7 +639,14 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | webui.ingress.annotations | object | `{}` | Web UI ingress annotations |
 | webui.ingress.enabled | bool | `false` | Whether to create the Web UI ingress |
 | webui.ingress.hosts | list | `[{"host":"falcosidekick-ui.local","paths":[{"path":"/"}]}]` | Web UI ingress hosts configuration |
+| webui.ingress.ingressClassName | string | `""` | ingress class name |
 | webui.ingress.tls | list | `[]` | Web UI ingress TLS configuration |
+| webui.initContainer | object | `{"image":{"registry":"docker.io","repository":"busybox","tag":1.31},"resources":{},"securityContext":{}}` | Web UI wait-redis initContainer |
+| webui.initContainer.image.registry | string | `"docker.io"` | wait-redis initContainer image registry to pull from |
+| webui.initContainer.image.repository | string | `"busybox"` | wait-redis initContainer image repository to pull from |
+| webui.initContainer.image.tag | float | `1.31` | wait-redis initContainer image tag to pull |
+| webui.initContainer.resources | object | `{}` | wait-redis initContainer resources |
+| webui.initContainer.securityContext | object | `{}` | wait-redis initContainer securityContext |
 | webui.loglevel | string | `"info"` | Log level ("debug", "info", "warning", "error") |
 | webui.nodeSelector | object | `{}` | Web UI nodeSelector field |
 | webui.podAnnotations | object | `{}` | additions annotations on the pods web UI |
@@ -570,12 +654,14 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | webui.podSecurityContext | object | `{"fsGroup":1234,"runAsUser":1234}` | Web UI pod securityContext |
 | webui.priorityClassName | string | `""` | Name of the priority class to be used by the Web UI pods, priority class needs to be created beforehand |
 | webui.redis.affinity | object | `{}` | Affinity for the Web UI Redis pods |
+| webui.redis.customAnnotations | object | `{}` | custom annotations to add to all resources |
+| webui.redis.customLabels | object | `{}` | custom labels to add to all resources |
 | webui.redis.enabled | bool | `true` | Is mutually exclusive with webui.externalRedis.enabled |
 | webui.redis.existingSecret | string | `""` | Existing secret with configuration |
 | webui.redis.image.pullPolicy | string | `"IfNotPresent"` | The web UI image pull policy |
 | webui.redis.image.registry | string | `"docker.io"` | The web UI Redis image registry to pull from |
 | webui.redis.image.repository | string | `"redis/redis-stack"` | The web UI Redis image repository to pull from |
-| webui.redis.image.tag | string | `"6.2.6-v3"` | The web UI Redis image tag to pull from |
+| webui.redis.image.tag | string | `"7.2.0-v11"` | The web UI Redis image tag to pull from |
 | webui.redis.nodeSelector | object | `{}` | Web UI Redis nodeSelector field |
 | webui.redis.password | string | `""` | Set a password for Redis |
 | webui.redis.podAnnotations | object | `{}` | additions annotations on the pods |
@@ -611,3 +697,11 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 
 A `prometheus` endpoint can be scrapped at `/metrics`.
 
+## Access Falcosidekick UI through an Ingress  and a subpath
+
+You may want to access the `WebUI (Falcosidekick UI)`](https://github.com/falcosecurity/falcosidekick/blob/master/docs/outputs/falcosidekick-ui.md) dashboard not from `/` but from `/subpath` and use an Ingress, here's an example of annotations to add to the Ingress for `nginx-ingress controller`:
+
+```yaml
+nginx.ingress.kubernetes.io/rewrite-target: /$2
+nginx.ingress.kubernetes.io/use-regex: "true"
+```
