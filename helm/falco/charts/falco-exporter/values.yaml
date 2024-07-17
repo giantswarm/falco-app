@@ -71,7 +71,8 @@ podSecurityPolicy:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
 daemonset:
@@ -89,14 +90,15 @@ daemonset:
 securityContext:
   capabilities:
     drop:
-      - ALL
+    - ALL
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   privileged: false
   seccompProfile:
     type: RuntimeDefault
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
