@@ -11,5 +11,6 @@ directories:
       - charts/falco/**
       - charts/falcosidekick/**
       - charts/falco-exporter/**
+      - charts/k8s-metacollector/**
     newRootPath: charts
     legalPaths: []
