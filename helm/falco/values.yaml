@@ -18,7 +18,7 @@ falco:
     repository: giantswarm/falco-no-driver
   priorityClassName: giantswarm-critical
   driver:
-    kind: ebpf
+    kind: modern_ebpf
     loader:
       initContainer:
         image:
