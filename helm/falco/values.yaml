@@ -17,6 +17,9 @@ falco:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco-no-driver
   priorityClassName: giantswarm-critical
+  collectors:
+    kubernetes:
+      enabled: true
   driver:
     kind: modern_ebpf
     loader:
