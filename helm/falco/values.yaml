@@ -76,3 +76,8 @@ falcosidekick:
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
+
+k8s-metacollector:
+  image:
+    registry: gsoci.azurecr.io
+    repository: giantswarm/k8s-metacollector
