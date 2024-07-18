@@ -141,8 +141,8 @@ spec:
 apiVersion: kyverno.io/v2beta1
 kind: PolicyException
 metadata:
-  name: {{ include "falco-helpers.fullname" . }}-falcok8smetacollector-exceptions
-  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  name: {{ include "k8s-metacollector.fullname" . }}-exceptions
+  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "k8s-metacollector.namespace" .) }}
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
@@ -169,7 +169,7 @@ spec:
             - ReplicaSet
             - Pod
           namespaces:
-            - {{ include "falco-helpers.namespace" . }}
+            - {{ include "k8s-metacollector.namespace" . }}
           names:
-            - {{ include "falco-helpers.fullname" . }}-k8s-metacollector*
+            - {{ include "k8s-metacollector.fullname" . }}
 {{- end -}}
