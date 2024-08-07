@@ -169,7 +169,7 @@ spec:
             - ReplicaSet
             - Pod
           namespaces:
-            - {{ include "falco-helpers.fullname" . }}
+            - {{ include "falco-helpers.namespace" . }}
           names:
             - {{ include "falco-helpers.fullname" . }}-k8s-metacollector*
 {{- end -}}
