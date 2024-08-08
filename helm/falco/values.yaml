@@ -56,6 +56,13 @@ falco:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
   tty: true
+  k8s-metacollector:
+    fullnameOverride: ""
+    service:
+      ports:
+        broker-grpc:
+          port: 45000
+
 
 falco-exporter:
   image:
