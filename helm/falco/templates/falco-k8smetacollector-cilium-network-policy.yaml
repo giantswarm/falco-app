@@ -1,0 +1,28 @@
+{{- if .Values.ciliumNetworkPolicy.enabled }}
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "falco-helpers.fullname" . }}-k8smetacollector
+  namespace: {{ include "falco-helpers.namespace" . }}
+  labels:
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: falco
+      app.kubernetes.io/name: k8s-metacollector
+  egress:
+    - toEntities:
+        - kube-apiserver
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: falco
+            app.kubernetes.io/name: falco-k8smetacollector
+  ingress:
+    - fromEntities:
+        - kube-apiserver
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: falco
+            app.kubernetes.io/name: falco
+{{- end }}
