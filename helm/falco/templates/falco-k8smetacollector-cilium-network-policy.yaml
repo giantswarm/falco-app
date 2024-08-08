@@ -19,6 +19,8 @@ spec:
             app.kubernetes.io/instance: falco
             app.kubernetes.io/name: falco-k8smetacollector
   ingress:
+    - fromEntities:
+        - kube-apiserver
     - fromEndpoints:
         - matchLabels:
             app.kubernetes.io/instance: falco
