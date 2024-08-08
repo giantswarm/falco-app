@@ -22,5 +22,5 @@ spec:
     - fromEndpoints:
         - matchLabels:
             app.kubernetes.io/instance: falco
-            app.kubernetes.io/name: k8s-metacollector
+            app.kubernetes.io/name: falco
 {{- end }}
