@@ -17,6 +17,9 @@ falco:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco-no-driver
   priorityClassName: giantswarm-critical
+  collectors:
+    kubernetes:
+      enabled: true
   driver:
     kind: modern_ebpf
     loader:
@@ -53,6 +56,13 @@ falco:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
   tty: true
+  k8s-metacollector:
+    fullnameOverride: ""
+    service:
+      ports:
+        broker-grpc:
+          port: 45000
+
 
 falco-exporter:
   image:
@@ -76,3 +86,8 @@ falcosidekick:
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
+
+k8s-metacollector:
+  image:
+    registry: gsoci.azurecr.io
+    repository: giantswarm/k8s-metacollector
