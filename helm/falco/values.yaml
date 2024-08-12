@@ -43,6 +43,9 @@ falco:
       key: node-role.kubernetes.io/control-plane
   # ebpf:
   #   enabled: true
+  controller:
+    labels:
+      application.giantswarm.io/team: "shield"
   falco:
     grpc:
       enabled: true

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add custom rule to detect access to root CA key file in control plane nodes
 - Added the falco-k8s-metacollector.
+- Added team label to the daemonset.
 
 ### Changed
 
