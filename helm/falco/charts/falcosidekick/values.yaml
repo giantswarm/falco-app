@@ -1145,7 +1145,7 @@ webui:
       # -- wait-redis initContainer image repository to pull from
       repository: busybox
       # -- wait-redis initContainer image tag to pull
-      tag: 1.31
+      tag: 1.37
     # -- wait-redis initContainer securityContext
     securityContext: {}
     # -- wait-redis initContainer resources
