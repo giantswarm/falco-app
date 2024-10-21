@@ -13,6 +13,7 @@ kyvernoPolicyExceptions:
   namespace: giantswarm
 
 falco:
+  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco-no-driver
@@ -43,6 +44,7 @@ falco:
       repository: giantswarm/falcoctl
 
 falco-exporter:
+  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco-exporter
@@ -61,6 +63,7 @@ falco-exporter:
       key: node-role.kubernetes.io/control-plane
 
 falcosidekick:
+  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
