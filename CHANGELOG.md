@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add feature gates for enabling/disabling individual Falco components.
 
+## [0.9.0] - 2024-08-12
+
+### Added
+
+- Add custom rule to detect access to root CA key file in control plane nodes
+- Added the falco-k8s-metacollector.
+- Added team label to the daemonset.
+
+### Changed
+
+- Remove API check on PolicyException.
+- Updated `Falco` chart version from `3.8.1` to `4.6.1`.
+- Updated `Falco-exporter` chart version from `0.9.9` to `0.11.0`
+- Updated `Falcosidekick` chart version from `0.7.5` to `0.8.2`
+- Updated `Falco` to upstream version `0.38.1`.
+- Edited Kyverno Policy Exceptions to allow falco-k8s-metacollector.
+- Edited the Falco Cilium Network Policy to allow traffing from the falco-k8s-metacollector.
+
 ## [0.8.1] - 2024-04-30
 
 ### Changed
@@ -223,7 +241,8 @@ For more information, please check the falco [rules page](https://github.com/fal
 - Push `falco-app` to provider collections (except KVM) when tagged.
 - Use Giant Swarm-managed images.
 
-[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.8.1...HEAD
+[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/giantswarm/falco-app/compare/v0.8.1...v0.9.0
 [0.8.1]: https://github.com/giantswarm/falco-app/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/giantswarm/falco-app/compare/v0.7.2...v0.8.0
 [0.7.2]: https://github.com/giantswarm/falco-app/compare/v0.7.1...v0.7.2

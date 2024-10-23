@@ -13,6 +13,40 @@
         "falco": {
             "type": "object",
             "properties": {
+                "collectors": {
+                    "type": "object",
+                    "properties": {
+                        "kubernetes": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                },
+                "controller": {
+                    "type": "object",
+                    "properties": {
+                        "labels": {
+                            "type": "object",
+                            "properties": {
+                                "application.giantswarm.io/team": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "customRules": {
+                    "type": "object",
+                    "properties": {
+                        "gs-root-ca-key-access.yaml": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "driver": {
                     "type": "object",
                     "properties": {
@@ -90,6 +124,32 @@
                         }
                     }
                 },
+                "k8s-metacollector": {
+                    "type": "object",
+                    "properties": {
+                        "fullnameOverride": {
+                            "type": "string"
+                        },
+                        "service": {
+                            "type": "object",
+                            "properties": {
+                                "ports": {
+                                    "type": "object",
+                                    "properties": {
+                                        "broker-grpc": {
+                                            "type": "object",
+                                            "properties": {
+                                                "port": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "priorityClassName": {
                     "type": "string"
                 },
@@ -114,6 +174,9 @@
                             }
                         }
                     }
+                },
+                "tty": {
+                    "type": "boolean"
                 }
             }
         },
@@ -214,6 +277,22 @@
                     "properties": {
                         "enforced": {
                             "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
+        "k8s-metacollector": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string"
+                        },
+                        "repository": {
+                            "type": "string"
                         }
                     }
                 }

@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.35.1
+appVersion: 0.38.1
 annotations:
   application.giantswarm.io/team: "shield"
   config.giantswarm.io/version: 1.x.x
@@ -7,13 +7,16 @@ annotations:
 dependencies:
   - name: falco
     condition: falco.enabled
-    version: 3.8.1
+    version: 4.6.1
   - name: falco-exporter
     condition: falco-exporter.enabled
-    version: 0.9.7
+    version: 0.11.0
   - name: falcosidekick
     condition: falcosidekick.enabled
-    version: 0.7.5
+    version: 0.8.2
+  - name: k8s-metacollector
+    condition: k8s-metacollector.enabled
+    version: 0.1.8
 description: A Helm chart for falco
 engine: gotpl
 home: https://github.com/giantswarm/falco-app
@@ -24,4 +27,4 @@ maintainers:
 name: falco
 sources:
   - https://github.com/giantswarm/falco-app
-version: 0.8.1
+version: 0.9.0
