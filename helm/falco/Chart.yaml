@@ -6,12 +6,16 @@ annotations:
   ui.giantswarm.io/logo: https://s.giantswarm.io/app-icons/falco/2/logo_dark.svg
 dependencies:
   - name: falco
+    condition: falco.enabled
     version: 4.6.1
   - name: falco-exporter
+    condition: falco-exporter.enabled
     version: 0.11.0
   - name: falcosidekick
+    condition: falcosidekick.enabled
     version: 0.8.2
   - name: k8s-metacollector
+    condition: k8s-metacollector.enabled
     version: 0.1.8
 description: A Helm chart for falco
 engine: gotpl

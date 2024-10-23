@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Add feature gates for enabling/disabling individual Falco components.
+
 ## [0.9.0] - 2024-08-12
 
 ### Added
