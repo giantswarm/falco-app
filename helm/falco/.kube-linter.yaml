@@ -23,3 +23,5 @@ checks:
   - "minimum-three-replicas"
   - "no-rolling-update-strategy"
   - "latest-tag"
+  - "liveness-port"
+  - "readiness-port"
