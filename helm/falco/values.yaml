@@ -94,6 +94,7 @@ falcosidekick:
     repository: giantswarm/falcosidekick
 
 k8s-metacollector:
+  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/k8s-metacollector
