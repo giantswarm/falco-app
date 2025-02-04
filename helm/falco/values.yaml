@@ -17,6 +17,7 @@ falco:
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco-no-driver
+    tag: 0.40.0
   priorityClassName: giantswarm-critical
   collectors:
     kubernetes:
