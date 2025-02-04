@@ -16,7 +16,7 @@ falco:
   enabled: true
   image:
     registry: gsoci.azurecr.io
-    repository: giantswarm/falco-no-driver
+    repository: giantswarm/falco
     tag: 0.40.0
   priorityClassName: giantswarm-critical
   collectors:
