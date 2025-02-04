@@ -3,6 +3,162 @@
 This file documents all notable changes to Falco Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v4.17.0
+
+* update(falco): bump k8saudit version to 0.11
+
+## v4.16.2
+
+* fix(falco): set dnsPolicy to ClusterFirstWithHostNet when gvisor driver is enabled to prevent DNS lookup failures for cluster-internal services
+
+## v4.16.1
+
+* fix(falco/serviceMonitor): set service label selector
+* new(falco/tests): add unit tests for serviceMonitor label selector
+
+## v4.16.0
+
+* bump falcosidekick dependency to v0.9.* to match with future versions
+
+## v4.15.1
+
+* fix: change the url for the concurrent queue classes docs
+
+## v4.15.0
+
+* update(falco): bump falco version to 0.39.2 and falcoctl to 0.10.1
+
+## v4.14.2
+
+* fix(falco/readme): use `rules_files` instead of deprecated `rules_file` in README config snippet
+
+## v4.14.1
+
+* fix(falco/dashboard): make pod variable independent of triggered rules. CPU and memory are now visible for each 
+  pod, even when no rules have been triggered for that falco instance.
+
+## v4.14.0
+
+* Bump k8smeta plugin to 0.2.1, see: https://github.com/falcosecurity/plugins/releases/tag/plugins%2Fk8smeta%2Fv0.2.1
+
+## v4.13.0
+
+* Expose new config entries for k8smeta plugin:`verbosity` and `hostProc`.
+
+## v4.12.0
+
+* Set apparmor to `unconfined` (disabled) when `leastPrivileged: true` and (`kind: modern_ebpf` or `kind: ebpf`)
+
+## v4.11.2
+
+* only prints env key if there are env values to be passed on `falcoctl.initContainer` and `falcoctl.sidecar`
+
+## v4.11.1
+
+* add details for the scap drops buffer charts with the dir  and drops labels
+
+## v4.11.0
+
+* new(falco): add grafana dashboard for falco
+
+## v4.10.0
+
+* Bump Falco to v0.39.1
+
+## v4.9.1
+
+* feat(falco): add labels and annotations to the metrics service
+
+## v4.9.0
+
+* Bump Falco to v0.39.0
+* update(falco): add new configuration entries for Falco
+  This commit adds new config keys introduces in Falco 0.39.0.
+  Furthermore, updates the unit tests for the latest changes
+  in the values.yaml.
+* cleanup(falco): remove deprecated falco configuration
+  This commit removes the "output" config key that has
+  been deprecated in falco.
+* update(falco): mount proc filesystem for plugins
+  The following PR in libs https://github.com/falcosecurity/libs/pull/1969
+  introduces a new platform for plugins that requires access to the
+  proc filesystem.
+* fix(falco): update broken link pointing to Falco docs
+  After the changes made by the following PR to the Falco docs https://github.com/falcosecurity/falco-website/pull/1362
+  this commit updates a broken link.
+
+## v4.8.3
+
+* The init container, when driver.kind=auto, automatically generates
+  a new Falco configuration file and selects the appropriate engine
+  kind based on the environment where Falco is deployed.
+
+  With this commit, along with falcoctl PR #630, the Helm charts now 
+  support different driver kinds for Falco instances based on the 
+  specific node they are running on. When driver.kind=auto is set,
+  each Falco instance dynamically selects the most suitable 
+  driver (e.g., ebpf, kmod, modern_ebpf) for the node.
+  +-------------------------------------------------------+
+  | Kubernetes Cluster                                    |
+  |                                                       |
+  |  +-------------------+  +-------------------+        |
+  |  | Node 1             |  | Node 2             |        |
+  |  |                   |  |                   |        |
+  |  | Falco (ebpf) |  | Falco (kmod)       |        |
+  |  +-------------------+  +-------------------+        |
+  |                                                       |
+  |                 +-------------------+                |
+  |                 | Node 3             |                |
+  |                 |                   |                |
+  |                 | Falco (modern_ebpf)|                |
+  |                 +-------------------+                |
+  +-------------------------------------------------------+
+
+## v4.8.2
+
+* fix(falco): correctly mount host filesystems when driver.kind is auto
+
+  When falco runs with kmod/module driver it needs special filesystems
+  to be mounted from the host such /dev and /sys/module/falco.
+  This commit ensures that we mount them in the falco container.
+
+  Note that, the /sys/module/falco is now mounted as /sys/module since
+  we do not know which kind of driver will be used. The falco folder 
+  exists under /sys/module only when the kernel module is loaded, 
+  hence it's not possible to use the /sys/module/falco hostpath when driver.kind 
+  is set to auto.
+
+## v4.8.1
+
+* fix(falcosidekick): add support for custom service type for webui redis
+
+## v4.8.0
+
+* Upgrade Falco version to 0.38.2
+
+## v4.7.2
+
+* use rules_files key in the preset values files
+
+## v4.7.1
+
+* fix(falco/config): use rules_files instead of deprecated key rules_file
+
+## v4.7.0
+
+* bump k8smeta plugin to version 0.2.0. The new version, resolves a bug that prevented the plugin
+  from populating the k8smeta fields. For more info see:
+  * https://github.com/falcosecurity/plugins/issues/514
+  * https://github.com/falcosecurity/plugins/pull/517
+
+## v4.6.3
+
+* fix(falco): mount client-certs-volume only if certs.existingClientSecret is defined
+
+## v4.6.2
+
+* bump falcosidekick dependency to v0.8.* to match with future versions
+
 ## v4.6.1
 
 * bump falcosidekick dependency to v0.8.2 (fixes bug when using externalRedis in UI)

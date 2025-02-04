@@ -5,25 +5,69 @@ numbering uses [semantic versioning](http://semver.org).
 
 Before release 0.1.20, the helm chart can be found in `falcosidekick` [repository](https://github.com/falcosecurity/falcosidekick/tree/master/deploy/helm/falcosidekick).
 
+## 0.9.3
+
+- Add a Grafana dashboard for the Prometheus metrics
+
+## 0.9.2
+
+- Add new dashboard with Loki
+
+## 0.9.1
+
+- Ugrade to Falcosidekick 2.30.0
+
+## 0.8.9
+
+- Fix customConfig mount path for webui redis
+
+## 0.8.8
+
+- Fix customConfig template for webui redis
+
+## 0.8.7
+
+- Fix securityContext for webui initContainer
+
+## 0.8.6
+
+- Use of `redis-cli` by the initContainer of Falcosidekick-UI to wait til the redis is up and running
+- Add the possibility to override the default redis server settings
+- Allow to set up a password to use with an external redis
+- Fix wrong value used for `OTLP_TRACES_PROTOCOL` env var
+- Used names for the priorities in the prometheus rules
+
+## 0.8.5
+
+- Fix an issue with the by default missing custom CA cert
+
+## 0.8.4
+
+- Fix falcosidekick chart ignoring custom service type for webui redis
+
+## 0.8.3
+
+- Add a condition to create the secrets for the redis only if the webui is deployed
+
 ## 0.8.2
 
 - Fix redis-availability check of the UI init-container in case externalRedis is enabled
 
 ## 0.8.1
 
-- allow to set resources, securityContext and image overwrite for wait-redis initContainer
+- Allow to set resources, securityContext and image overwrite for wait-redis initContainer
 
 ## 0.8.0
 
-- ugrade to Falcosidekick 2.29.0
-- allow to set custom labels and annotations to set to all resources
-- allow to use an existing secrets and values for the env vars at the same time
-- fix missing ingressClassName settings in the values.yaml
-- add of an initContainer to check if the redis for falcosidekick-ui is up
+- Ugrade to Falcosidekick 2.29.0
+- Allow to set custom labels and annotations to set to all resources
+- Allow to use an existing secrets and values for the env vars at the same time
+- Fix missing ingressClassName settings in the values.yaml
+- Add of an initContainer to check if the redis for falcosidekick-ui is up
 
 ## 0.7.22
 
-- upgrade redis-stack image to 7.2.0-v11
+- Upgrade redis-stack image to 7.2.0-v11
 
 ## 0.7.21
 

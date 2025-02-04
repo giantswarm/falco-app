@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bump falco-sidekick dependency version to include redis UI check...
-      sha: e8a0387945bee44cccf2a4e0fed927c35969fa1a
+      commitTitle: add a grafana dashboard for the falco talon metrics...
+      sha: 7dfa1e09291b01b2faf153d5f5172b9b2acd9e7d
       tags:
-      - falco-4.6.1
+      - falco-talon-0.2.2
     path: .
   path: helm/falco/charts
 kind: LockConfig
