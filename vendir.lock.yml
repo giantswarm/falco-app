@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bump falco-sidekick dependency version to include redis UI check...
-      sha: e8a0387945bee44cccf2a4e0fed927c35969fa1a
+      commitTitle: 'fix(falco): bump version to 0.40.0...'
+      sha: 986a7ad988ceefceaa813445ea76665cd04ceaab
       tags:
-      - falco-4.6.1
+      - falco-4.19.0
     path: .
   path: helm/falco/charts
 kind: LockConfig
