@@ -1,12 +1,15 @@
 dependencies:
 - name: falco
   repository: ""
-  version: 4.6.1
+  version: 4.19.0
 - name: falco-exporter
   repository: ""
-  version: 0.11.0
+  version: 0.12.1
 - name: falcosidekick
   repository: ""
-  version: 0.8.2
-digest: sha256:c3839c7fff0900ee484adea35efb0290893c46cc835ce75a946d26d352ead7f4
-generated: "2024-07-17T09:53:49.849810879Z"
+  version: 0.9.5
+- name: k8s-metacollector
+  repository: ""
+  version: 0.1.10
+digest: sha256:8842fd8f498047454bf2077ca28a2e49beeba96736d4dcdd6b875f54e3a07958
+generated: "2025-02-04T20:48:26.183961037Z"
