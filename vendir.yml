@@ -6,7 +6,7 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/falco-charts-upstream
-      ref: falco-4.19.0
+      ref: falco-talon-0.2.2
     includePaths:
       - charts/falco/**
       - charts/falcosidekick/**
