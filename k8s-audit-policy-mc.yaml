@@ -1,0 +1,49 @@
+apiVersion: audit.k8s.io/v1
+kind: Policy
+# Don't log authentication/authorization checks
+omitStages:
+  - RequestReceived
+rules:
+  # Don't log read operations on common resources
+  - level: None
+    verbs: ["get", "list", "watch"]
+    resources:
+    - group: ""
+      resources: ["pods", "services", "endpoints", "configmaps"]
+  
+  # Log App CRs at RequestResponse level
+  - level: RequestResponse
+    verbs: ["create", "update", "patch", "delete"]
+    resources:
+    - group: "application.giantswarm.io"
+      resources: ["apps"]
+  
+  # Log Cluster API operations at RequestResponse level
+  - level: RequestResponse
+    resources:
+    - group: "cluster.x-k8s.io"
+    - group: "infrastructure.giantswarm.io"
+    - group: "controlplane.cluster.x-k8s.io"
+  
+  # Log RBAC changes at RequestResponse level
+  - level: RequestResponse
+    verbs: ["create", "update", "patch", "delete"]
+    resources:
+    - group: "rbac.authorization.k8s.io"
+  
+  # Log secret access in org namespaces
+  - level: Metadata
+    verbs: ["get", "list"]
+    resources:
+    - group: ""
+      resources: ["secrets"]
+    namespaceGroups: ["org-*"]
+  
+  # Log organization changes
+  - level: RequestResponse
+    resources:
+    - group: "security.giantswarm.io"
+      resources: ["organizations"]
+  
+  # Default: log at Metadata level
+  - level: Metadata

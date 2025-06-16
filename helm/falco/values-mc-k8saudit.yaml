@@ -1,0 +1,107 @@
+# MC-specific configuration for k8s audit logs
+# This file overrides values from charts/falco/values-k8saudit.yaml
+
+# Use Giant Swarm registry to avoid Docker Hub rate limits
+falco:
+  image:
+    registry: gsoci.azurecr.io
+    repository: giantswarm/falco
+    tag: 0.40.0
+  
+  # Set priority class for critical pods
+  priorityClassName: giantswarm-critical
+  
+  # MC-specific audit rules
+  customRules:
+    mc-audit-rules.yaml: |-
+      # Define Giant Swarm service accounts
+      - list: giantswarm_operators
+        items:
+          - app-operator@giantswarm.io
+          - chart-operator@giantswarm.io
+          - cluster-operator@giantswarm.io
+          - release-operator@giantswarm.io
+          - organization-operator@giantswarm.io
+      
+      - list: giantswarm_namespaces
+        items:
+          - giantswarm
+          - flux-giantswarm
+          - flux-system
+          - "org-*"
+      
+      # Rule 1: Detect unauthorized App CR creation/modification
+      - rule: MC Unauthorized App Management
+        desc: Detect unauthorized App CR operations in management cluster
+        condition: >
+          ka.verb in (create, update, delete) and
+          ka.target.resource = "apps" and
+          ka.target.group = "application.giantswarm.io" and
+          not ka.user.name in (giantswarm_operators)
+        output: "Unauthorized App operation (user=%ka.user.name verb=%ka.verb app=%ka.target.name namespace=%ka.target.namespace)"
+        priority: WARNING
+        source: k8s_audit
+        tags: [management_cluster, app_platform]
+      
+      # Rule 2: Detect Cluster API tampering
+      - rule: MC Cluster Resource Tampering
+        desc: Detect unauthorized modifications to cluster resources
+        condition: >
+          ka.verb in (update, patch, delete) and
+          ka.target.group in ("cluster.x-k8s.io", "infrastructure.giantswarm.io") and
+          not ka.user.name in (cluster-operator@giantswarm.io)
+        output: "Cluster resource modified (user=%ka.user.name verb=%ka.verb resource=%ka.target.resource name=%ka.target.name)"
+        priority: CRITICAL
+        source: k8s_audit
+        tags: [management_cluster, cluster_api]
+      
+      # Rule 3: Detect privilege escalation attempts
+      - rule: MC RBAC Privilege Escalation
+        desc: Detect RBAC changes that grant excessive permissions
+        condition: >
+          ka.verb in (create, update) and
+          ka.target.resource in (clusterroles, clusterrolebindings) and
+          ka.requestObject.rules[?].verbs[?] contains "*" and
+          not ka.user.name in (giantswarm_operators)
+        output: "Potential RBAC escalation (user=%ka.user.name verb=%ka.verb role=%ka.target.name)"
+        priority: CRITICAL
+        source: k8s_audit
+        tags: [management_cluster, rbac, privilege_escalation]
+      
+      # Rule 4: Detect kubeconfig secret access
+      - rule: MC Kubeconfig Secret Access
+        desc: Detect unauthorized access to workload cluster kubeconfigs
+        condition: >
+          ka.verb in (get, list) and
+          ka.target.resource = "secrets" and
+          (ka.target.name contains "kubeconfig" or ka.target.name endswith "-certs") and
+          ka.target.namespace startswith "org-" and
+          not ka.user.name in (giantswarm_operators)
+        output: "Kubeconfig secret accessed (user=%ka.user.name verb=%ka.verb secret=%ka.target.name namespace=%ka.target.namespace)"
+        priority: WARNING
+        source: k8s_audit
+        tags: [management_cluster, secrets]
+
+# Use Giant Swarm falcoctl image
+falcoctl:
+  image:
+    registry: gsoci.azurecr.io
+    repository: giantswarm/falcoctl
+
+# Internal webhook service (not exposed externally)
+services:
+  - name: k8saudit-webhook
+    type: ClusterIP
+    ports:
+      - port: 9765
+        protocol: TCP
+
+# Resource limits for single-replica deployment
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
