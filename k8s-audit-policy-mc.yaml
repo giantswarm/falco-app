@@ -133,9 +133,7 @@ rules:
       - group: "storage.k8s.io"
     omitStages:
       - "RequestReceived"
-
   # NEW GIANT SWARM MC-SPECIFIC RULES
-  
   # Exclude Giant Swarm operators routine read operations to reduce noise
   - level: None
     users: 
@@ -144,8 +142,7 @@ rules:
       - "system:serviceaccount:giantswarm:release-operator"
       - "system:serviceaccount:giantswarm:organization-operator"
       - "system:serviceaccount:giantswarm:chart-operator"
-    verbs: ["get", "list", "watch"]
-    
+    verbs: ["get", "list", "watch"]  
   # Giant Swarm App Platform - Critical Operations
   - level: RequestResponse
     verbs: ["create", "update", "patch", "delete"]
@@ -154,8 +151,7 @@ rules:
         resources: ["apps", "appcatalogs", "catalogs"]
     namespaces: ["giantswarm", "org-*", "flux-giantswarm", "flux-system"]
     omitStages:
-      - "RequestReceived"
-      
+      - "RequestReceived"    
   # Cluster API Resources - Track cluster lifecycle
   - level: RequestResponse
     verbs: ["create", "update", "patch", "delete"]
@@ -165,8 +161,7 @@ rules:
       - group: "infrastructure.giantswarm.io"
         resources: ["*"]
     omitStages:
-      - "RequestReceived"
-      
+      - "RequestReceived"     
   # Organization Management
   - level: RequestResponse
     verbs: ["create", "update", "patch", "delete"]
@@ -174,8 +169,7 @@ rules:
       - group: "security.giantswarm.io"
         resources: ["organizations"]
     omitStages:
-      - "RequestReceived"
-      
+      - "RequestReceived"    
   # Track RBAC changes in Giant Swarm namespaces
   - level: RequestResponse
     verbs: ["create", "update", "patch", "delete"]
@@ -184,8 +178,7 @@ rules:
         resources: ["roles", "rolebindings"]
     namespaces: ["giantswarm", "org-*", "flux-giantswarm", "flux-system"]
     omitStages:
-      - "RequestReceived"
-      
+      - "RequestReceived"   
   # Track cluster-wide RBAC changes
   - level: RequestResponse
     verbs: ["create", "update", "patch", "delete"]
@@ -194,8 +187,6 @@ rules:
         resources: ["clusterroles", "clusterrolebindings"]
     omitStages:
       - "RequestReceived"
-
-  # ===== KEEP EXISTING DEFAULT RULES AT THE END =====
   # Default level for known APIs
   - level: RequestResponse
     resources:
