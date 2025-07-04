@@ -100,3 +100,7 @@ k8s-metacollector:
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/k8s-metacollector
+
+# Enable log collection for observability
+observability:
+  enabled: true
