@@ -102,5 +102,6 @@ k8s-metacollector:
     repository: giantswarm/k8s-metacollector
 
 # Enable log collection for observability
-observability:
-  enabled: true
+monitoring:
+  podLog:
+    enabled: true

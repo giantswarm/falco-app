@@ -1,26 +1,20 @@
-{{- if .Values.observability.enabled }}
+{{- if .Values.monitoring.podLog.enabled }}
 ---
-# PodLogs for falco-exporter (all logs - non-sensitive metrics only)
+# PodLogs for falco-exporter
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: falco-exporter-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    giantswarm.io/managed-by: security-team
-    giantswarm.io/service-type: managed
     application.giantswarm.io/team: shield
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-    security.giantswarm.io/component: falco-exporter
-    security.giantswarm.io/log-level: all
-    security.giantswarm.io/data-sensitivity: safe
+    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
     giantswarm.io/notes: "Log collection for Falco metrics exporter"
-    security.giantswarm.io/implemented-by: "team-shield"
-    security.giantswarm.io/implemented-date: "2025-07-04"
 spec:
   selector:
     matchLabels:
@@ -37,27 +31,21 @@ spec:
     targetLabel: component
 
 ---
-# PodLogs for falcosidekick (all logs - non-sensitive event forwarding only)
+# PodLogs for falcosidekick
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: falcosidekick-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    giantswarm.io/managed-by: security-team
-    giantswarm.io/service-type: managed
     application.giantswarm.io/team: shield
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-    security.giantswarm.io/component: falcosidekick
-    security.giantswarm.io/log-level: all
-    security.giantswarm.io/data-sensitivity: safe
+    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
     giantswarm.io/notes: "Log collection for Falco sidekick event forwarder"
-    security.giantswarm.io/implemented-by: "team-shield"
-    security.giantswarm.io/implemented-date: "2025-07-04"
 spec:
   selector:
     matchLabels:
@@ -74,27 +62,21 @@ spec:
     targetLabel: component
 
 ---
-# PodLogs for k8s-metacollector (all logs - non-sensitive)
+# PodLogs for k8s-metacollector
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: k8s-metacollector-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    giantswarm.io/managed-by: security-team
-    giantswarm.io/service-type: managed
     application.giantswarm.io/team: shield
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-    security.giantswarm.io/component: k8s-metacollector
-    security.giantswarm.io/log-level: all
-    security.giantswarm.io/data-sensitivity: safe
+    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
     giantswarm.io/notes: "Log collection for Falco k8s metadata collector"
-    security.giantswarm.io/implemented-by: "team-shield"
-    security.giantswarm.io/implemented-date: "2025-07-04"
 spec:
   selector:
     matchLabels:
@@ -111,28 +93,21 @@ spec:
     targetLabel: component
 
 ---
-# PodLogs for falco core (error logs only - sensitive data)
+# PodLogs for falco core (error logs only)
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: falco-error-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    giantswarm.io/managed-by: security-team
-    giantswarm.io/service-type: managed
     application.giantswarm.io/team: shield
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-    security.giantswarm.io/component: falco
-    security.giantswarm.io/log-level: errors-only
-    security.giantswarm.io/data-sensitivity: high
+    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
     giantswarm.io/notes: "ERROR-ONLY log collection for Falco (filters sensitive runtime data)"
-    security.giantswarm.io/implemented-by: "team-shield"
-    security.giantswarm.io/implemented-date: "2025-07-04"
-    security.giantswarm.io/filtering-reason: "Falco detects runtime security threats and logs contain sensitive customer workload information"
 spec:
   selector:
     matchLabels:
@@ -148,7 +123,7 @@ spec:
           level:
       - drop:
           expression: '(?i).*(info|debug|notice).*'
-          dropReason: "Filtering out non-error logs - Falco contains sensitive runtime security data"
+          dropReason: "Filtering out non-error logs - Falco contains sensitive runtime data"
   relabelings:
   - action: replace
     replacement: giantswarm
