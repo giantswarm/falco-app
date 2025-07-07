@@ -7,9 +7,8 @@ metadata:
   name: falco-exporter-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    application.giantswarm.io/team: shield
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
     giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
@@ -38,9 +37,8 @@ metadata:
   name: falcosidekick-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    application.giantswarm.io/team: shield
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
     giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
@@ -69,9 +67,8 @@ metadata:
   name: k8s-metacollector-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    application.giantswarm.io/team: shield
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
     giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
@@ -100,9 +97,8 @@ metadata:
   name: falco-error-logs
   namespace: {{ .Release.Namespace }}
   labels:
-    application.giantswarm.io/team: shield
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
     giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
