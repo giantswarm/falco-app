@@ -8,8 +8,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "falco-helpers.labels" . | nindent 4 }}
-    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
@@ -38,8 +36,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "falco-helpers.labels" . | nindent 4 }}
-    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
@@ -68,8 +64,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "falco-helpers.labels" . | nindent 4 }}
-    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
@@ -98,8 +92,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "falco-helpers.labels" . | nindent 4 }}
-    application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-    giantswarm.io/service-type: managed
   annotations:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
