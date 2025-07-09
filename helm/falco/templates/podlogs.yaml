@@ -1,4 +1,4 @@
-{{- if .Values.monitoring.podLog.enabled }}
+{{- if and .Values.monitoring .Values.monitoring.podLog .Values.monitoring.podLog.enabled }}
 ---
 # PodLogs for falco-exporter
 apiVersion: monitoring.grafana.com/v1alpha2
@@ -81,45 +81,5 @@ spec:
     targetLabel: node_name
   - action: replace
     replacement: k8s-metacollector
-    targetLabel: component
-
----
-# PodLogs for falco core (error logs only)
-apiVersion: monitoring.grafana.com/v1alpha2
-kind: PodLogs
-metadata:
-  name: falco-error-logs
-  namespace: {{ .Release.Namespace }}
-  labels:
-    {{- include "falco-helpers.labels" . | nindent 4 }}
-  annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}
-    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
-    giantswarm.io/notes: "ERROR-ONLY log collection for Falco (filters sensitive runtime data)"
-spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: falco
-      app.kubernetes.io/component: falco
-  pipelineStages:
-  - match:
-      selector: '{component="falco"}'
-      stages:
-      - regex:
-          expression: '.*(?P<level>ERROR|FATAL|WARN|WARNING).*'
-      - labels:
-          level:
-      - drop:
-          expression: '(?i).*(info|debug|notice).*'
-          dropReason: "Filtering out non-error logs - Falco contains sensitive runtime data"
-  relabelings:
-  - action: replace
-    replacement: giantswarm
-    targetLabel: giantswarm_observability_tenant
-  - action: replace
-    sourceLabels: [__meta_kubernetes_pod_node_name]
-    targetLabel: node_name
-  - action: replace
-    replacement: falco
     targetLabel: component
 {{- end }}
