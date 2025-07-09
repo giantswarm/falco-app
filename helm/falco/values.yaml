@@ -103,5 +103,5 @@ k8s-metacollector:
 
 # Enable log collection for observability
 monitoring:
-  podLog:
+  podLogs:
     enabled: false
