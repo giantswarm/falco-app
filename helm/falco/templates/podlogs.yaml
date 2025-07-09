@@ -5,17 +5,16 @@ apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: falco-exporter-logs
-  namespace: {{ .Release.Namespace }}
+  namespace: giantswarm
   labels:
-    {{- include "falco-helpers.labels" . | nindent 4 }}
+    app.kubernetes.io/name: falco-exporter
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}
-    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
-    giantswarm.io/notes: "Log collection for Falco metrics exporter"
+    giantswarm.io/notes: "Log collection for Falco exporter"
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/component: falco-exporter
+      app.kubernetes.io/name: falco-exporter
+      app.kubernetes.io/instance: falco
   relabelings:
   - action: replace
     replacement: giantswarm
@@ -33,17 +32,17 @@ apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: falcosidekick-logs
-  namespace: {{ .Release.Namespace }}
+  namespace: giantswarm
   labels:
-    {{- include "falco-helpers.labels" . | nindent 4 }}
+    app.kubernetes.io/name: falcosidekick
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}
-    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
-    giantswarm.io/notes: "Log collection for Falco sidekick event forwarder"
+    giantswarm.io/notes: "Log collection for Falcosidekick"
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/component: falcosidekick
+      app.kubernetes.io/name: falcosidekick
+      app.kubernetes.io/instance: falco
+      app.kubernetes.io/component: core
   relabelings:
   - action: replace
     replacement: giantswarm
@@ -56,22 +55,21 @@ spec:
     targetLabel: component
 
 ---
-# PodLogs for k8s-metacollector
+# PodLogs for falco k8s-metacollector
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
-  name: k8s-metacollector-logs
-  namespace: {{ .Release.Namespace }}
+  name: falco-k8s-metacollector-logs
+  namespace: giantswarm
   labels:
-    {{- include "falco-helpers.labels" . | nindent 4 }}
+    app.kubernetes.io/name: k8s-metacollector
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}
-    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
-    giantswarm.io/notes: "Log collection for Falco k8s metadata collector"
+    giantswarm.io/notes: "Log collection for Falco k8s-metacollector"
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/component: k8s-metacollector
+      app.kubernetes.io/name: k8s-metacollector
+      app.kubernetes.io/instance: falco
   relabelings:
   - action: replace
     replacement: giantswarm
@@ -80,6 +78,6 @@ spec:
     sourceLabels: [__meta_kubernetes_pod_node_name]
     targetLabel: node_name
   - action: replace
-    replacement: k8s-metacollector
+    replacement: falco-k8s-metacollector
     targetLabel: component
 {{- end }}
