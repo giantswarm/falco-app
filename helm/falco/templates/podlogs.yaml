@@ -1,0 +1,83 @@
+{{- if and .Values.monitoring .Values.monitoring.podLog .Values.monitoring.podLog.enabled }}
+---
+# PodLogs for falco-exporter
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: falco-exporter-logs
+  namespace: giantswarm
+  labels:
+    app.kubernetes.io/name: falco-exporter
+  annotations:
+    giantswarm.io/notes: "Log collection for Falco exporter"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: falco-exporter
+      app.kubernetes.io/instance: falco
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: falco-exporter
+    targetLabel: component
+
+---
+# PodLogs for falcosidekick
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: falcosidekick-logs
+  namespace: giantswarm
+  labels:
+    app.kubernetes.io/name: falcosidekick
+  annotations:
+    giantswarm.io/notes: "Log collection for Falcosidekick"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: falcosidekick
+      app.kubernetes.io/instance: falco
+      app.kubernetes.io/component: core
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: falcosidekick
+    targetLabel: component
+
+---
+# PodLogs for falco k8s-metacollector
+apiVersion: monitoring.grafana.com/v1alpha2
+kind: PodLogs
+metadata:
+  name: falco-k8s-metacollector-logs
+  namespace: giantswarm
+  labels:
+    app.kubernetes.io/name: k8s-metacollector
+  annotations:
+    giantswarm.io/notes: "Log collection for Falco k8s-metacollector"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: k8s-metacollector
+      app.kubernetes.io/instance: falco
+  relabelings:
+  - action: replace
+    replacement: giantswarm
+    targetLabel: giantswarm_observability_tenant
+  - action: replace
+    sourceLabels: [__meta_kubernetes_pod_node_name]
+    targetLabel: node_name
+  - action: replace
+    replacement: falco-k8s-metacollector
+    targetLabel: component
+{{- end }}
