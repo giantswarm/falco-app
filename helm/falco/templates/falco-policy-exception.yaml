@@ -1,5 +1,5 @@
 {{- if .Values.kyvernoPolicyExceptions.enabled }}
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falco-exceptions
@@ -49,7 +49,7 @@ spec:
         names:
         - {{ include "falco-helpers.fullname" . }}*
 ---
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falco-exporter-exceptions
@@ -99,7 +99,7 @@ spec:
         names:
         - {{ include "falco-helpers.fullname" . }}-falco-exporter*
 ---
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falcosidekick-exceptions
@@ -139,7 +139,7 @@ spec:
         names:
         - {{ include "falco-helpers.fullname" . }}-falcosidekick*
 ---
-apiVersion: kyverno.io/v2beta1
+apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-k8s-metacollector-exceptions

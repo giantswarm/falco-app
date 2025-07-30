@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Include Statefuleset to `Falcosidekick` policy exception.
+- Update PolicyExceptions to `v2`.
 
 ## [0.10.0] - 2025-02-05
 
@@ -76,11 +77,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `Falco` chart version from `3.3.0` to `3.8.1`.
 - Updated `Falco-exporter` chart version from `0.9.6` to `0.9.7`
 - Updated `Falcosidekick` chart version from `0.6.1` to `0.7.5`
-- Updated `Falco` to upstream version `0.36.1`. 
+- Updated `Falco` to upstream version `0.36.1`.
 
 ### Added
 
-- Added the use of `Falcoctl`. 
+- Added the use of `Falcoctl`.
 
 ### Notes
 
