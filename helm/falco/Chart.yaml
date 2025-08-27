@@ -8,9 +8,6 @@ dependencies:
   - name: falco
     condition: falco.enabled
     version: 4.19.0
-  - name: falco-exporter
-    condition: falco-exporter.enabled
-    version: 0.12.1
   - name: falcosidekick
     condition: falcosidekick.enabled
     version: 0.9.5
