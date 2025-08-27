@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix(falco): bump version to 0.40.0...'
-      sha: 986a7ad988ceefceaa813445ea76665cd04ceaab
+      commitTitle: Fix make lint and make docs for rhel-based distros...
+      sha: 5d52074b19bce5d5a21722fce6c0f97db0a9088b
       tags:
-      - falco-4.19.0
+      - falco-6.2.5
     path: .
   path: helm/falco/charts
 kind: LockConfig
