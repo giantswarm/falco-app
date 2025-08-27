@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix(falco): bump version to 0.40.0...'
-      sha: 986a7ad988ceefceaa813445ea76665cd04ceaab
+      commitTitle: bump up talon version to 0.3.0 + fix missing usage of imagePullSecrets...
+      sha: 4f6e4312a93a60bb5122f7136e943a6abfd3f0a2
       tags:
-      - falco-4.19.0
+      - falco-talon-0.3.0
     path: .
   path: helm/falco/charts
 kind: LockConfig

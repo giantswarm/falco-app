@@ -7,13 +7,13 @@ annotations:
 dependencies:
   - name: falco
     condition: falco.enabled
-    version: 4.19.0
+    version: 4.20.0
   - name: falco-exporter
     condition: falco-exporter.enabled
     version: 0.12.1
   - name: falcosidekick
     condition: falcosidekick.enabled
-    version: 0.9.5
+    version: 0.9.9
   - name: k8s-metacollector
     condition: k8s-metacollector.enabled
     version: 0.1.10
