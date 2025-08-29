@@ -3,7 +3,7 @@ ciliumNetworkPolicy:
 
 global:
   podSecurityStandards:
-    enforced: false
+    enforced: true
 
 verticalPodAutoscaler:
   enabled: false
@@ -66,26 +66,6 @@ falco:
       ports:
         broker-grpc:
           port: 45000
-
-
-falco-exporter:
-  enabled: true
-  image:
-    registry: gsoci.azurecr.io
-    repository: giantswarm/falco-exporter
-  podSecurityPolicy:
-    create: true
-    annotations: {seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'}
-  resources:
-    limits:
-      cpu: 100m
-      memory: 128Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  tolerations:
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/control-plane
 
 falcosidekick:
   enabled: true
