@@ -52,6 +52,8 @@ falco:
     enabled: true
   serviceMonitor:
     create: true
+    labels:
+      application.giantswarm.io/team: "shield"
 
   falco:
     grpc:
