@@ -50,6 +50,10 @@ falco:
 
   metrics:
     enabled: true
+    outputRule: true
+  webserver:
+    enabled: true
+    prometheus_metrics_enabled: true
   serviceMonitor:
     create: true
     labels:
