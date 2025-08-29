@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `falco` to upstream version `0.41.3`.
+
 ## [0.10.1] - 2025-07-30
 
 ### Changed
@@ -18,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Update `Falco` to upstream version `0.40.0`
+- Update `Falco` to upstream version `0.40.0`.
 
 ## [0.9.1] - 2024-10-23
 
