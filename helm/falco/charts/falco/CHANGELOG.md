@@ -3,6 +3,100 @@
 This file documents all notable changes to Falco Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v6.2.5
+
+* Removed allowedUnsafeSysctls from SCC
+
+## v6.2.4
+
+* Bump container plugin to 0.3.6
+
+## v6.2.3
+
+* Add support for envFrom for falcoctl.install|follow
+
+## v6.2.2
+
+* Bump container plugin to 0.3.5
+* Bump k8smeta plugin to 0.3.1
+
+## v6.2.1
+
+* Bump container plugin to 0.3.3
+
+## v6.2.0
+
+* Switch to `collectors.containerEngine` configuration by default
+* Update `collectors.containerEngine.engines` default values
+* Fix containerd socket path configuration
+* Address "container.name shows container.id" issue
+* Address "Missing k8s.pod name, container.name, other metadata with k3s" issue
+* Bump container plugin to 0.3.2
+
+## v6.1.0
+
+* feat(falco): Add possibility to custom falco pods hostname
+
+## v6.0.2
+
+* Bump Falco to 0.41.3
+* Bump container plugin to 0.3.1
+
+## v6.0.1
+
+* Bump Falco to 0.41.2
+* Bump container plugin to 0.3.0
+
+## v6.0.0
+
+* Rename Falco Talon configuration keys naming
+
+## v5.0.3
+
+* Bump container plugin to 0.2.6
+
+## v5.0.2
+
+* Bump container plugin to 0.2.5
+* Bump Falco to 0.41.1
+
+## v5.0.1
+
+* Correct installation issue when both artifact installation and follow are enabled
+
+## v5.0.0
+* Bump falcoctl to 0.11.2
+* Use default falco image flavor (wolfi) by default
+
+## v4.22.0
+* Bump Falco to 0.41.0;
+* Bump falco rules to 4.0.0;
+* Deprecate old container engines in favor of the new container plugin;
+* Add support for the new container plugin;
+* Update k8smeta plugin to 0.3.0;
+* Update falco configuration;
+
+## v4.21.2
+
+* add falco-talon as falco subchart
+
+## v4.21.1
+
+* removed falco-expoter (now deprecated) references from the readme 
+
+## v4.21.0
+
+* feat(falco): adding imagePullSecrets at the service account level
+
+## v4.20.1
+
+* correctly mount the volumes based on socket path
+* unit tests for container engines socket paths
+
+## v4.20.0
+
+* bump falcoctl to 0.11.0
+
 ## v4.19.0
 
 * fix falco version to 0.40.0

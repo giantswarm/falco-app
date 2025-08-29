@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.40.0
+appVersion: 0.41.3
 annotations:
   application.giantswarm.io/team: "shield"
   config.giantswarm.io/version: 1.x.x
@@ -7,13 +7,10 @@ annotations:
 dependencies:
   - name: falco
     condition: falco.enabled
-    version: 4.19.0
-  - name: falco-exporter
-    condition: falco-exporter.enabled
-    version: 0.12.1
+    version: 6.2.5
   - name: falcosidekick
     condition: falcosidekick.enabled
-    version: 0.9.5
+    version: 0.10.2
   - name: k8s-metacollector
     condition: k8s-metacollector.enabled
     version: 0.1.10

@@ -5,6 +5,42 @@ numbering uses [semantic versioning](http://semver.org).
 
 Before release 0.1.20, the helm chart can be found in `falcosidekick` [repository](https://github.com/falcosecurity/falcosidekick/tree/master/deploy/helm/falcosidekick).
 
+## 0.10.2
+
+- Add type information to `volumeClaimTemplates`.
+
+## 0.10.1
+
+- Add an "or" condition for `configmap-ui`
+
+## 0.10.0
+
+- Add new features to the Loki dashboard
+
+## 0.9.11
+
+- Add `customtags` setting
+
+## 0.9.10
+
+- Fix missing values in the README
+
+## 0.9.9
+
+- Added Azure Workload Identity for Falcosidekick
+
+## 0.9.8
+
+- Ugrade to Falcosidekick 2.31.1 (fix last release)
+
+## 0.9.7
+
+- Ugrade to Falcosidekick 2.31.1
+
+## 0.9.6
+
+- Ugrade to Falcosidekick 2.31.0
+
 ## 0.9.5
 
 - Move the `prometheus.io/scrape` annotation to the default values, to allow overrides.

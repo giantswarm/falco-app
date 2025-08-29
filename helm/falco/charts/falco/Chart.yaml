@@ -1,7 +1,7 @@
 apiVersion: v2
 name: falco
-version: 4.19.0
-appVersion: "0.40.0"
+version: 6.2.5
+appVersion: "0.41.3"
 description: Falco
 keywords:
   - monitoring
@@ -26,3 +26,7 @@ dependencies:
     version: 0.1.*
     repository: https://falcosecurity.github.io/charts
     condition: collectors.kubernetes.enabled
+  - name: falco-talon
+    version: 0.3.*
+    repository: https://falcosecurity.github.io/charts
+    condition: responseActions.enabled
