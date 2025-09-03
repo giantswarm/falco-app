@@ -52,56 +52,6 @@ spec:
 apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
-  name: {{ include "falco-helpers.fullname" . }}-falco-exporter-exceptions
-  namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
-  annotations:
-    "helm.sh/hook": "pre-install,pre-upgrade"
-spec:
-  exceptions:
-  - policyName: disallow-privileged-containers
-    ruleNames:
-    - privileged-containers
-    - autogen-privileged-containers
-  - policyName: disallow-capabilities-strict
-    ruleNames:
-    - require-drop-all
-    - adding-capabilities-strict
-    - autogen-require-drop-all
-    - autogen-adding-capabilities-strict
-  - policyName: restrict-volume-types
-    ruleNames:
-    - restricted-volumes
-    - autogen-restricted-volumes
-  - policyName: disallow-privilege-escalation
-    ruleNames:
-    - privilege-escalation
-    - autogen-privilege-escalation
-  - policyName: require-run-as-nonroot
-    ruleNames:
-    - run-as-non-root
-    - autogen-run-as-non-root
-  - policyName: disallow-host-path
-    ruleNames:
-    - host-path
-    - autogen-host-path
-  - policyName: restrict-seccomp-strict
-    ruleNames:
-    - check-seccomp-strict
-    - autogen-check-seccomp-strict
-  match:
-    any:
-    - resources:
-        kinds:
-        - DaemonSet
-        - Pod
-        namespaces:
-        - {{ include "falco-helpers.namespace" . }}
-        names:
-        - {{ include "falco-helpers.fullname" . }}-falco-exporter*
----
-apiVersion: kyverno.io/v2
-kind: PolicyException
-metadata:
   name: {{ include "falco-helpers.fullname" . }}-falcosidekick-exceptions
   namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
   annotations:

@@ -38,4 +38,11 @@ spec:
     - fromEntities:
         - kube-apiserver
         - cluster
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: alloy
+      toPorts:
+        - ports:
+            - port: "8765"
+              protocol: TCP
 {{- end }}
