@@ -45,7 +45,7 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
 app: {{ template "falco-helpers.fullname" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/version: "{{ .Chart.Version }}"
+app.kubernetes.io/version: "{{ .Chart.Version | replace "+" "_" }}"
 app.kubernetes.io/part-of: {{ template "falco-helpers.name" . }}
 chart: {{ template "falco-helpers.chartref" . }}
 release: {{ $.Release.Name | quote }}
