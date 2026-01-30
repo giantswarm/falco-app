@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-01-30
+
 ### Changed
 
 - Build with up-to-date pipelines.
@@ -266,7 +268,8 @@ For more information, please check the falco [rules page](https://github.com/fal
 - Push `falco-app` to provider collections (except KVM) when tagged.
 - Use Giant Swarm-managed images.
 
-[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.11.1...HEAD
+[0.11.1]: https://github.com/giantswarm/falco-app/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/giantswarm/falco-app/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/giantswarm/falco-app/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/giantswarm/falco-app/compare/v0.9.1...v0.10.0
