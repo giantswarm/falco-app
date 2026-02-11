@@ -68,7 +68,7 @@ The team label here only applies to CRD install resources and is to keep the lin
 {{- define "falco-helpers.UpdateLogicAnnotations" -}}
 "helm.sh/hook": "pre-install,pre-upgrade"
 "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
-application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
+application.giantswarm.io/team: {{ index .Chart.Annotations "io.giantswarm.application.team" | quote }}
 {{- end -}}
 
 {{/* Create a label which can be used to select any orphaned crd-install hook resources */}}

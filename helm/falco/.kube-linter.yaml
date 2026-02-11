@@ -25,3 +25,5 @@ checks:
   - "latest-tag"
   - "liveness-port"
   - "readiness-port"
+  - "sorted-keys"
+  - "restart-policy"
