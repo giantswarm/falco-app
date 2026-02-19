@@ -27,3 +27,4 @@ checks:
   - "readiness-port"
   - "sorted-keys"
   - "restart-policy"
+  - "priority-class-name"

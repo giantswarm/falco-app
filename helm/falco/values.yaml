@@ -17,7 +17,7 @@ falco:
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
-  priorityClassName: giantswarm-critical
+  podPriorityClassName: giantswarm-critical
   collectors:
     kubernetes:
       enabled: true

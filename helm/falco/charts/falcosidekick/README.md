@@ -361,9 +361,10 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.loki.endpoint | string | `"/loki/api/v1/push"` | Loki endpoint URL path, more info: <https://grafana.com/docs/loki/latest/api/#post-apiprompush> |
 | config.loki.extralabels | string | `""` | comma separated list of fields to use as labels additionally to rule, source, priority, tags and custom_fields |
 | config.loki.format | string | `"text"` | Format for the log entry value: json, text (default) |
-| config.loki.grafanaDashboard | object | `{"configMap":{"folder":"","name":"falcosidekick-loki-dashboard-grafana","namespace":""},"enabled":true}` | dashboard for Grafana |
-| config.loki.grafanaDashboard.configMap | object | `{"folder":"","name":"falcosidekick-loki-dashboard-grafana","namespace":""}` | configmaps to be deployed that contain a grafana dashboard. |
+| config.loki.grafanaDashboard | object | `{"configMap":{"folder":"","folderAnnotation":"grafana_dashboard_folder","name":"falcosidekick-loki-dashboard-grafana","namespace":""},"enabled":true}` | dashboard for Grafana |
+| config.loki.grafanaDashboard.configMap | object | `{"folder":"","folderAnnotation":"grafana_dashboard_folder","name":"falcosidekick-loki-dashboard-grafana","namespace":""}` | configmaps to be deployed that contain a grafana dashboard. |
 | config.loki.grafanaDashboard.configMap.folder | string | `""` | folder where the dashboard is stored by grafana. |
+| config.loki.grafanaDashboard.configMap.folderAnnotation | string | `"grafana_dashboard_folder"` | annotation used by grafana |
 | config.loki.grafanaDashboard.configMap.name | string | `"falcosidekick-loki-dashboard-grafana"` | name specifies the name for the configmap. |
 | config.loki.grafanaDashboard.configMap.namespace | string | `""` | namespace specifies the namespace for the configmap. |
 | config.loki.grafanaDashboard.enabled | bool | `true` | enabled specifies whether this dashboard should be deployed. |
@@ -506,6 +507,11 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | config.smtp.token | string | `""` | OAuthBearer token for OAuthBearer Mechanism |
 | config.smtp.trace | string | `""` | trace string for Anonymous Mechanism |
 | config.smtp.user | string | `""` | user to access SMTP server |
+| config.splunk.checkcert | bool | `true` | check if ssl certificate of the output is valid |
+| config.splunk.customheaders | string | `""` | a list of comma separated custom headers to add, syntax is "key:value,key:value" |
+| config.splunk.host | string | `""` | Hostname of the target Splunk service (ex: http://host:port/services/collector/event) |
+| config.splunk.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
+| config.splunk.token | string | `""` | Specify the authentication token for the HTTP Event Collector interface. |
 | config.spyderbat.apikey | string | `""` | Spyderbat API key with access to the organization |
 | config.spyderbat.apiurl | string | `"https://api.spyderbat.com"` | Spyderbat API url |
 | config.spyderbat.minimumpriority | string | `""` | minimum priority of event to use this output, order is `emergency\|alert\|critical\|error\|warning\|notice\|informational\|debug or ""` |
@@ -604,19 +610,20 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | extraVolumeMounts | list | `[]` | Extra volume mounts for sidekick deployment |
 | extraVolumes | list | `[]` | Extra volumes for sidekick deployment |
 | fullnameOverride | string | `""` | Override the name |
-| grafana | object | `{"dashboards":{"configMaps":{"falcosidekick":{"folder":"","name":"falcosidekick-grafana-dashboard","namespace":""}},"enabled":false}}` | grafana contains the configuration related to grafana. |
-| grafana.dashboards | object | `{"configMaps":{"falcosidekick":{"folder":"","name":"falcosidekick-grafana-dashboard","namespace":""}},"enabled":false}` | dashboards contains configuration for grafana dashboards. |
-| grafana.dashboards.configMaps | object | `{"falcosidekick":{"folder":"","name":"falcosidekick-grafana-dashboard","namespace":""}}` | configmaps to be deployed that contain a grafana dashboard. |
-| grafana.dashboards.configMaps.falcosidekick | object | `{"folder":"","name":"falcosidekick-grafana-dashboard","namespace":""}` | falcosidekick contains the configuration for falcosidekick's dashboard. |
+| grafana | object | `{"dashboards":{"configMaps":{"falcosidekick":{"folder":"","folderAnnotation":"grafana_dashboard_folder","name":"falcosidekick-grafana-dashboard","namespace":""}},"enabled":false}}` | grafana contains the configuration related to grafana. |
+| grafana.dashboards | object | `{"configMaps":{"falcosidekick":{"folder":"","folderAnnotation":"grafana_dashboard_folder","name":"falcosidekick-grafana-dashboard","namespace":""}},"enabled":false}` | dashboards contains configuration for grafana dashboards. |
+| grafana.dashboards.configMaps | object | `{"falcosidekick":{"folder":"","folderAnnotation":"grafana_dashboard_folder","name":"falcosidekick-grafana-dashboard","namespace":""}}` | configmaps to be deployed that contain a grafana dashboard. |
+| grafana.dashboards.configMaps.falcosidekick | object | `{"folder":"","folderAnnotation":"grafana_dashboard_folder","name":"falcosidekick-grafana-dashboard","namespace":""}` | falcosidekick contains the configuration for falcosidekick's dashboard. |
 | grafana.dashboards.configMaps.falcosidekick.folder | string | `""` | folder where the dashboard is stored by grafana. |
+| grafana.dashboards.configMaps.falcosidekick.folderAnnotation | string | `"grafana_dashboard_folder"` | annotation used by grafana |
 | grafana.dashboards.configMaps.falcosidekick.name | string | `"falcosidekick-grafana-dashboard"` | name specifies the name for the configmap. |
 | grafana.dashboards.configMaps.falcosidekick.namespace | string | `""` | namespace specifies the namespace for the configmap. |
 | grafana.dashboards.enabled | bool | `false` | enabled specifies whether the dashboards should be deployed. |
-| image | object | `{"pullPolicy":"IfNotPresent","registry":"docker.io","repository":"falcosecurity/falcosidekick","tag":"2.31.1"}` | number of old history to retain to allow rollback (If not set, default Kubernetes value is set to 10) revisionHistoryLimit: 1 |
+| image | object | `{"pullPolicy":"IfNotPresent","registry":"docker.io","repository":"falcosecurity/falcosidekick","tag":"2.32.0"}` | number of old history to retain to allow rollback (If not set, default Kubernetes value is set to 10) revisionHistoryLimit: 1 |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"docker.io"` | The image registry to pull from |
 | image.repository | string | `"falcosecurity/falcosidekick"` | The image repository to pull from |
-| image.tag | string | `"2.31.1"` | The image tag to pull |
+| image.tag | string | `"2.32.0"` | The image tag to pull |
 | imagePullSecrets | list | `[]` | Secrets for the registry |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Whether to create the ingress |
@@ -698,7 +705,7 @@ The following table lists the main configurable parameters of the Falcosidekick 
 | webui.priorityClassName | string | `""` | Name of the priority class to be used by the Web UI pods, priority class needs to be created beforehand |
 | webui.redis.affinity | object | `{}` | Affinity for the Web UI Redis pods |
 | webui.redis.customAnnotations | object | `{}` | custom annotations to add to all resources |
-| webui.redis.customConfig | object | `{}` | List of Custom config overrides for Redis |
+| webui.redis.customConfig | list | `[]` | List of Custom config overrides for Redis |
 | webui.redis.customLabels | object | `{}` | custom labels to add to all resources |
 | webui.redis.enabled | bool | `true` | Is mutually exclusive with webui.externalRedis.enabled |
 | webui.redis.existingSecret | string | `""` | Existing secret with configuration |
