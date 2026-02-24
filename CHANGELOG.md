@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Push to the `default` catalog.
 
+### Changed
+
+- Escape `+` characters in `.Chart.Version` value when used as value for `app.kubernetes.io/version` label.
+
 ## [0.11.1] - 2026-01-30
 
 ### Changed
