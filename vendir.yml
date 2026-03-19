@@ -5,7 +5,7 @@ directories:
   contents:
   - path: .
     git:
-      url: https://github.com/giantswarm/falco-charts-upstream
+      url: https://github.com/falcosecurity/charts
       ref: falco-6.2.5
     includePaths:
       - charts/falco/**
