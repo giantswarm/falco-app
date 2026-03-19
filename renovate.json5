@@ -30,7 +30,8 @@
       "matchFileNames": ["vendir.yml"],
       "branchPrefix": "renovate/vendir/",
       "prCreation": "approval",
-      "groupName": "falco-upstream"
+      "groupName": "falco-upstream",
+      "separateMajorMinor": false
     }
   ]
 }
