@@ -99,10 +99,22 @@ spec:
         - containerPort: {{ .Values.falco.webserver.listen_port }}
           name: web
           protocol: TCP
+      startupProbe:
+        initialDelaySeconds: {{ .Values.healthChecks.startupProbe.initialDelaySeconds }}
+        timeoutSeconds: {{ .Values.healthChecks.startupProbe.timeoutSeconds }}
+        periodSeconds: {{ .Values.healthChecks.startupProbe.periodSeconds }}
+        failureThreshold: {{ .Values.healthChecks.startupProbe.failureThreshold }}
+        httpGet:
+          path: {{ .Values.falco.webserver.k8s_healthz_endpoint }}
+          port: {{ .Values.falco.webserver.listen_port }}
+          {{- if .Values.falco.webserver.ssl_enabled }}
+          scheme: HTTPS
+          {{- end }}
       livenessProbe:
         initialDelaySeconds: {{ .Values.healthChecks.livenessProbe.initialDelaySeconds }}
         timeoutSeconds: {{ .Values.healthChecks.livenessProbe.timeoutSeconds }}
         periodSeconds: {{ .Values.healthChecks.livenessProbe.periodSeconds }}
+        failureThreshold: {{ .Values.healthChecks.livenessProbe.failureThreshold }}
         httpGet:
           path: {{ .Values.falco.webserver.k8s_healthz_endpoint }}
           port: {{ .Values.falco.webserver.listen_port }}
@@ -113,6 +125,7 @@ spec:
         initialDelaySeconds: {{ .Values.healthChecks.readinessProbe.initialDelaySeconds }}
         timeoutSeconds: {{ .Values.healthChecks.readinessProbe.timeoutSeconds }}
         periodSeconds: {{ .Values.healthChecks.readinessProbe.periodSeconds }}
+        failureThreshold: {{ .Values.healthChecks.readinessProbe.failureThreshold }}
         httpGet:
           path: {{ .Values.falco.webserver.k8s_healthz_endpoint }}
           port: {{ .Values.falco.webserver.listen_port }}
@@ -160,12 +173,13 @@ spec:
         - mountPath: /host/dev
           name: dev-fs
           readOnly: true
-        - name: sys-fs
+        - name: sys-module-fs
           mountPath: /sys/module
         {{- end }}
-        {{- if and .Values.driver.enabled (and (eq .Values.driver.kind "ebpf") (contains "falco-no-driver" .Values.image.repository)) }}
-        - name: debugfs
-          mountPath: /sys/kernel/debug
+        {{- if eq (include "falco.sysfsMount.enabled" .) "true" }}
+        - mountPath: {{ .Values.driver.sysfsMountPath }}
+          name: sys-fs
+          readOnly: true
         {{- end }}
         - mountPath: /etc/falco/falco.yaml
           name: falco-yaml
@@ -226,6 +240,8 @@ spec:
       emptyDir: {}
     - name: rulesfiles-install-dir
       emptyDir: {}
+    - name: artifact-state-dir
+      emptyDir: {}
     {{- end }}
     - name: root-falco-fs
       emptyDir: {}
@@ -247,14 +263,14 @@ spec:
     - name: dev-fs
       hostPath:
         path: /dev
-    - name: sys-fs
+    - name: sys-module-fs
       hostPath:
         path: /sys/module
     {{- end }}
-    {{- if and .Values.driver.enabled (and (eq .Values.driver.kind "ebpf") (contains "falco-no-driver" .Values.image.repository)) }}
-    - name: debugfs
+    {{- if eq (include "falco.sysfsMount.enabled" .) "true" }}
+    - name: sys-fs
       hostPath:
-        path: /sys/kernel/debug
+        path: {{ .Values.driver.sysfsMountPath }}
     {{- end }}
     - name: proc-fs
       hostPath:
