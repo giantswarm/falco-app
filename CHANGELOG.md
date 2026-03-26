@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `falco` to upstream version `v"0.43.0"`.
+
 ## [0.11.2] - 2026-02-24
 
 ### Added
@@ -19,14 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.11.1] - 2026-01-30
 
+### Added
+
+- Add `io.giantswarm.application.audience` and `io.giantswarm.application.managed` chart annotations for Backstage visibility.
+
 ### Changed
 
 - Build with up-to-date pipelines.
 - Migrate chart metadata annotations to OCI-compatible format.
-
-### Added
-
-- Add `io.giantswarm.application.audience` and `io.giantswarm.application.managed` chart annotations for Backstage visibility.
 
 ## [0.11.0] - 2025-09-03
 
@@ -79,13 +83,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.8.0] - 2024-01-25
 
-### Changed
-
-- Enable CiliumNetworkPolicies by default.
-
 ### Added
 
 - Add CiliumNetworkPolicy for falco-exporter.
+
+### Changed
+
+- Enable CiliumNetworkPolicies by default.
 
 ## [0.7.2] - 2024-01-12
 
@@ -101,6 +105,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.7.0] - 2023-11-08
 
+### Added
+
+- Added the use of `Falcoctl`.
+
 ### Changed
 
 - Updated `Falco` chart version from `3.3.0` to `3.8.1`.
@@ -108,23 +116,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `Falcosidekick` chart version from `0.6.1` to `0.7.5`
 - Updated `Falco` to upstream version `0.36.1`.
 
-### Added
-
-- Added the use of `Falcoctl`.
-
 ### Notes
 
 Falco made some big changes in the way rules are distributed, categorized, and updated.
 For more information, check the Falco [release notes](https://github.com/falcosecurity/falco/releases/tag/0.36.0).
-
 This means that we will ship Falco with fewer rules by default, as aligned with upstream.
-
 They have done this to give endusers a quieter default set of rules. They will now follow a standard, incubating, sandbox system.
-
 Before this update, all these rules were shipped by default. This means, that if CustomRules or macros were based on some rules which are now considered incubating or sandbox rules, they are now broken.
-
 This can be fixed by altering the configuration of falcoctl to also download and use the incubating and sandbox rules, or by rewriting your CustomRules.
-
 For more information, please check the falco [rules page](https://github.com/falcosecurity/rules).
 
 ## [0.6.7] - 2023-10-31
