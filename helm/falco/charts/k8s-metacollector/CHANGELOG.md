@@ -4,6 +4,10 @@
 This file documents all notable changes to `k8s-metacollector` Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## v0.2.0
+
+* Allow specifying folder annotation for grafana dashboards
+
 ## v0.1.10
 
 * Fix Grafana dashboards datasources
