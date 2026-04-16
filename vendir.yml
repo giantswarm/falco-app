@@ -1,0 +1,17 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+- path: helm/falco/charts
+  contents:
+  - path: .
+    git:
+      url: https://github.com/falcosecurity/charts
+      # renovate: datasource=github-tags depName=falcosecurity/charts
+      ref: falco-6.2.5
+    includePaths:
+      - charts/falco/**
+      - charts/falcosidekick/**
+      - charts/falco-exporter/**
+      - charts/k8s-metacollector/**
+    newRootPath: charts
+    legalPaths: []

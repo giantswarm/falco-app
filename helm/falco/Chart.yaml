@@ -1,0 +1,28 @@
+apiVersion: v2
+appVersion: 0.41.3
+annotations:
+  io.giantswarm.application.audience: all
+  io.giantswarm.application.logo: https://s.giantswarm.io/app-icons/falco/2/logo_dark.svg
+  io.giantswarm.application.managed: "true"
+  io.giantswarm.application.team: "shield"
+dependencies:
+  - name: falco
+    condition: falco.enabled
+    version: 6.2.5
+  - name: falcosidekick
+    condition: falcosidekick.enabled
+    version: 0.10.2
+  - name: k8s-metacollector
+    condition: k8s-metacollector.enabled
+    version: 0.1.10
+description: A Helm chart for falco
+engine: gotpl
+home: https://github.com/giantswarm/falco-app
+icon: https://s.giantswarm.io/app-icons/falco/2/icon_dark.svg
+maintainers:
+  - name: Giant Swarm applications team
+    url: https://github.com/giantswarm/falco-app
+name: falco
+sources:
+  - https://github.com/giantswarm/falco-app
+version: 0.11.2
