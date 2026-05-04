@@ -2,7 +2,7 @@
 #
 #    devctl
 #
-#    https://github.com/giantswarm/devctl/blob/57c68171868158d915a92dd45201bbeadaa17214/pkg/gen/input/workflows/internal/file/dispatch_update_chart_events.yaml.template
+#    https://github.com/giantswarm/devctl/blob/098777d1fe8a37096d310414b3b697f7d1fd8040/pkg/gen/input/workflows/internal/file/dispatch_update_chart_events.yaml.template
 #
 name: Dispatch update-chart events to security-bundle
 
@@ -20,7 +20,7 @@ concurrency:
 permissions: {}
 
 jobs:
-  dispatch-events:
+  dispatch-update-events:
     if: github.event_name == 'push'
     uses: giantswarm/github-workflows/.github/workflows/dispatch-update-chart-events.yaml@main
     permissions:
