@@ -13,11 +13,9 @@ kyvernoPolicyExceptions:
   namespace: giantswarm
 
 falco:
-  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
-  priorityClassName: giantswarm-critical
   collectors:
     kubernetes:
       enabled: true
@@ -51,9 +49,6 @@ falco:
   metrics:
     enabled: true
     outputRule: true
-  webserver:
-    enabled: true
-    prometheus_metrics_enabled: true
   serviceMonitor:
     create: true
     labels:
@@ -72,21 +67,13 @@ falco:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
   tty: true
-  k8s-metacollector:
-    fullnameOverride: ""
-    service:
-      ports:
-        broker-grpc:
-          port: 45000
 
 falcosidekick:
-  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
 
 k8s-metacollector:
-  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/k8s-metacollector
