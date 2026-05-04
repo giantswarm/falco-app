@@ -256,7 +256,7 @@ be temporary and will stay here until we move this logic to the falcoctl tool.
 - name: falcoctl-artifact-install
   image: {{ include "falcoctl.image" . }}
   imagePullPolicy: {{ .Values.falcoctl.image.pullPolicy }}
-  args: 
+  args:
     - artifact
     - install
   {{- with .Values.falcoctl.artifact.install.args }}
@@ -277,6 +277,8 @@ be temporary and will stay here until we move this logic to the falcoctl tool.
       name: rulesfiles-install-dir
     - mountPath: /etc/falcoctl
       name: falcoctl-config-volume
+    - mountPath: {{ .Values.falcoctl.config.artifact.install.stateDir }}
+      name: artifact-state-dir
       {{- with .Values.falcoctl.artifact.install.mounts.volumeMounts }}
         {{- toYaml . | nindent 4 }}
       {{- end }}
@@ -315,6 +317,8 @@ be temporary and will stay here until we move this logic to the falcoctl tool.
       name: rulesfiles-install-dir
     - mountPath: /etc/falcoctl
       name: falcoctl-config-volume
+    - mountPath: {{ .Values.falcoctl.config.artifact.follow.stateDir }}
+      name: artifact-state-dir
       {{- with .Values.falcoctl.artifact.follow.mounts.volumeMounts }}
         {{- toYaml . | nindent 4 }}
       {{- end }}
@@ -422,12 +426,34 @@ true
 {{- end -}}
 
 {{/*
+Return "true" if we should mount the path specified by `driver.sysfsMountPath` in the Falco pod.
+It considers driver.enabled, driver.kind and the per-driver sysfsMount opt-outs in values.yaml.
+*/}}
+{{- define "falco.sysfsMount.enabled" -}}
+{{- if .Values.driver.enabled -}}
+  {{- if eq .Values.driver.kind "ebpf" -}}
+    {{- if .Values.driver.ebpf.sysfsMount }}true{{- else }}false{{- end -}}
+  {{- else if or (eq .Values.driver.kind "modern_ebpf") (eq .Values.driver.kind "modern-bpf") -}}
+    {{- if .Values.driver.modernEbpf.sysfsMount }}true{{- else }}false{{- end -}}
+  {{- else if eq .Values.driver.kind "auto" -}}
+    {{- if or .Values.driver.ebpf.sysfsMount .Values.driver.modernEbpf.sysfsMount }}true{{- else }}false{{- end -}}
+  {{- end -}}
+{{- else -}}
+false
+{{- end -}}
+{{- end -}}
+
+
+{{/*
 Based on the user input it populates the metrics configuration in the falco config map.
 */}}
 {{- define "falco.metricsConfiguration" -}}
 {{- if .Values.metrics.enabled -}}
 {{- $_ := set .Values.falco.webserver "prometheus_metrics_enabled" true -}}
 {{- $_ = set .Values.falco.webserver "enabled" true -}}
+{{- if not .Values.falco.metrics -}}
+{{- $_ = set .Values.falco "metrics" dict -}}
+{{- end -}}
 {{- $_ = set .Values.falco.metrics "enabled" .Values.metrics.enabled -}}
 {{- $_ = set .Values.falco.metrics "interval" .Values.metrics.interval -}}
 {{- $_ = set .Values.falco.metrics "output_rule" .Values.metrics.outputRule -}}
@@ -437,6 +463,8 @@ Based on the user input it populates the metrics configuration in the falco conf
 {{- $_ = set .Values.falco.metrics "kernel_event_counters_enabled" .Values.metrics.kernelEventCountersEnabled -}}
 {{- $_ = set .Values.falco.metrics "kernel_event_counters_per_cpu_enabled" .Values.metrics.kernelEventCountersPerCPUEnabled -}}
 {{- $_ = set .Values.falco.metrics "libbpf_stats_enabled" .Values.metrics.libbpfStatsEnabled -}}
+{{- $_ = set .Values.falco.metrics "plugins_metrics_enabled" .Values.metrics.pluginsMetricsEnabled -}}
+{{- $_ = set .Values.falco.metrics "jemalloc_stats_enabled" .Values.metrics.jemallocStatsEnabled -}}
 {{- $_ = set .Values.falco.metrics "convert_memory_to_mb" .Values.metrics.convertMemoryToMB -}}
 {{- $_ = set .Values.falco.metrics "include_empty_values" .Values.metrics.includeEmptyValues -}}
 {{- end -}}
@@ -447,21 +475,7 @@ This helper is used to add the container plugin to the falco configuration.
 */}}
 {{ define "falco.containerPlugin" -}}
 {{ if and .Values.driver.enabled .Values.collectors.enabled -}}
-{{ if and (or .Values.collectors.docker.enabled .Values.collectors.crio.enabled .Values.collectors.containerd.enabled) .Values.collectors.containerEngine.enabled -}}
-{{ fail "You can not enable any of the [docker, containerd, crio] collectors configuration and the containerEngine configuration at the same time. Please use the containerEngine configuration since the old configurations are deprecated." }}
-{{ else if or .Values.collectors.docker.enabled .Values.collectors.crio.enabled .Values.collectors.containerd.enabled .Values.collectors.containerEngine.enabled -}}
-{{ if or .Values.collectors.docker.enabled .Values.collectors.crio.enabled .Values.collectors.containerd.enabled -}}
-{{ $_ := set .Values.collectors.containerEngine.engines.docker "enabled" .Values.collectors.docker.enabled -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.docker "sockets" (list .Values.collectors.docker.socket) -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.containerd "enabled" .Values.collectors.containerd.enabled -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.containerd "sockets" (list .Values.collectors.containerd.socket) -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.cri "enabled" .Values.collectors.crio.enabled -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.cri "sockets" (list .Values.collectors.crio.socket) -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.podman "enabled" false -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.lxc "enabled" false -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.libvirt_lxc "enabled" false -}}
-{{ $_ = set .Values.collectors.containerEngine.engines.bpm "enabled" false -}}
-{{ end -}}
+{{ if .Values.collectors.containerEngine.enabled -}}
 {{ $hasConfig := false -}}
 {{ range .Values.falco.plugins -}}
 {{ if eq (get . "name") "container" -}}
@@ -489,19 +503,7 @@ This helper is used to add container plugin volumes to the falco pod.
 */}}
 {{- define "falco.containerPluginVolumes" -}}
 {{- if and .Values.driver.enabled .Values.collectors.enabled -}}
-{{- if and (or .Values.collectors.docker.enabled .Values.collectors.crio.enabled .Values.collectors.containerd.enabled) .Values.collectors.containerEngine.enabled -}}
-{{ fail "You can not enable any of the [docker, containerd, crio] collectors configuration and the containerEngine configuration at the same time. Please use the containerEngine configuration since the old configurations are deprecated." }}
-{{- end -}}
 {{ $volumes := list -}}
-{{- if .Values.collectors.docker.enabled -}}
-{{ $volumes = append $volumes (dict "name" "docker-socket" "hostPath" (dict "path" .Values.collectors.docker.socket)) -}}
-{{- end -}}
-{{- if .Values.collectors.crio.enabled -}}
-{{ $volumes = append $volumes (dict "name" "crio-socket" "hostPath" (dict "path" .Values.collectors.crio.socket)) -}}
-{{- end -}}
-{{- if .Values.collectors.containerd.enabled -}}
-{{ $volumes = append $volumes (dict "name" "containerd-socket" "hostPath" (dict "path" .Values.collectors.containerd.socket)) -}}
-{{- end -}}
 {{- if .Values.collectors.containerEngine.enabled -}}
 {{- $seenPaths := dict -}}
 {{- $idx := 0 -}}
@@ -519,31 +521,20 @@ This helper is used to add container plugin volumes to the falco pod.
 {{- end -}}
 {{- end -}}
 {{- end -}}
-{{- end -}}
 {{- if gt (len $volumes) 0 -}}
 {{ toYaml $volumes -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
+{{- end -}}
+
 
 {{/*
 This helper is used to add container plugin volumeMounts to the falco pod.
 */}}
 {{- define "falco.containerPluginVolumeMounts" -}}
 {{- if and .Values.driver.enabled .Values.collectors.enabled -}}
-{{- if and (or .Values.collectors.docker.enabled .Values.collectors.crio.enabled .Values.collectors.containerd.enabled) .Values.collectors.containerEngine.enabled -}}
-{{ fail "You can not enable any of the [docker, containerd, crio] collectors configuration and the containerEngine configuration at the same time. Please use the containerEngine configuration since the old configurations are deprecated." }}
-{{- end -}}
 {{ $volumeMounts := list -}}
-{{- if .Values.collectors.docker.enabled -}}
-{{ $volumeMounts = append $volumeMounts (dict "name" "docker-socket" "mountPath" (print "/host" .Values.collectors.docker.socket)) -}}
-{{- end -}}
-{{- if .Values.collectors.crio.enabled -}}
-{{ $volumeMounts = append $volumeMounts (dict "name" "crio-socket" "mountPath" (print "/host" .Values.collectors.crio.socket)) -}}
-{{- end -}}
-{{- if .Values.collectors.containerd.enabled -}}
-{{ $volumeMounts = append $volumeMounts (dict "name" "containerd-socket" "mountPath" (print "/host" .Values.collectors.containerd.socket)) -}}
-{{- end -}}
 {{- if .Values.collectors.containerEngine.enabled -}}
 {{- $seenPaths := dict -}}
 {{- $idx := 0 -}}
@@ -561,9 +552,10 @@ This helper is used to add container plugin volumeMounts to the falco pod.
 {{- end -}}
 {{- end -}}
 {{- end -}}
-{{- end -}}
 {{- if gt (len $volumeMounts) 0 -}}
 {{ toYaml ($volumeMounts) }}
 {{- end -}}
 {{- end -}}
 {{- end -}}
+{{- end -}}
+

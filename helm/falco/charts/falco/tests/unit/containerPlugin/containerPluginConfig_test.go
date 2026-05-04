@@ -3,6 +3,7 @@ package containerPlugin
 import (
 	"path/filepath"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -607,66 +608,6 @@ func TestContainerPluginConfiguration(t *testing.T) {
 	}
 }
 
-func TestInvalidCollectorConfiguration(t *testing.T) {
-	t.Parallel()
-
-	helmChartPath, err := filepath.Abs(unit.ChartPath)
-	require.NoError(t, err)
-
-	testCases := []struct {
-		name        string
-		values      map[string]string
-		expectedErr string
-	}{
-		{
-			name: "dockerAndContainerEngine",
-			values: map[string]string{
-				"collectors.docker.enabled":          "true",
-				"collectoars.containerd.enabled":     "false",
-				"collectors.crio.enabled":            "false",
-				"collectors.containerEngine.enabled": "true",
-			},
-			expectedErr: "You can not enable any of the [docker, containerd, crio] collectors configuration and the containerEngine configuration at the same time. Please use the containerEngine configuration since the old configurations are deprecated.",
-		},
-		{
-			name: "containerdAndContainerEngine",
-			values: map[string]string{
-				"collectors.docker.enabled":          "false",
-				"collectors.containerd.enabled":      "true",
-				"collectors.crio.enabled":            "false",
-				"collectors.containerEngine.enabled": "true",
-			},
-			expectedErr: "You can not enable any of the [docker, containerd, crio] collectors configuration and the containerEngine configuration at the same time. Please use the containerEngine configuration since the old configurations are deprecated.",
-		},
-		{
-			name: "crioAndContainerEngine",
-			values: map[string]string{
-				"collectors.docker.enabled":          "false",
-				"collectoars.containerd.enabled":     "false",
-				"collectors.crio.enabled":            "true",
-				"collectors.containerEngine.enabled": "true",
-			},
-			expectedErr: "You can not enable any of the [docker, containerd, crio] collectors configuration and the containerEngine configuration at the same time. Please use the containerEngine configuration since the old configurations are deprecated.",
-		},
-	}
-
-	for _, tc := range testCases {
-		tc := tc
-		t.Run(tc.name, func(t *testing.T) {
-			t.Parallel()
-
-			options := &helm.Options{
-				SetValues: tc.values,
-			}
-
-			// Attempt to render the template, expect an error
-			_, err := helm.RenderTemplateE(t, options, helmChartPath, unit.ReleaseName, []string{"templates/configmap.yaml"})
-			require.Error(t, err)
-			require.Contains(t, err.Error(), tc.expectedErr)
-		})
-	}
-}
-
 // Test that the helper does not overwrite user's configuration.
 // And that the container reference is added to the configmap.
 func TestFalcoctlRefs(t *testing.T) {
@@ -684,8 +625,18 @@ func TestFalcoctlRefs(t *testing.T) {
 		// Test plugin reference.
 		refs := artifactConfig["install"].(map[string]interface{})["refs"].([]interface{})
 		require.Len(t, refs, 2)
-		require.True(t, slices.Contains(refs, "falco-rules:4"))
-		require.True(t, slices.Contains(refs, "ghcr.io/falcosecurity/plugins/plugin/container:0.3.6"))
+		require.True(t, slices.ContainsFunc(
+			refs,
+			func(ref any) bool {
+				return strings.HasPrefix(ref.(string), "falco-rules:")
+			},
+		))
+		require.True(t, slices.ContainsFunc(
+			refs,
+			func(ref any) bool {
+				return strings.HasPrefix(ref.(string), "ghcr.io/falcosecurity/plugins/plugin/container:")
+			},
+		))
 	}
 
 	refShouldNotBeSet := func(t *testing.T, config any) {
@@ -700,8 +651,18 @@ func TestFalcoctlRefs(t *testing.T) {
 		// Test plugin reference.
 		refs := artifactConfig["install"].(map[string]interface{})["refs"].([]interface{})
 		require.Len(t, refs, 1)
-		require.True(t, slices.Contains(refs, "falco-rules:4"))
-		require.False(t, slices.Contains(refs, "ghcr.io/falcosecurity/plugins/plugin/container:0.3.6"))
+		require.True(t, slices.ContainsFunc(
+			refs,
+			func(ref any) bool {
+				return strings.HasPrefix(ref.(string), "falco-rules:")
+			},
+		))
+		require.False(t, slices.ContainsFunc(
+			refs,
+			func(ref any) bool {
+				return strings.HasPrefix(ref.(string), "ghcr.io/falcosecurity/plugins/plugin/container:")
+			},
+		))
 	}
 
 	testCases := []struct {
