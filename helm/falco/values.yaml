@@ -16,6 +16,7 @@ falco:
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
+  podPriorityClassName: giantswarm-critical
   collectors:
     kubernetes:
       enabled: true
@@ -59,6 +60,9 @@ falco:
       enabled: true
     grpc_output:
       enabled: true
+    webserver:
+      enabled: true
+      prometheus_metrics_enabled: true
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
     name: "falco"
@@ -67,6 +71,12 @@ falco:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
   tty: true
+  k8s-metacollector:
+    fullnameOverride: ""
+    service:
+      ports:
+        broker-grpc:
+          port: 45000
 
 falcosidekick:
   image:

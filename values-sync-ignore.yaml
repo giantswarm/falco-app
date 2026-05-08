@@ -1,0 +1,4 @@
+exclude:
+  - "**.k8s-metacollector.**"
+  - "**.podPriorityClassName"
+  - "**.webserver.**"
