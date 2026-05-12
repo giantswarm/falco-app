@@ -91,6 +91,17 @@
                                 }
                             },
                             "type": "object"
+                        },
+                        "webserver": {
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "prometheus_metrics_enabled": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "type": "object"
                         }
                     },
                     "type": "object"
@@ -122,6 +133,32 @@
                     },
                     "type": "object"
                 },
+                "k8s-metacollector": {
+                    "properties": {
+                        "fullnameOverride": {
+                            "type": "string"
+                        },
+                        "service": {
+                            "properties": {
+                                "ports": {
+                                    "properties": {
+                                        "broker-grpc": {
+                                            "properties": {
+                                                "port": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
                 "metrics": {
                     "properties": {
                         "enabled": {
@@ -132,6 +169,9 @@
                         }
                     },
                     "type": "object"
+                },
+                "podPriorityClassName": {
+                    "type": "string"
                 },
                 "serviceAccount": {
                     "properties": {
