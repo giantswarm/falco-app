@@ -71,6 +71,7 @@ falco:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
   tty: true
+
   k8s-metacollector:
     fullnameOverride: ""
     service:

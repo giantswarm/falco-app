@@ -8,7 +8,7 @@ annotations:
 dependencies:
   - name: falco
     condition: falco.enabled
-    version: 8.0.2
+    version: 9.0.0
   - name: falcosidekick
     condition: falcosidekick.enabled
     version: 0.13.1
