@@ -80,11 +80,13 @@ falco:
           port: 45000
 
 falcosidekick:
+  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
 
 k8s-metacollector:
+  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/k8s-metacollector
