@@ -1,0 +1,6 @@
+exclude:
+  - "falcosidekick.enabled"
+  - "k8s-metacollector.enabled"
+  - "**.k8s-metacollector.**"
+  - "**.podPriorityClassName"
+  - "**.webserver.**"

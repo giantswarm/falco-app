@@ -13,11 +13,10 @@ kyvernoPolicyExceptions:
   namespace: giantswarm
 
 falco:
-  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
-  priorityClassName: giantswarm-critical
+  podPriorityClassName: giantswarm-critical
   collectors:
     kubernetes:
       enabled: true
@@ -51,9 +50,6 @@ falco:
   metrics:
     enabled: true
     outputRule: true
-  webserver:
-    enabled: true
-    prometheus_metrics_enabled: true
   serviceMonitor:
     create: true
     labels:
@@ -64,6 +60,9 @@ falco:
       enabled: true
     grpc_output:
       enabled: true
+    webserver:
+      enabled: true
+      prometheus_metrics_enabled: true
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
     name: "falco"
@@ -72,6 +71,7 @@ falco:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
   tty: true
+
   k8s-metacollector:
     fullnameOverride: ""
     service:
