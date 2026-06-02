@@ -3,6 +3,102 @@
 This file documents all notable changes to Falco Helm Chart. The release
 numbering uses [semantic versioning](http://semver.org).
 
+## Unreleased
+
+## v9.0.0
+
+* Drop gRPC output and server support
+* Drop support for legacy eBPF probe
+* Drop support for gVisor engine
+
+## v8.0.5
+
+* Honor `falco.plugins_hostinfo` for `proc-fs` mount and volume generation in plugin-only deployments, while keeping existing behavior when `driver.enabled=true`
+
+## v8.0.4
+
+* Make chart-injected `FALCO_HOSTNAME` overridable via `extra.env` and suppressible via `falcoHostnameEnv=false`; default behavior is unchanged.
+
+## v8.0.3
+
+* Add missing `metadata.namespace` for `Role` and `RoleBinding`
+
+## v8.0.2
+
+* Upgrade Falco to v0.43.1
+* Upgrade container plugin to v0.6.3
+
+## v8.0.1
+
+* Fix serviceMonitor template to properly merge custom selector labels with defaults using mustMergeOverwrite, avoiding duplicate YAML keys
+* Fix serviceAccount unit test to handle empty template output with newer terratest versions
+
+## v8.0.0
+
+* Upgrade Falco to v0.43.0
+* Upgrade Falcoctl to v0.12.2 (fixes issue with authentication to private registries during artifact signature verification)
+* Upgrade container plugin to v0.6.1
+* Upgrade k8smeta plugin to v0.4.1
+* Add deprecation notices for gRPC output and gRPC server (deprecated upstream in Falco 0.43.0)
+* Add deprecation notices for Legacy eBPF probe (`driver.kind=ebpf`) and gVisor engine (`driver.kind=gvisor`)
+
+## v7.2.1
+
+* Bump falcoctl to v0.12.1 (fixes issue with state dir configuration through config file)
+
+## v7.2.0
+
+* Add `artifact-state-dir` volume shared between falcoctl-artifact-install and falcoctl-artifact-follow to maintain artifact state consistency
+
+## v7.1.2
+
+* Upgrade falcoctl to v0.12.0 (adds Cosign v3 with Bundle Format support).
+
+## v7.1.1
+
+* Improve documentation for container engine hooks and fix typos in values.yaml
+
+## v7.1.0
+
+* Allow specifying folder annotation for grafana dashboards
+
+## v7.0.3
+
+* Replace initialDelaySeconds in liveness/readiness probes by startupProbe for quicker startup
+
+## v7.0.2
+
+* Reduce artifact follow default interval value to 1 week
+
+## v7.0.1
+
+* Upgrade Falco to v0.42.1
+* Upgrade container plugin to v0.4.1
+
+## v7.0.0
+
+* Upgrade Falco to v0.42.0
+* Upgrade default ruleset to v5.0.0
+* Upgrade falcoctl to v0.11.4
+* Upgrade container plugin to v0.4.0
+* Upgrade k8smeta plugin to v0.4.0
+* Upgrade k8saudit plugins and rules to v0.16
+* Remove deprecated container metadata collectors settings in favor of `collectors.containerEngine`
+* Revised Falco configuration in `falco.*` settings
+* The path specified by `driver.sysfsMountPath` (e.g. `/sys/kernel`) is now automatically mounted into the Falco container when `driver.kind` is set to `auto`, or when `driver.kind` is set either to `ebpf` or `modern_ebpf` and the corresponding `mountSysfs` option is set to `true`.
+
+## v6.4.1
+
+* Fix rendering issue due to .Values.falco.metrics not being defined
+
+## v6.4.0
+
+* Added support for dual-stack for the metrics service
+
+## v6.3.0
+
+* Bump falcosidekick dep to 0.11.X
+
 ## v6.2.5
 
 * Removed allowedUnsafeSysctls from SCC
@@ -285,7 +381,7 @@ numbering uses [semantic versioning](http://semver.org).
 
 ## v4.5.2
 
-* reording scc configuration, making it more robust to plain yaml comparison
+* reordering scc configuration, making it more robust to plain yaml comparison
 
 ## v4.5.1
 
@@ -1270,7 +1366,7 @@ Remove whitespace around `falco.httpOutput.url` to fix the error `libcurl error:
 * Enable eBPF by default on Falco
 * Allow to download Falco images from different registries than `docker.io`
 * Use rollingUpdate strategy by default
-* Provide sane defauls for falco resource management
+* Provide sane defaults for falco resource management
 
 ## v0.5.6
 
