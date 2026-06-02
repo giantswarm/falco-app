@@ -17,10 +17,6 @@ metadata:
     {{- if .Values.driver.modernEbpf.leastPrivileged }}
     container.apparmor.security.beta.kubernetes.io/{{ .Chart.Name }}: unconfined
     {{- end }}
-    {{- else if eq .Values.driver.kind "ebpf" }}
-    {{- if .Values.driver.ebpf.leastPrivileged }}
-    container.apparmor.security.beta.kubernetes.io/{{ .Chart.Name }}: unconfined
-    {{- end }}
     {{- end }}
     {{- end }}
     {{- with .Values.podAnnotations }}
@@ -34,12 +30,6 @@ spec:
   {{- with .Values.podSecurityContext }}
   securityContext:
     {{- toYaml . | nindent 4}}
-  {{- end }}
-  {{- if .Values.driver.enabled }}
-  {{- if and (eq .Values.driver.kind "ebpf") .Values.driver.ebpf.hostNetwork }}
-  hostNetwork: true
-  dnsPolicy: ClusterFirstWithHostNet
-  {{- end }}
   {{- end }}
   {{- if .Values.podPriorityClassName }}
   priorityClassName: {{ .Values.podPriorityClassName }}
@@ -60,11 +50,6 @@ spec:
   imagePullSecrets: 
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- if eq .Values.driver.kind "gvisor" }}
-  hostNetwork: true
-  hostPID: true
-  dnsPolicy: ClusterFirstWithHostNet
-  {{- end }}
   containers:
     - name: {{ .Chart.Name }}
       image: {{ include "falco.image" . }}
@@ -82,10 +67,24 @@ spec:
       env:
         - name: HOST_ROOT
           value: /host
+        {{- /*
+          Detect a user-provided FALCO_HOSTNAME in extra.env. If present, suppress the
+          chart-default below to avoid a Kubernetes strategic-merge-patch collision on
+          UPDATE (env[].name is the merge key; duplicate entries collapse server-side
+          into a single invalid EnvVar with both `value` and `valueFrom` set).
+        */}}
+        {{- $userHostnameOverride := false }}
+        {{- range .Values.extra.env }}
+          {{- if eq .name "FALCO_HOSTNAME" }}
+            {{- $userHostnameOverride = true }}
+          {{- end }}
+        {{- end }}
+        {{- if and .Values.falcoHostnameEnv (not $userHostnameOverride) }}
         - name: FALCO_HOSTNAME
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+        {{- end }}
         - name: FALCO_K8S_NODE_NAME
           valueFrom:
             fieldRef:
@@ -99,10 +98,22 @@ spec:
         - containerPort: {{ .Values.falco.webserver.listen_port }}
           name: web
           protocol: TCP
+      startupProbe:
+        initialDelaySeconds: {{ .Values.healthChecks.startupProbe.initialDelaySeconds }}
+        timeoutSeconds: {{ .Values.healthChecks.startupProbe.timeoutSeconds }}
+        periodSeconds: {{ .Values.healthChecks.startupProbe.periodSeconds }}
+        failureThreshold: {{ .Values.healthChecks.startupProbe.failureThreshold }}
+        httpGet:
+          path: {{ .Values.falco.webserver.k8s_healthz_endpoint }}
+          port: {{ .Values.falco.webserver.listen_port }}
+          {{- if .Values.falco.webserver.ssl_enabled }}
+          scheme: HTTPS
+          {{- end }}
       livenessProbe:
         initialDelaySeconds: {{ .Values.healthChecks.livenessProbe.initialDelaySeconds }}
         timeoutSeconds: {{ .Values.healthChecks.livenessProbe.timeoutSeconds }}
         periodSeconds: {{ .Values.healthChecks.livenessProbe.periodSeconds }}
+        failureThreshold: {{ .Values.healthChecks.livenessProbe.failureThreshold }}
         httpGet:
           path: {{ .Values.falco.webserver.k8s_healthz_endpoint }}
           port: {{ .Values.falco.webserver.listen_port }}
@@ -113,6 +124,7 @@ spec:
         initialDelaySeconds: {{ .Values.healthChecks.readinessProbe.initialDelaySeconds }}
         timeoutSeconds: {{ .Values.healthChecks.readinessProbe.timeoutSeconds }}
         periodSeconds: {{ .Values.healthChecks.readinessProbe.periodSeconds }}
+        failureThreshold: {{ .Values.healthChecks.readinessProbe.failureThreshold }}
         httpGet:
           path: {{ .Values.falco.webserver.k8s_healthz_endpoint }}
           port: {{ .Values.falco.webserver.listen_port }}
@@ -138,10 +150,14 @@ spec:
       {{- end }}
         - mountPath: /root/.falco
           name: root-falco-fs
+        {{- if eq (include "falco.procfsMount.enabled" .) "true" }}
         - mountPath: /host/proc
           name: proc-fs
         {{- if and .Values.driver.enabled (not .Values.driver.loader.enabled) }}
           readOnly: true
+        {{- end }}
+        {{- end }}
+        {{- if and .Values.driver.enabled (not .Values.driver.loader.enabled) }}
         - mountPath: /host/boot
           name: boot-fs
           readOnly: true
@@ -160,12 +176,13 @@ spec:
         - mountPath: /host/dev
           name: dev-fs
           readOnly: true
-        - name: sys-fs
+        - name: sys-module-fs
           mountPath: /sys/module
         {{- end }}
-        {{- if and .Values.driver.enabled (and (eq .Values.driver.kind "ebpf") (contains "falco-no-driver" .Values.image.repository)) }}
-        - name: debugfs
-          mountPath: /sys/kernel/debug
+        {{- if eq (include "falco.sysfsMount.enabled" .) "true" }}
+        - mountPath: {{ .Values.driver.sysfsMountPath }}
+          name: sys-fs
+          readOnly: true
         {{- end }}
         - mountPath: /etc/falco/falco.yaml
           name: falco-yaml
@@ -184,20 +201,8 @@ spec:
           name: client-certs-volume
           readOnly: true
         {{- end }}
-        {{- include "falco.unixSocketVolumeMount"  . | nindent 8 -}}
         {{- with .Values.mounts.volumeMounts }}
           {{- toYaml . | nindent 8 }}
-        {{- end }}
-        {{- if eq .Values.driver.kind "gvisor" }}
-        - mountPath: /usr/local/bin/runsc
-          name: runsc-path
-          readOnly: true
-        - mountPath: /host{{ .Values.driver.gvisor.runsc.root }}
-          name: runsc-root
-        - mountPath: /host{{ .Values.driver.gvisor.runsc.config }}
-          name: runsc-config
-        - mountPath: /gvisor-config
-          name: falco-gvisor-config
         {{- end }}
   {{- if .Values.falcoctl.artifact.follow.enabled }}
     {{- include "falcoctl.sidecar" . | nindent 4 }}
@@ -205,9 +210,6 @@ spec:
   initContainers:
   {{- with .Values.extra.initContainers }}
     {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- if eq .Values.driver.kind "gvisor" }}
-  {{- include "falco.gvisor.initContainer" . | nindent 4 }}
   {{- end }}
   {{- if eq (include "driverLoader.enabled" .) "true" }}
     {{- include "falco.driverLoader.initContainer" . | nindent 4 }}
@@ -225,6 +227,8 @@ spec:
     - name: plugins-install-dir
       emptyDir: {}
     - name: rulesfiles-install-dir
+      emptyDir: {}
+    - name: artifact-state-dir
       emptyDir: {}
     {{- end }}
     - name: root-falco-fs
@@ -247,32 +251,19 @@ spec:
     - name: dev-fs
       hostPath:
         path: /dev
-    - name: sys-fs
+    - name: sys-module-fs
       hostPath:
         path: /sys/module
     {{- end }}
-    {{- if and .Values.driver.enabled (and (eq .Values.driver.kind "ebpf") (contains "falco-no-driver" .Values.image.repository)) }}
-    - name: debugfs
+    {{- if eq (include "falco.sysfsMount.enabled" .) "true" }}
+    - name: sys-fs
       hostPath:
-        path: /sys/kernel/debug
+        path: {{ .Values.driver.sysfsMountPath }}
     {{- end }}
+    {{- if eq (include "falco.procfsMount.enabled" .) "true" }}
     - name: proc-fs
       hostPath:
         path: /proc
-    {{- if eq .Values.driver.kind "gvisor" }}
-    - name: runsc-path
-      hostPath:
-        path: {{ .Values.driver.gvisor.runsc.path }}/runsc
-        type: File
-    - name: runsc-root
-      hostPath:
-        path: {{ .Values.driver.gvisor.runsc.root }}
-    - name: runsc-config
-      hostPath:
-        path: {{ .Values.driver.gvisor.runsc.config }}
-        type: File
-    - name: falco-gvisor-config
-      emptyDir: {}
     {{- end }}
     - name: falcoctl-config-volume
       configMap: 
@@ -309,7 +300,6 @@ spec:
         secretName: {{ include "falco.fullname" . }}-client-certs
         {{- end }}
     {{- end }}
-    {{- include "falco.unixSocketVolume" . | nindent 4 -}}
     {{- with .Values.mounts.volumes }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -384,13 +374,6 @@ spec:
   {{- if (or (eq .Values.driver.kind "kmod") (eq .Values.driver.kind "module") (eq .Values.driver.kind "auto")) -}}
     {{- $securityContext := set $securityContext "privileged" true -}}
   {{- end -}}
-  {{- if eq .Values.driver.kind "ebpf" -}}
-    {{- if .Values.driver.ebpf.leastPrivileged -}}
-      {{- $securityContext := set $securityContext "capabilities" (dict "add" (list "SYS_ADMIN" "SYS_RESOURCE" "SYS_PTRACE")) -}}
-    {{- else -}}
-      {{- $securityContext := set $securityContext "privileged" true -}}
-    {{- end -}}
-  {{- end -}}
   {{- if (or (eq .Values.driver.kind "modern_ebpf") (eq .Values.driver.kind "modern-bpf")) -}}
     {{- if .Values.driver.modernEbpf.leastPrivileged -}}
       {{- $securityContext := set $securityContext "capabilities" (dict "add" (list "BPF" "SYS_RESOURCE" "PERFMON" "SYS_PTRACE")) -}}
@@ -404,20 +387,4 @@ spec:
 {{- else -}}
   {{- toYaml $securityContext }}
 {{- end -}}
-{{- end -}}
-
-
-{{- define "falco.unixSocketVolumeMount" -}}
-{{- if and .Values.falco.grpc.enabled .Values.falco.grpc.bind_address (hasPrefix "unix://" .Values.falco.grpc.bind_address) }}
-- mountPath: {{ include "falco.unixSocketDir" . }}
-  name: grpc-socket-dir
-{{- end }}
-{{- end -}}
-
-{{- define "falco.unixSocketVolume" -}}
-{{- if and .Values.falco.grpc.enabled .Values.falco.grpc.bind_address (hasPrefix "unix://" .Values.falco.grpc.bind_address) }}
-- name: grpc-socket-dir
-  hostPath:
-    path: {{ include "falco.unixSocketDir" . }}
-{{- end }}
 {{- end -}}

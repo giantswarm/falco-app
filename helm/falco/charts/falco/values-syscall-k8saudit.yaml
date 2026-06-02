@@ -1,5 +1,5 @@
-# Enable the driver, and choose between the kernel module or the ebpf probe.
-# Default value: kernel module.
+# Enable the driver, and choose between the kernel module or the modern eBPF probe.
+# Default value: modern eBPF probe.
 driver:
   enabled: true
   kind: module
@@ -30,10 +30,10 @@ falcoctl:
     artifact:
       install:
         # -- List of artifacts to be installed by the falcoctl init container.
-        refs: [falco-rules:4, k8saudit-rules:0.11, k8saudit:0.11]
+        refs: [falco-rules:5, k8saudit-rules:0.16, k8saudit:0.16]
       follow:
         # -- List of artifacts to be followed by the falcoctl sidecar container.
-        refs: [falco-rules:4, k8saudit-rules:0.11, k8saudit:0.11]
+        refs: [falco-rules:5, k8saudit-rules:0.16, k8saudit:0.16]
 
 services:
   - name: k8saudit-webhook
