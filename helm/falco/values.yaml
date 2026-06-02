@@ -13,11 +13,9 @@ kyvernoPolicyExceptions:
   namespace: giantswarm
 
 falco:
-  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
-  priorityClassName: giantswarm-critical
   collectors:
     kubernetes:
       enabled: true
