@@ -219,6 +219,9 @@
         },
         "falcosidekick": {
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "image": {
                     "properties": {
                         "registry": {
@@ -248,6 +251,9 @@
         },
         "k8s-metacollector": {
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "image": {
                     "properties": {
                         "registry": {

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated `falco` to upstream version `v"0.43.1"`.
 - Updated `k8s-metacollector` to upstream version `v"0.1.2"`.
+- Updated `falco` to upstream version `v"0.44.0"`.
 
 ## [0.11.2] - 2026-02-24
 
