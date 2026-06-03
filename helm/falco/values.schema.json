@@ -74,27 +74,6 @@
                     },
                     "type": "object"
                 },
-                "falco": {
-                    "properties": {
-                        "grpc": {
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "grpc_output": {
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
                 "falcoctl": {
                     "properties": {
                         "image": {

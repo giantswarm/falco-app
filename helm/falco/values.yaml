@@ -57,11 +57,6 @@ falco:
     labels:
       application.giantswarm.io/team: "shield"
 
-  falco:
-    grpc:
-      enabled: true
-    grpc_output:
-      enabled: true
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
     name: "falco"
