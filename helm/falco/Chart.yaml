@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.41.3
+appVersion: 0.44.0
 annotations:
   io.giantswarm.application.audience: all
   io.giantswarm.application.logo: https://s.giantswarm.io/app-icons/falco/2/logo_dark.svg
