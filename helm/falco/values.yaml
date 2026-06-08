@@ -13,11 +13,9 @@ kyvernoPolicyExceptions:
   namespace: giantswarm
 
 falco:
-  enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
-  priorityClassName: giantswarm-critical
   collectors:
     kubernetes:
       enabled: true
@@ -59,11 +57,6 @@ falco:
     labels:
       application.giantswarm.io/team: "shield"
 
-  falco:
-    grpc:
-      enabled: true
-    grpc_output:
-      enabled: true
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
     name: "falco"
