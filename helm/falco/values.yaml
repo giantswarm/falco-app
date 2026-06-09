@@ -43,6 +43,10 @@ falco:
   # ebpf:
   #   enabled: true
   controller:
+    daemonset:
+      updateStrategy:
+        rollingUpdate:
+          maxUnavailable: 20%
     labels:
       application.giantswarm.io/team: "shield"
 
