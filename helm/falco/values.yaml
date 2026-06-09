@@ -46,7 +46,7 @@ falco:
     daemonset:
       updateStrategy:
         rollingUpdate:
-          maxUnavailable: 20%
+          maxUnavailable: 10%
     labels:
       application.giantswarm.io/team: "shield"
 
