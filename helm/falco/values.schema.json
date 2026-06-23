@@ -26,6 +26,24 @@
                 },
                 "controller": {
                     "properties": {
+                        "daemonset": {
+                            "properties": {
+                                "updateStrategy": {
+                                    "properties": {
+                                        "rollingUpdate": {
+                                            "properties": {
+                                                "maxUnavailable": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
                         "labels": {
                             "properties": {
                                 "application.giantswarm.io/team": {
