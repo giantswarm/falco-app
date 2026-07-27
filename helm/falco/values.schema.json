@@ -1,78 +1,99 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
     "properties": {
         "ciliumNetworkPolicy": {
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 }
-            },
-            "type": "object"
+            }
         },
         "falco": {
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "collectors": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "kubernetes": {
+                            "type": "object",
+                            "additionalProperties": false,
                             "properties": {
                                 "enabled": {
                                     "type": "boolean"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "controller": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "daemonset": {
+                            "type": "object",
+                            "additionalProperties": false,
                             "properties": {
                                 "updateStrategy": {
+                                    "type": "object",
+                                    "additionalProperties": false,
                                     "properties": {
                                         "rollingUpdate": {
+                                            "type": "object",
+                                            "additionalProperties": false,
                                             "properties": {
                                                 "maxUnavailable": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "labels": {
+                            "type": "object",
+                            "additionalProperties": false,
                             "properties": {
                                 "application.giantswarm.io/team": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "customRules": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "gs-root-ca-key-access.yaml": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "driver": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "kind": {
                             "type": "string"
                         },
                         "loader": {
+                            "type": "object",
+                            "additionalProperties": false,
                             "properties": {
                                 "initContainer": {
+                                    "type": "object",
+                                    "additionalProperties": false,
                                     "properties": {
                                         "image": {
+                                            "type": "object",
+                                            "additionalProperties": false,
                                             "properties": {
                                                 "registry": {
                                                     "type": "string"
@@ -80,21 +101,21 @@
                                                 "repository": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "falcoctl": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "image": {
+                            "type": "object",
+                            "additionalProperties": false,
                             "properties": {
                                 "registry": {
                                     "type": "string"
@@ -102,13 +123,13 @@
                                 "repository": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "image": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -116,36 +137,41 @@
                         "repository": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "k8s-metacollector": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "fullnameOverride": {
                             "type": "string"
                         },
                         "service": {
+                            "type": "object",
+                            "additionalProperties": false,
                             "properties": {
                                 "ports": {
+                                    "type": "object",
+                                    "additionalProperties": false,
                                     "properties": {
                                         "broker-grpc": {
+                                            "type": "object",
+                                            "additionalProperties": false,
                                             "properties": {
                                                 "port": {
                                                     "type": "integer"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "metrics": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean"
@@ -153,35 +179,40 @@
                         "outputRule": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "serviceAccount": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "name": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "serviceMonitor": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "create": {
                             "type": "boolean"
                         },
                         "labels": {
+                            "type": "object",
+                            "additionalProperties": false,
                             "properties": {
                                 "application.giantswarm.io/team": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "tolerations": {
+                    "type": "array",
                     "items": {
+                        "type": "object",
+                        "additionalProperties": false,
                         "properties": {
                             "effect": {
                                 "type": "string"
@@ -189,15 +220,15 @@
                             "key": {
                                 "type": "string"
                             }
-                        },
-                        "type": "object"
-                    },
-                    "type": "array"
+                        }
+                    }
                 },
                 "tty": {
                     "type": "boolean"
                 },
                 "webserver": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "enabled": {
                             "type": "boolean"
@@ -205,18 +236,20 @@
                         "prometheus_metrics_enabled": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "falcosidekick": {
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 },
                 "image": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -224,31 +257,35 @@
                         "repository": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "global": {
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "podSecurityStandards": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "enforced": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "k8s-metacollector": {
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 },
                 "image": {
+                    "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -256,13 +293,13 @@
                         "repository": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "kyvernoPolicyExceptions": {
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean"
@@ -270,17 +307,16 @@
                 "namespace": {
                     "type": "string"
                 }
-            },
-            "type": "object"
+            }
         },
         "verticalPodAutoscaler": {
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 }
-            },
-            "type": "object"
+            }
         }
-    },
-    "type": "object"
+    }
 }
