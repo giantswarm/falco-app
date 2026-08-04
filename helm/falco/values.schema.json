@@ -1,60 +1,85 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": true,
     "properties": {
         "ciliumNetworkPolicy": {
+            "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 }
-            },
-            "type": "object"
+            }
         },
         "falco": {
+            "type": "object",
             "properties": {
                 "collectors": {
+                    "type": "object",
                     "properties": {
                         "kubernetes": {
+                            "type": "object",
                             "properties": {
                                 "enabled": {
                                     "type": "boolean"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "controller": {
+                    "type": "object",
                     "properties": {
+                        "daemonset": {
+                            "type": "object",
+                            "properties": {
+                                "updateStrategy": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rollingUpdate": {
+                                            "type": "object",
+                                            "properties": {
+                                                "maxUnavailable": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         "labels": {
+                            "type": "object",
                             "properties": {
                                 "application.giantswarm.io/team": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "customRules": {
+                    "type": "object",
                     "properties": {
                         "gs-root-ca-key-access.yaml": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "driver": {
+                    "type": "object",
                     "properties": {
                         "kind": {
                             "type": "string"
                         },
                         "loader": {
+                            "type": "object",
                             "properties": {
                                 "initContainer": {
+                                    "type": "object",
                                     "properties": {
                                         "image": {
+                                            "type": "object",
                                             "properties": {
                                                 "registry": {
                                                     "type": "string"
@@ -62,21 +87,19 @@
                                                 "repository": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "falcoctl": {
+                    "type": "object",
                     "properties": {
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "registry": {
                                     "type": "string"
@@ -84,13 +107,12 @@
                                 "repository": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "image": {
+                    "type": "object",
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -98,36 +120,36 @@
                         "repository": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "k8s-metacollector": {
+                    "type": "object",
                     "properties": {
                         "fullnameOverride": {
                             "type": "string"
                         },
                         "service": {
+                            "type": "object",
                             "properties": {
                                 "ports": {
+                                    "type": "object",
                                     "properties": {
                                         "broker-grpc": {
+                                            "type": "object",
                                             "properties": {
                                                 "port": {
                                                     "type": "integer"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "metrics": {
+                    "type": "object",
                     "properties": {
                         "enabled": {
                             "type": "boolean"
@@ -135,35 +157,36 @@
                         "outputRule": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "serviceAccount": {
+                    "type": "object",
                     "properties": {
                         "name": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "serviceMonitor": {
+                    "type": "object",
                     "properties": {
                         "create": {
                             "type": "boolean"
                         },
                         "labels": {
+                            "type": "object",
                             "properties": {
                                 "application.giantswarm.io/team": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "tolerations": {
+                    "type": "array",
                     "items": {
+                        "type": "object",
                         "properties": {
                             "effect": {
                                 "type": "string"
@@ -171,15 +194,14 @@
                             "key": {
                                 "type": "string"
                             }
-                        },
-                        "type": "object"
-                    },
-                    "type": "array"
+                        }
+                    }
                 },
                 "tty": {
                     "type": "boolean"
                 },
                 "webserver": {
+                    "type": "object",
                     "properties": {
                         "enabled": {
                             "type": "boolean"
@@ -187,18 +209,18 @@
                         "prometheus_metrics_enabled": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "falcosidekick": {
+            "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 },
                 "image": {
+                    "type": "object",
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -206,31 +228,31 @@
                         "repository": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "global": {
+            "type": "object",
             "properties": {
                 "podSecurityStandards": {
+                    "type": "object",
                     "properties": {
                         "enforced": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "k8s-metacollector": {
+            "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 },
                 "image": {
+                    "type": "object",
                     "properties": {
                         "registry": {
                             "type": "string"
@@ -238,13 +260,12 @@
                         "repository": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "kyvernoPolicyExceptions": {
+            "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean"
@@ -252,17 +273,15 @@
                 "namespace": {
                     "type": "string"
                 }
-            },
-            "type": "object"
+            }
         },
         "verticalPodAutoscaler": {
+            "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 }
-            },
-            "type": "object"
+            }
         }
-    },
-    "type": "object"
+    }
 }
