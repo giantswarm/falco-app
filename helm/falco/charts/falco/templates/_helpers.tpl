@@ -503,4 +503,3 @@ This helper is used to add container plugin volumeMounts to the falco pod.
 {{- end -}}
 {{- end -}}
 {{- end -}}
-
