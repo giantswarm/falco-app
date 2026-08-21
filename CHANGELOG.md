@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Route Falco security events to the Giant Swarm Security Grafana organization. Operational data still goes to the default tenant.
+- Enable metrics scraping for Falcosidekick and k8s-metacollector.
+- Send Falco events to Falcosidekick by default.
+
 ### Changed
 
-- Updated `falco` to upstream version `v0.44.1`.
+- Enabled `json_output` for Falco so security events land in Loki as structured JSON.
 
 ## [0.12.1] - 2026-06-09
 

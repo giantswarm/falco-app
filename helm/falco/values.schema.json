@@ -95,6 +95,14 @@
                         }
                     }
                 },
+                "falco": {
+                    "type": "object",
+                    "properties": {
+                        "json_output": {
+                            "type": "boolean"
+                        }
+                    }
+                },
                 "falcoctl": {
                     "type": "object",
                     "properties": {
@@ -108,6 +116,14 @@
                                     "type": "string"
                                 }
                             }
+                        }
+                    }
+                },
+                "falcosidekick": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
                         }
                     }
                 },
@@ -156,6 +172,14 @@
                         },
                         "outputRule": {
                             "type": "boolean"
+                        }
+                    }
+                },
+                "podLabels": {
+                    "type": "object",
+                    "properties": {
+                        "observability.giantswarm.io/tenant": {
+                            "type": "string"
                         }
                     }
                 },
@@ -229,6 +253,22 @@
                             "type": "string"
                         }
                     }
+                },
+                "serviceMonitor": {
+                    "type": "object",
+                    "properties": {
+                        "additionalLabels": {
+                            "type": "object",
+                            "properties": {
+                                "application.giantswarm.io/team": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    }
                 }
             }
         },
@@ -259,6 +299,25 @@
                         },
                         "repository": {
                             "type": "string"
+                        }
+                    }
+                },
+                "serviceMonitor": {
+                    "type": "object",
+                    "properties": {
+                        "create": {
+                            "type": "boolean"
+                        },
+                        "interval": {
+                            "type": "string"
+                        },
+                        "labels": {
+                            "type": "object",
+                            "properties": {
+                                "application.giantswarm.io/team": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 }
