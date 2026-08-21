@@ -40,8 +40,6 @@ falco:
   tolerations:
     - effect: NoSchedule
       key: node-role.kubernetes.io/control-plane
-  # ebpf:
-  #   enabled: true
   controller:
     daemonset:
       updateStrategy:
@@ -49,6 +47,15 @@ falco:
           maxUnavailable: 10%
     labels:
       application.giantswarm.io/team: "shield"
+
+  # Ships Falco pod logs to the observability platform's default security tenant.
+  # Falco pod metrics are operational and still sent to the default tenant, as they are not security events.
+  podLabels:
+    observability.giantswarm.io/tenant: giantswarm_security_default
+
+  falco:
+    # Emit alerts as structured JSON so the events are queryable in Loki.
+    json_output: true
 
   metrics:
     enabled: true
@@ -69,6 +76,9 @@ falco:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
   tty: true
+  # Makes Falco forward events to Falcosidekick. Keep in sync with the `falcosidekick.enabled`.
+  falcosidekick:
+    enabled: true
   k8s-metacollector:
     fullnameOverride: ""
     service:
@@ -77,13 +87,23 @@ falco:
           port: 45000
 
 falcosidekick:
+  # If enabled, Falco must also be configured to forward events here. Keep in sync with `falco.falcosidekick.enabled`.
   enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      application.giantswarm.io/team: "shield"
 
 k8s-metacollector:
   enabled: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/k8s-metacollector
+  serviceMonitor:
+    create: true
+    interval: 60s
+    labels:
+      application.giantswarm.io/team: "shield"
