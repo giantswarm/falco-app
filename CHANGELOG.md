@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Enabled `json_output` for Falco so security events land in Loki as structured JSON.
+- Updated `falco` to upstream version `v0.44.1`.
+- Updated `charts` to upstream version `falco-9.1.0`.
 
 ## [0.12.1] - 2026-06-09
 
