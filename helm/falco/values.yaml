@@ -12,7 +12,7 @@ kyvernoPolicyExceptions:
   enabled: true
   namespace: giantswarm
 
-falco:
+falco:  # @schema skipProperties: true; additionalProperties: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
@@ -86,7 +86,7 @@ falco:
         broker-grpc:
           port: 45000
 
-falcosidekick:
+falcosidekick:  # @schema skipProperties: true; additionalProperties: true
   # If enabled, Falco must also be configured to forward events here. Keep in sync with `falco.falcosidekick.enabled`.
   enabled: true
   image:
@@ -97,7 +97,7 @@ falcosidekick:
     additionalLabels:
       application.giantswarm.io/team: "shield"
 
-k8s-metacollector:
+k8s-metacollector:  # @schema skipProperties: true; additionalProperties: true
   enabled: true
   image:
     registry: gsoci.azurecr.io
