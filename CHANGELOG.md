@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Enabled `json_output` for Falco so security events land in Loki as structured JSON.
+- Allow additional properties for vendored upstream chart values so upstream keys are not rejected by the generated schema.
 
 ## [0.12.1] - 2026-06-09
 
