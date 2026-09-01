@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Take the `app.kubernetes.io/version` label from the chart app version instead of the chart version, as described in the Helm chart best practices. The chart version carries build metadata that pushed the label past the 63 byte limit and made the install fail.
+
 ### Added
 
 - Route Falco security events to the Giant Swarm Security Grafana organization. Operational data still goes to the default tenant.
