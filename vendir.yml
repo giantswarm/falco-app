@@ -7,7 +7,7 @@ directories:
     git:
       url: https://github.com/falcosecurity/charts
       # renovate: datasource=github-tags depName=falcosecurity/charts
-      ref: falco-9.0.0
+      ref: falco-9.1.0
     includePaths:
       - charts/falco/**
       - charts/falcosidekick/**
