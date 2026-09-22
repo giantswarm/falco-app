@@ -1,6 +1,6 @@
 # falcosidekick
 
-![Version: 0.13.1](https://img.shields.io/badge/Version-0.13.1-informational?style=flat-square) ![AppVersion: 2.31.1](https://img.shields.io/badge/AppVersion-2.31.1-informational?style=flat-square)
+![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![AppVersion: 2.31.1](https://img.shields.io/badge/AppVersion-2.31.1-informational?style=flat-square)
 
 Connect Falco to your ecosystem
 
@@ -513,6 +513,17 @@ Connect Falco to your ecosystem
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.hosts | list | `[{"host":"falcosidekick.local","paths":[{"path":"/"}]}]` | Ingress hosts |
 | ingress.tls | list | `[]` | Ingress TLS configuration |
+| httproute.enabled | bool | `false` | Whether to create the HTTPRoute (Gateway API). Requires the Gateway API CRDs to be installed in the cluster |
+| httproute.apiVersion | string | `""` | HTTPRoute apiVersion (defaults to "gateway.networking.k8s.io/v1" when empty) |
+| httproute.kind | string | `""` | HTTPRoute kind (defaults to "HTTPRoute" when empty) |
+| httproute.annotations | object | `{}` | HTTPRoute annotations |
+| httproute.labels | object | `{}` | HTTPRoute additional labels |
+| httproute.parentRefs | list | `[]` | parentRefs references the Gateways this HTTPRoute should be attached to |
+| httproute.hostnames | list | `[]` | hostnames (templated) that should match against the HTTP Host header to select this HTTPRoute |
+| httproute.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | matches define conditions used for matching the rule against incoming HTTP requests |
+| httproute.filters | list | `[]` | filters applied to requests that match this rule |
+| httproute.additionalRules | list | `[]` | additionalRules (templated) prepends custom rules to the route |
+| httproute.httpsRedirect | bool | `false` | httpsRedirect adds a filter to redirect HTTP to HTTPS (301). When enabled, matches and filters are ignored. Ref. https://gateway-api.sigs.k8s.io/guides/http-redirect-rewrite/ |
 | resources | object | `{}` | The resources for falcosdekick pods |
 | nodeSelector | object | `{}` | Sidekick nodeSelector field |
 | tolerations | list | `[]` | Tolerations for pod assignment |
@@ -555,6 +566,17 @@ Connect Falco to your ecosystem
 | webui.ingress.annotations | object | `{}` | Web UI ingress annotations |
 | webui.ingress.hosts | list | `[{"host":"falcosidekick-ui.local","paths":[{"path":"/"}]}]` | Web UI ingress hosts configuration |
 | webui.ingress.tls | list | `[]` | Web UI ingress TLS configuration |
+| webui.httproute.enabled | bool | `false` | Whether to create the Web UI HTTPRoute (Gateway API). Requires the Gateway API CRDs to be installed in the cluster |
+| webui.httproute.apiVersion | string | `""` | HTTPRoute apiVersion (defaults to "gateway.networking.k8s.io/v1" when empty) |
+| webui.httproute.kind | string | `""` | HTTPRoute kind (defaults to "HTTPRoute" when empty) |
+| webui.httproute.annotations | object | `{}` | Web UI HTTPRoute annotations |
+| webui.httproute.labels | object | `{}` | Web UI HTTPRoute additional labels |
+| webui.httproute.parentRefs | list | `[]` | parentRefs references the Gateways this HTTPRoute should be attached to |
+| webui.httproute.hostnames | list | `[]` | hostnames (templated) that should match against the HTTP Host header to select this HTTPRoute |
+| webui.httproute.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | matches define conditions used for matching the rule against incoming HTTP requests |
+| webui.httproute.filters | list | `[]` | filters applied to requests that match this rule |
+| webui.httproute.additionalRules | list | `[]` | additionalRules (templated) prepends custom rules to the route |
+| webui.httproute.httpsRedirect | bool | `false` | httpsRedirect adds a filter to redirect HTTP to HTTPS (301). When enabled, matches and filters are ignored |
 | webui.resources | object | `{}` | The resources for the web UI pods |
 | webui.nodeSelector | object | `{}` | Web UI nodeSelector field |
 | webui.tolerations | list | `[]` | Tolerations for pod assignment |

@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'sync(charts/falco): v9.1.0...'
-      sha: 53586de4fb9d8d02006131ade702b161cd7e06e3
+      commitTitle: 'sync(charts/falco): v9.2.0...'
+      sha: a0d4c577deb1ed974972ec75908eddf5487ac26e
       tags:
-      - falco-9.1.0
+      - falco-9.2.0
     path: .
   path: helm/falco/charts
 kind: LockConfig
