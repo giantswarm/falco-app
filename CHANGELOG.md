@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-09-30
+
 ### Changed
 
 - Update the README: fix broken documentation links, recommend installing via Flux HelmRelease with `kubectl gs deploy chart`, replace the obsolete values examples (PodSecurityPolicy, falco-exporter, legacy eBPF flag), and describe the vendir-based upstream sync.
@@ -322,7 +324,8 @@ For more information, please check the falco [rules page](https://github.com/fal
 - Push `falco-app` to provider collections (except KVM) when tagged.
 - Use Giant Swarm-managed images.
 
-[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/giantswarm/falco-app/compare/v0.14.1...HEAD
+[0.14.1]: https://github.com/giantswarm/falco-app/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/giantswarm/falco-app/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/giantswarm/falco-app/compare/v0.12.1...v0.13.0
 [0.12.1]: https://github.com/giantswarm/falco-app/compare/v0.12.0...v0.12.1
