@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update the README: fix broken documentation links, recommend installing via Flux HelmRelease with `kubectl gs deploy chart`, replace the obsolete values examples (PodSecurityPolicy, falco-exporter, legacy eBPF flag), and describe the vendir-based upstream sync.
+
 ## [0.14.0] - 2026-09-22
 
 ### Changed
