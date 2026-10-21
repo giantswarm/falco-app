@@ -13,6 +13,12 @@ kyvernoPolicyExceptions:
   namespace: giantswarm
 
 falco:  # @schema skipProperties: true; additionalProperties: true
+  # ephemeral-storage bounds the rules/plugins/state emptyDirs (require-emptydir-requests-and-limits); cpu/memory come from upstream.
+  resources:
+    requests:
+      ephemeral-storage: 256Mi
+    limits:
+      ephemeral-storage: 1Gi
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falco
@@ -75,6 +81,19 @@ falco:  # @schema skipProperties: true; additionalProperties: true
     image:
       registry: gsoci.azurecr.io
       repository: giantswarm/falcoctl
+    artifact:
+      install:
+        resources:
+          requests:
+            ephemeral-storage: 64Mi
+          limits:
+            ephemeral-storage: 512Mi
+      follow:
+        resources:
+          requests:
+            ephemeral-storage: 64Mi
+          limits:
+            ephemeral-storage: 512Mi
   tty: true
   # Makes Falco forward events to Falcosidekick. Keep in sync with the `falcosidekick.enabled`.
   falcosidekick:
