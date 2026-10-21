@@ -8,13 +8,13 @@ annotations:
 dependencies:
   - name: falco
     condition: falco.enabled
-    version: 9.2.0
+    version: 9.2.1
   - name: falcosidekick
     condition: falcosidekick.enabled
-    version: 0.14.0
+    version: 0.14.1
   - name: k8s-metacollector
     condition: k8s-metacollector.enabled
-    version: 0.3.2
+    version: 0.3.3
 description: A Helm chart for falco
 engine: gotpl
 home: https://github.com/giantswarm/falco-app
