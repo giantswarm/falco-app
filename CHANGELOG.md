@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - set size limits for emptyDir volumes
+- Updated `falco` to upstream version `v0.45.1`.
+- Updated `k8s-metacollector` to upstream version `v0.1.5`.
+- Updated `charts` to upstream version `falco-9.2.1`.
 
 ## [0.14.1] - 2026-09-30
 
