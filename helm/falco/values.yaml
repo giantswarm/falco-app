@@ -11,6 +11,12 @@ verticalPodAutoscaler:
 kyvernoPolicyExceptions:
   enabled: true
   namespace: giantswarm
+  legacy:
+    # -- Render the kyverno.io/v2 PolicyException, which only applies to ClusterPolicies. Turn it off once the cluster runs the CEL policies.
+    enabled: true
+  cel:
+    # -- Render the policies.kyverno.io/v1 PolicyException, which only applies to CEL policies (ValidatingPolicy).
+    enabled: true
 
 falco:  # @schema skipProperties: true; additionalProperties: true
   # ephemeral-storage bounds the rules/plugins/state emptyDirs (require-emptydir-requests-and-limits); cpu/memory come from upstream.
