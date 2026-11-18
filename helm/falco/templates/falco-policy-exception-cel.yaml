@@ -47,7 +47,7 @@ spec:
       request.kind.kind in ['DaemonSet', 'Pod', 'ServiceAccount'] &&
       request.namespace == '{{ include "falco-helpers.namespace" . }}' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('{{ include "falco-helpers.fullname" . }}')
+      (object.metadata.name == '{{ include "falco-helpers.fullname" . }}' || object.metadata.name.startsWith('{{ include "falco-helpers.fullname" . }}-'))
 ---
 apiVersion: policies.kyverno.io/v1
 kind: PolicyException
@@ -88,7 +88,7 @@ spec:
       request.kind.kind in ['Deployment', 'ReplicaSet', 'Pod', 'StatefulSet', 'ServiceAccount'] &&
       request.namespace == '{{ include "falco-helpers.namespace" . }}' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('{{ include "falco-helpers.fullname" . }}-falcosidekick')
+      (object.metadata.name == '{{ include "falco-helpers.fullname" . }}-falcosidekick' || object.metadata.name.startsWith('{{ include "falco-helpers.fullname" . }}-falcosidekick-'))
 ---
 apiVersion: policies.kyverno.io/v1
 kind: PolicyException
@@ -127,5 +127,5 @@ spec:
       request.kind.kind in ['Deployment', 'ReplicaSet', 'Pod', 'ServiceAccount'] &&
       request.namespace == '{{ include "falco-helpers.namespace" . }}' &&
       has(object.metadata.name) &&
-      object.metadata.name.startsWith('{{ include "falco-helpers.fullname" . }}-k8s-metacollector')
+      (object.metadata.name == '{{ include "falco-helpers.fullname" . }}-k8s-metacollector' || object.metadata.name.startsWith('{{ include "falco-helpers.fullname" . }}-k8s-metacollector-'))
 {{- end -}}
