@@ -1,0 +1,68 @@
+suite: falcosidekick arm64 node pool toleration
+templates:
+  - charts/falcosidekick/templates/deployment.yaml
+  # deployment.yaml checksums this file.
+  - charts/falcosidekick/templates/secrets.yaml
+  - charts/falcosidekick/templates/deployment-ui.yaml
+  - charts/falcosidekick/templates/tests/test-connection.yaml
+# Giant Swarm arm64 node pools carry kubernetes.io/arch=arm64:NoSchedule. Every
+# falcosidekick image is multi-arch: falcosidekick, falcosidekick-ui,
+# redis-stack-server and curl.
+tests:
+  - it: falcosidekick Deployment tolerates the arm64 taint
+    template: charts/falcosidekick/templates/deployment.yaml
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
+
+  - it: optional web UI Deployment tolerates the arm64 taint
+    template: charts/falcosidekick/templates/deployment-ui.yaml
+    set:
+      falcosidekick.webui.enabled: true
+    documentSelector:
+      path: kind
+      value: Deployment
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
+
+  - it: optional web UI redis StatefulSet tolerates the arm64 taint
+    template: charts/falcosidekick/templates/deployment-ui.yaml
+    set:
+      falcosidekick.webui.enabled: true
+    documentSelector:
+      path: kind
+      value: StatefulSet
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
+
+  - it: helm test connection Pod tolerates the arm64 taint
+    template: charts/falcosidekick/templates/tests/test-connection.yaml
+    asserts:
+      - isKind:
+          of: Pod
+      - equal:
+          path: spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: kubernetes.io/arch
+              operator: Equal
+              value: arm64

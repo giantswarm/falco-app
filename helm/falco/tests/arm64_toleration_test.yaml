@@ -1,0 +1,36 @@
+suite: arm64 node pool toleration
+templates:
+  - charts/falco/templates/daemonset.yaml
+  # The DaemonSet includes falco.podTemplate, defined in a file helm-unittest only
+  # loads when it is listed (its name does not start with an underscore). The pod
+  # template in turn checksums the three files below.
+  - charts/falco/templates/pod-template.tpl
+  - charts/falco/templates/configmap.yaml
+  - charts/falco/templates/rules-configmap.yaml
+  - charts/falco/templates/certs-secret.yaml
+tests:
+  # Giant Swarm arm64 node pools carry kubernetes.io/arch=arm64:NoSchedule. Without
+  # this toleration the falco DaemonSet skips those nodes, so they get no runtime
+  # detection. The falco and falcoctl images are multi-arch.
+  - it: falco DaemonSet tolerates the arm64 taint and keeps the control-plane one
+    template: charts/falco/templates/daemonset.yaml
+    asserts:
+      - isKind:
+          of: DaemonSet
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+            - effect: NoSchedule
+              key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
+
+  - it: falco DaemonSet stays unpinned, so amd64 nodes keep coverage
+    template: charts/falco/templates/daemonset.yaml
+    asserts:
+      - notExists:
+          path: spec.template.spec.nodeSelector
+      - notExists:
+          path: spec.template.spec.affinity
