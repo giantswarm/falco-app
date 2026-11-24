@@ -1,0 +1,90 @@
+{{- /*
+Falco and Falcosidekick each serve operational metrics and security metrics on one
+endpoint. The observability platform routes metrics by the tenant label of the
+ServiceMonitor, so one ServiceMonitor can only feed one tenant. Each endpoint is
+therefore scraped by two ServiceMonitors that split the series by metric name:
+
+  <name>-security    keeps only the component's securityMetrics
+  <name>-operations  drops exactly those and keeps everything else
+
+Both filters are built from the same list, so a series lands in exactly one tenant.
+
+The upstream ServiceMonitors (falco.serviceMonitor.create and
+falcosidekick.serviceMonitor.enabled) feed one tenant with every series, so they must
+stay disabled.
+*/ -}}
+{{- define "falco-helpers.splitServiceMonitor" -}}
+{{- $root := .root -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .name }}-{{ .suffix }}
+  namespace: {{ .namespace }}
+  labels:
+    {{- include "falco-helpers.labels" $root | nindent 4 }}
+    application.giantswarm.io/team: {{ index $root.Chart.Annotations "io.giantswarm.application.team" | quote }}
+    observability.giantswarm.io/tenant: {{ .tenant | quote }}
+spec:
+  endpoints:
+    - port: {{ .port }}
+      path: /metrics
+      scheme: http
+      {{- with .cfg.interval }}
+      interval: {{ . }}
+      {{- end }}
+      {{- with .cfg.scrapeTimeout }}
+      scrapeTimeout: {{ . }}
+      {{- end }}
+      {{- if .honorLabels }}
+      honorLabels: true
+      {{- end }}
+      {{- if .nodeLabel }}
+      relabelings:
+        # `pod` is the Falco pod on these series. The node tells where a rule matched.
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          targetLabel: node
+      {{- end }}
+      {{- if .regex }}
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: {{ .regex }}
+          action: {{ .action }}
+      {{- end }}
+  selector:
+    matchLabels:
+      {{- .selector | nindent 6 }}
+  namespaceSelector:
+    matchNames:
+      - {{ .namespace }}
+{{- end -}}
+
+{{- /* Renders the security and the operations ServiceMonitor of one endpoint. */ -}}
+{{- define "falco-helpers.splitServiceMonitors" -}}
+{{- $regex := join "|" .cfg.securityMetrics -}}
+{{- if $regex }}
+---
+{{ include "falco-helpers.splitServiceMonitor" (merge (dict "suffix" "security" "tenant" .root.Values.serviceMonitors.securityTenant "regex" $regex "action" "keep") .) }}
+{{- end }}
+---
+{{ include "falco-helpers.splitServiceMonitor" (merge (dict "suffix" "operations" "tenant" .root.Values.serviceMonitors.operationsTenant "regex" $regex "action" "drop") .) }}
+{{- end -}}
+
+{{- $falco := index .Subcharts "falco" -}}
+{{- if and .Values.serviceMonitors.falco.enabled $falco }}
+{{- if and $falco.Values.metrics.enabled $falco.Values.metrics.service.create }}
+{{- if $falco.Values.serviceMonitor.create }}
+{{- fail "falco.serviceMonitor.create must be false while serviceMonitors.falco.enabled is true: the upstream ServiceMonitor cannot filter series and would send the security metrics to the operations tenant." }}
+{{- end }}
+{{- $selector := printf "%s\ntype: falco-metrics" (include "falco.selectorLabels" $falco) }}
+{{- include "falco-helpers.splitServiceMonitors" (dict "root" . "cfg" .Values.serviceMonitors.falco "name" (include "falco.fullname" $falco) "namespace" (include "falco.namespace" $falco) "port" "metrics" "selector" $selector "honorLabels" true "nodeLabel" true) }}
+{{- end }}
+{{- end }}
+
+{{- $sidekick := index .Subcharts "falcosidekick" -}}
+{{- if and .Values.serviceMonitors.falcosidekick.enabled $sidekick }}
+{{- if $sidekick.Values.serviceMonitor.enabled }}
+{{- fail "falcosidekick.serviceMonitor.enabled must be false while serviceMonitors.falcosidekick.enabled is true: the upstream ServiceMonitor would send the per-workload event counter to the operations tenant." }}
+{{- end }}
+{{- $selector := printf "%s\napp.kubernetes.io/component: core" (include "falcosidekick.selectorLabels" $sidekick) }}
+{{- include "falco-helpers.splitServiceMonitors" (dict "root" . "cfg" .Values.serviceMonitors.falcosidekick "name" (include "falcosidekick.fullname" $sidekick) "namespace" .Release.Namespace "port" "http" "selector" $selector "honorLabels" false "nodeLabel" false) }}
+{{- end }}
