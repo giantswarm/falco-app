@@ -46,6 +46,12 @@ falco:  # @schema skipProperties: true; additionalProperties: true
   tolerations:
     - effect: NoSchedule
       key: node-role.kubernetes.io/control-plane
+    # Giant Swarm arm64 node pools carry this taint. Without it the DaemonSet skips arm64 nodes,
+    # so they get no runtime detection. The falco and falcoctl images are multi-arch.
+    - effect: NoSchedule
+      key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
   controller:
     daemonset:
       updateStrategy:
@@ -115,6 +121,31 @@ falcosidekick:  # @schema skipProperties: true; additionalProperties: true
     enabled: true
     additionalLabels:
       application.giantswarm.io/team: "shield"
+  # Lets falcosidekick run on Giant Swarm arm64 node pools, which carry this taint. All its images
+  # (falcosidekick, falcosidekick-ui, redis-stack-server, curl) are multi-arch.
+  tolerations:
+    - effect: NoSchedule
+      key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+  webui:
+    tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+    redis:
+      tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+  testConnection:
+    tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
 
 k8s-metacollector:  # @schema skipProperties: true; additionalProperties: true
   enabled: true
@@ -126,3 +157,9 @@ k8s-metacollector:  # @schema skipProperties: true; additionalProperties: true
     interval: 60s
     labels:
       application.giantswarm.io/team: "shield"
+  # Lets k8s-metacollector run on Giant Swarm arm64 node pools, which carry this taint. Its image is multi-arch.
+  tolerations:
+    - effect: NoSchedule
+      key: kubernetes.io/arch
+      operator: Equal
+      value: arm64

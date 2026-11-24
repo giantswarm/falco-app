@@ -1,0 +1,17 @@
+suite: k8s-metacollector arm64 node pool toleration
+templates:
+  - charts/k8s-metacollector/templates/deployment.yaml
+tests:
+  # Giant Swarm arm64 node pools carry kubernetes.io/arch=arm64:NoSchedule. The
+  # k8s-metacollector image is multi-arch.
+  - it: k8s-metacollector Deployment tolerates the arm64 taint
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - effect: NoSchedule
+              key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
