@@ -1,15 +1,6 @@
 {{- /*
-In a namespace with a default-deny NetworkPolicy, a pod that no policy selects receives
-nothing. Falco's HTTP output to Falcosidekick then times out on every event, and since
-Falco delivers an event to all its outputs before it takes the next one, that holds
-back every other output too.
-
 Events and metrics share port 2801, so the port is opened to Falco and to the metrics
 agent only, not to the whole cluster: anything that can reach it can post events.
-
-There is no egress rule. Falcosidekick forwards nowhere by default, and the policy
-leaves outbound traffic as the namespace has it. Outputs that are configured later
-need their own egress allowance where the namespace denies egress.
 */ -}}
 {{- $sidekick := index .Subcharts "falcosidekick" -}}
 {{- $falco := index .Subcharts "falco" -}}
