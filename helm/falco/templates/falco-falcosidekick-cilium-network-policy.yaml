@@ -1,0 +1,40 @@
+{{- /*
+Events and metrics share port 2801, so the port is opened to Falco and to the metrics
+agent only, not to the whole cluster: anything that can reach it can post events.
+*/ -}}
+{{- $sidekick := index .Subcharts "falcosidekick" -}}
+{{- $falco := index .Subcharts "falco" -}}
+{{- if and .Values.ciliumNetworkPolicy.enabled $sidekick }}
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "falco-helpers.fullname" . }}-falcosidekick
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "falco-helpers.labels" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "falcosidekick.selectorLabels" $sidekick | nindent 6 }}
+      app.kubernetes.io/component: core
+  ingress:
+    {{- if $falco }}
+    - fromEndpoints:
+        - matchLabels:
+            {{- include "falco.selectorLabels" $falco | nindent 12 }}
+      toPorts:
+        - ports:
+            - port: "2801"
+              protocol: TCP
+    {{- end }}
+    # Alloy runs in kube-system. Without the namespace label the selector would only
+    # match pods of this policy's namespace.
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            app.kubernetes.io/name: alloy
+      toPorts:
+        - ports:
+            - port: "2801"
+              protocol: TCP
+{{- end }}

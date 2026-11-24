@@ -1,9 +1,11 @@
-{{- if .Values.kyvernoPolicyExceptions.enabled }}
+{{- if and .Values.kyvernoPolicyExceptions.enabled .Values.kyvernoPolicyExceptions.legacy.enabled }}
 apiVersion: kyverno.io/v2
 kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falco-exceptions
   namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  labels:
+    policy.giantswarm.io/migrated-to-cel: "true"
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
@@ -54,6 +56,8 @@ kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-falcosidekick-exceptions
   namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  labels:
+    policy.giantswarm.io/migrated-to-cel: "true"
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
@@ -94,6 +98,8 @@ kind: PolicyException
 metadata:
   name: {{ include "falco-helpers.fullname" . }}-k8s-metacollector-exceptions
   namespace: {{ .Values.kyvernoPolicyExceptions.namespace | default (include "falco-helpers.namespace" .) }}
+  labels:
+    policy.giantswarm.io/migrated-to-cel: "true"
   annotations:
     "helm.sh/hook": "pre-install,pre-upgrade"
 spec:
