@@ -105,7 +105,7 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean",
-                            "description": "Create the two ServiceMonitors for the Falco metrics endpoint. Needs `falco.metrics.enabled`, and `falco.serviceMonitor.create` must stay `false`."
+                            "description": "Create the two ServiceMonitors for the Falco metrics endpoint. Needs `falco.metrics.enabled`."
                         },
                         "interval": {
                             "type": "string",
@@ -130,7 +130,7 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean",
-                            "description": "Create the two ServiceMonitors for the Falcosidekick metrics endpoint. `falcosidekick.serviceMonitor.enabled` must stay `false`."
+                            "description": "Create the two ServiceMonitors for the Falcosidekick metrics endpoint."
                         },
                         "interval": {
                             "type": "string",

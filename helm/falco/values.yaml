@@ -22,7 +22,7 @@ serviceMonitors:
   # -- Observability tenant for the security metrics. The tenant must exist, otherwise the platform drops the series.
   securityTenant: giantswarm_security_default
   falco:
-    # -- Create the two ServiceMonitors for the Falco metrics endpoint. Needs `falco.metrics.enabled`, and `falco.serviceMonitor.create` must stay `false`.
+    # -- Create the two ServiceMonitors for the Falco metrics endpoint. Needs `falco.metrics.enabled`.
     enabled: true
     # -- Scrape interval of both ServiceMonitors.
     interval: 15s
@@ -32,7 +32,7 @@ serviceMonitors:
     securityMetrics:
       - falcosecurity_falco_rules_matches_total
   falcosidekick:
-    # -- Create the two ServiceMonitors for the Falcosidekick metrics endpoint. `falcosidekick.serviceMonitor.enabled` must stay `false`.
+    # -- Create the two ServiceMonitors for the Falcosidekick metrics endpoint.
     enabled: true
     # -- Scrape interval of both ServiceMonitors. Empty uses the platform default.
     interval: ""
@@ -105,8 +105,11 @@ falco:  # @schema skipProperties: true; additionalProperties: true
   webserver:
     enabled: true
     prometheus_metrics_enabled: true
-  # The upstream ServiceMonitor feeds one tenant with every series, so it would send the security
-  # metrics to the operations tenant. The chart renders its own pair instead, see `serviceMonitors.falco`.
+  # The platform scrapes Falco through the chart's own pair of ServiceMonitors, see `serviceMonitors.falco`.
+  # This upstream ServiceMonitor carries every series unfiltered. Enable it only as an extra for a
+  # Prometheus of your own, with the labels that Prometheus selects on. It must not carry the labels
+  # `observability.giantswarm.io/tenant` or `application.giantswarm.io/team`: the platform would scrape
+  # it too, and the security metrics would reach the operations tenant.
   serviceMonitor:
     create: false
 
@@ -147,7 +150,9 @@ falcosidekick:  # @schema skipProperties: true; additionalProperties: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
-  # As for Falco: the chart renders its own pair of ServiceMonitors, see `serviceMonitors.falcosidekick`.
+  # As for Falco: the platform scrapes Falcosidekick through the chart's own pair of ServiceMonitors,
+  # see `serviceMonitors.falcosidekick`. Enable this upstream one only as an extra for a Prometheus of
+  # your own, without the tenant and team labels (in `additionalLabels` and in `customLabels`).
   serviceMonitor:
     enabled: false
   # Lets falcosidekick run on Giant Swarm arm64 node pools, which carry this taint. All its images

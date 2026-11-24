@@ -10,9 +10,20 @@ therefore scraped by two ServiceMonitors that split the series by metric name:
 Both filters are built from the same list, so a series lands in exactly one tenant.
 
 The upstream ServiceMonitors (falco.serviceMonitor.create and
-falcosidekick.serviceMonitor.enabled) feed one tenant with every series, so they must
-stay disabled.
+falcosidekick.serviceMonitor.enabled) carry every series. The platform picks up a
+ServiceMonitor that has a tenant label, or a team label and no tenant label, and would
+then send the security metrics to one tenant with everything else. So the upstream
+ServiceMonitors may only be enabled without those two labels, as an extra for a
+Prometheus the platform does not run.
 */ -}}
+{{- /* Fails when an upstream ServiceMonitor carries a label that makes the platform scrape it. */ -}}
+{{- define "falco-helpers.refusePlatformLabels" -}}
+{{- range $label := list "observability.giantswarm.io/tenant" "application.giantswarm.io/team" }}
+{{- if hasKey $.labels $label }}
+{{- fail (printf "%s must not set the label %s while %s is true: the platform would scrape this upstream ServiceMonitor too and send the security metrics to the operations tenant. Without that label it remains usable for a Prometheus of your own." $.source $label $.split) }}
+{{- end }}
+{{- end }}
+{{- end -}}
 {{- define "falco-helpers.splitServiceMonitor" -}}
 {{- $root := .root -}}
 apiVersion: monitoring.coreos.com/v1
@@ -73,7 +84,7 @@ spec:
 {{- if and .Values.serviceMonitors.falco.enabled $falco }}
 {{- if and $falco.Values.metrics.enabled $falco.Values.metrics.service.create }}
 {{- if $falco.Values.serviceMonitor.create }}
-{{- fail "falco.serviceMonitor.create must be false while serviceMonitors.falco.enabled is true: the upstream ServiceMonitor cannot filter series and would send the security metrics to the operations tenant." }}
+{{- include "falco-helpers.refusePlatformLabels" (dict "labels" ($falco.Values.serviceMonitor.labels | default dict) "source" "falco.serviceMonitor.labels" "split" "serviceMonitors.falco.enabled") }}
 {{- end }}
 {{- $selector := printf "%s\ntype: falco-metrics" (include "falco.selectorLabels" $falco) }}
 {{- include "falco-helpers.splitServiceMonitors" (dict "root" . "cfg" .Values.serviceMonitors.falco "name" (include "falco.fullname" $falco) "namespace" (include "falco.namespace" $falco) "port" "metrics" "selector" $selector "honorLabels" true "nodeLabel" true) }}
@@ -83,7 +94,8 @@ spec:
 {{- $sidekick := index .Subcharts "falcosidekick" -}}
 {{- if and .Values.serviceMonitors.falcosidekick.enabled $sidekick }}
 {{- if $sidekick.Values.serviceMonitor.enabled }}
-{{- fail "falcosidekick.serviceMonitor.enabled must be false while serviceMonitors.falcosidekick.enabled is true: the upstream ServiceMonitor would send the per-workload event counter to the operations tenant." }}
+{{- include "falco-helpers.refusePlatformLabels" (dict "labels" ($sidekick.Values.serviceMonitor.additionalLabels | default dict) "source" "falcosidekick.serviceMonitor.additionalLabels" "split" "serviceMonitors.falcosidekick.enabled") }}
+{{- include "falco-helpers.refusePlatformLabels" (dict "labels" ($sidekick.Values.customLabels | default dict) "source" "falcosidekick.customLabels" "split" "serviceMonitors.falcosidekick.enabled") }}
 {{- end }}
 {{- $selector := printf "%s\napp.kubernetes.io/component: core" (include "falcosidekick.selectorLabels" $sidekick) }}
 {{- include "falco-helpers.splitServiceMonitors" (dict "root" . "cfg" .Values.serviceMonitors.falcosidekick "name" (include "falcosidekick.fullname" $sidekick) "namespace" .Release.Namespace "port" "http" "selector" $selector "honorLabels" false "nodeLabel" false) }}

@@ -134,13 +134,54 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: refuses to render next to the upstream Falco ServiceMonitor
+  # The platform picks up a ServiceMonitor that carries a tenant label, or a team label
+  # and no tenant label (legacy, default tenant). The upstream monitor with neither is
+  # invisible to it, so it stays available for a Prometheus of the customer's own.
+  - it: allows the upstream Falco ServiceMonitor as an extra the platform does not pick up
+    set:
+      falco.serviceMonitor.create: true
+      falco.serviceMonitor.labels:
+        release: customer-prometheus
+    asserts:
+      - hasDocuments:
+          count: 4
+        template: templates/falco-servicemonitors.yaml
+      - hasDocuments:
+          count: 1
+        template: charts/falco/templates/serviceMonitor.yaml
+      - equal:
+          path: metadata.labels.release
+          value: customer-prometheus
+        template: charts/falco/templates/serviceMonitor.yaml
+      - notExists:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+        template: charts/falco/templates/serviceMonitor.yaml
+      - notExists:
+          path: metadata.labels["application.giantswarm.io/team"]
+        template: charts/falco/templates/serviceMonitor.yaml
+      - notExists:
+          path: spec.endpoints[0].metricRelabelings
+        template: charts/falco/templates/serviceMonitor.yaml
+
+  - it: refuses an upstream Falco ServiceMonitor with a tenant label
     template: templates/falco-servicemonitors.yaml
     set:
       falco.serviceMonitor.create: true
+      falco.serviceMonitor.labels:
+        observability.giantswarm.io/tenant: giantswarm
     asserts:
       - failedTemplate:
-          errorPattern: falco.serviceMonitor.create
+          errorPattern: falco.serviceMonitor.labels
+
+  - it: refuses an upstream Falco ServiceMonitor with a team label
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falco.serviceMonitor.create: true
+      falco.serviceMonitor.labels:
+        application.giantswarm.io/team: shield
+    asserts:
+      - failedTemplate:
+          errorPattern: falco.serviceMonitor.labels
 
   - it: sends everything to the operations tenant when no security metric is listed
     template: templates/falco-servicemonitors.yaml
@@ -261,13 +302,45 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: refuses to render next to the upstream Falcosidekick ServiceMonitor
+  - it: allows the upstream Falcosidekick ServiceMonitor as an extra the platform does not pick up
+    set:
+      falcosidekick.serviceMonitor.enabled: true
+      falcosidekick.serviceMonitor.additionalLabels:
+        release: customer-prometheus
+    asserts:
+      - hasDocuments:
+          count: 4
+        template: templates/falco-servicemonitors.yaml
+      - hasDocuments:
+          count: 1
+        template: charts/falcosidekick/templates/servicemonitor.yaml
+      - notExists:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+        template: charts/falcosidekick/templates/servicemonitor.yaml
+      - notExists:
+          path: metadata.labels["application.giantswarm.io/team"]
+        template: charts/falcosidekick/templates/servicemonitor.yaml
+
+  - it: refuses an upstream Falcosidekick ServiceMonitor with a tenant label
     template: templates/falco-servicemonitors.yaml
     set:
       falcosidekick.serviceMonitor.enabled: true
+      falcosidekick.serviceMonitor.additionalLabels:
+        observability.giantswarm.io/tenant: giantswarm
     asserts:
       - failedTemplate:
-          errorPattern: falcosidekick.serviceMonitor.enabled
+          errorPattern: falcosidekick.serviceMonitor.additionalLabels
+
+  # customLabels land on every Falcosidekick resource, its ServiceMonitor included.
+  - it: refuses an upstream Falcosidekick ServiceMonitor with a team label from customLabels
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falcosidekick.serviceMonitor.enabled: true
+      falcosidekick.customLabels:
+        application.giantswarm.io/team: shield
+    asserts:
+      - failedTemplate:
+          errorPattern: falcosidekick.customLabels
 
   - it: renders no Falcosidekick monitor when Falcosidekick is disabled
     template: templates/falco-servicemonitors.yaml
