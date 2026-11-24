@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `charts` to upstream version `falco-9.2.2`.
 - Falco, Falcosidekick (including the optional web UI, its Redis and the `helm test` Pod) and k8s-metacollector tolerate the `kubernetes.io/arch=arm64:NoSchedule` taint of Giant Swarm arm64 node pools. The Falco DaemonSet now covers arm64 nodes with runtime detection, and the other components can be scheduled there.
 
+### Fixed
+
+- Allow Falco to reach Falcosidekick in namespaces with a default-deny network policy, so that a timing out HTTP output no longer holds back Falco's other outputs.
+- Allow metrics to be scraped from Falcosidekick and k8s-metacollector in namespaces with a default-deny network policy.
+
 ## [0.14.1] - 2026-09-30
 
 ### Changed

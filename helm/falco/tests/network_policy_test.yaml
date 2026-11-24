@@ -1,0 +1,118 @@
+suite: network policies for Falcosidekick and k8s-metacollector
+templates:
+  - templates/falco-falcosidekick-cilium-network-policy.yaml
+  - templates/falco-k8smetacollector-cilium-network-policy.yaml
+release:
+  name: falco
+  namespace: giantswarm
+tests:
+  # In a namespace with a default-deny NetworkPolicy, a pod that no policy selects
+  # receives nothing. Without this policy Falco cannot deliver events to Falcosidekick:
+  # its HTTP output times out on every event and holds back all other outputs.
+  - it: lets Falco deliver events to Falcosidekick
+    template: templates/falco-falcosidekick-cilium-network-policy.yaml
+    asserts:
+      - isKind:
+          of: CiliumNetworkPolicy
+      - equal:
+          path: metadata.name
+          value: falco-falcosidekick
+      - equal:
+          path: metadata.namespace
+          value: giantswarm
+      - equal:
+          path: spec.endpointSelector.matchLabels
+          value:
+            app.kubernetes.io/name: falcosidekick
+            app.kubernetes.io/instance: falco
+            app.kubernetes.io/component: core
+      - contains:
+          path: spec.ingress
+          content:
+            fromEndpoints:
+              - matchLabels:
+                  app.kubernetes.io/name: falco
+                  app.kubernetes.io/instance: falco
+            toPorts:
+              - ports:
+                  - port: "2801"
+                    protocol: TCP
+
+  # Alloy runs in kube-system. A CiliumNetworkPolicy selector without a namespace only
+  # matches pods of the policy's own namespace.
+  - it: lets the metrics agent scrape Falcosidekick
+    template: templates/falco-falcosidekick-cilium-network-policy.yaml
+    asserts:
+      - contains:
+          path: spec.ingress
+          content:
+            fromEndpoints:
+              - matchLabels:
+                  io.kubernetes.pod.namespace: kube-system
+                  app.kubernetes.io/name: alloy
+            toPorts:
+              - ports:
+                  - port: "2801"
+                    protocol: TCP
+
+  # Events and metrics share port 2801. Opening it to the whole cluster would let any
+  # pod post events, so only Falco and the metrics agent get in.
+  - it: opens Falcosidekick to nothing else
+    template: templates/falco-falcosidekick-cilium-network-policy.yaml
+    asserts:
+      - lengthEqual:
+          path: spec.ingress
+          count: 2
+      - notExists:
+          path: spec.ingress[0].fromEntities
+      - notExists:
+          path: spec.ingress[1].fromEntities
+      # No egress rule: the policy leaves outbound traffic as the namespace has it.
+      - notExists:
+          path: spec.egress
+
+  - it: renders no Falcosidekick policy when policies are disabled
+    template: templates/falco-falcosidekick-cilium-network-policy.yaml
+    set:
+      ciliumNetworkPolicy.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders no Falcosidekick policy when Falcosidekick is disabled
+    template: templates/falco-falcosidekick-cilium-network-policy.yaml
+    set:
+      falcosidekick.enabled: false
+      falco.falcosidekick.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: lets metrics be scraped from k8s-metacollector
+    template: templates/falco-k8smetacollector-cilium-network-policy.yaml
+    asserts:
+      - contains:
+          path: spec.ingress
+          content:
+            fromEntities:
+              - cluster
+            toPorts:
+              - ports:
+                  - port: "8080"
+                    protocol: TCP
+
+  - it: keeps the existing k8s-metacollector ingress rules
+    template: templates/falco-k8smetacollector-cilium-network-policy.yaml
+    asserts:
+      - contains:
+          path: spec.ingress
+          content:
+            fromEntities:
+              - kube-apiserver
+      - contains:
+          path: spec.ingress
+          content:
+            fromEndpoints:
+              - matchLabels:
+                  app.kubernetes.io/instance: falco
+                  app.kubernetes.io/name: falco
