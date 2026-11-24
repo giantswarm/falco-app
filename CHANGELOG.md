@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Split the Falco and Falcosidekick metrics between two observability tenants, so that security data stays apart from operations data. Each component serves both kinds on one endpoint, so two ServiceMonitors now scrape each endpoint. `falco-security` and `falco-falcosidekick-security` send the rule match counter `falcosecurity_falco_rules_matches_total` and the per-workload event counter `falcosecurity_falcosidekick_falco_events_total` to the `giantswarm_security_default` tenant. `falco-operations` and `falco-falcosidekick-operations` send every other series to the `giantswarm` tenant. They replace the upstream `falco` and `falco-falcosidekick` ServiceMonitors: `falco.serviceMonitor.create` and `falcosidekick.serviceMonitor.enabled` must stay `false`. Queries, dashboards and alerts that read the two counters have to use the security tenant from now on. Configure the split with `serviceMonitors`.
+- Scrape Falco and Falcosidekick with two ServiceMonitors each, so that their security metrics go to the security tenant and all other metrics to the default tenant.
 - Add a `node` label to all Falco metrics.
 - Set the `giantswarm` observability tenant explicitly on the k8s-metacollector ServiceMonitor.
 - set size limits for emptyDir volumes
