@@ -15,6 +15,36 @@ kyvernoPolicyExceptions:
     # -- Renders the kyverno.io/v2 PolicyException, which applies to ClusterPolicies only. Will be used as a global switch in a future release.
     enabled: true
 
+serviceMonitors:
+  # Falco and Falcosidekick each serve operational metrics and security metrics on one endpoint.
+  # Two ServiceMonitors per endpoint split the series between two observability tenants,
+  # so that security data stays apart from operations data.
+
+  # -- Observability tenant for the operational metrics: every series that the component's `securityMetrics` do not match.
+  operationsTenant: giantswarm
+  # -- Observability tenant for the security metrics. The tenant must exist, otherwise the platform drops the series.
+  securityTenant: giantswarm_security_default
+  falco:
+    # -- Create the two ServiceMonitors for the Falco metrics endpoint. Needs `falco.metrics.enabled`.
+    enabled: true
+    # -- Scrape interval of both ServiceMonitors.
+    interval: 15s
+    # -- Scrape timeout of both ServiceMonitors.
+    scrapeTimeout: 10s
+    # -- Falco metric names (or regular expressions matching the whole name) that are security data. They go to `securityTenant` only, every other series goes to `operationsTenant` only. With an empty list everything goes to `operationsTenant`.
+    securityMetrics:
+      - falcosecurity_falco_rules_matches_total
+  falcosidekick:
+    # -- Create the two ServiceMonitors for the Falcosidekick metrics endpoint.
+    enabled: true
+    # -- Scrape interval of both ServiceMonitors. Empty uses the platform default.
+    interval: ""
+    # -- Scrape timeout of both ServiceMonitors. Empty uses the platform default.
+    scrapeTimeout: ""
+    # -- Falcosidekick metric names (or regular expressions matching the whole name) that are security data, routed like `serviceMonitors.falco.securityMetrics`. The event counter names the namespace and pod of each Falco event.
+    securityMetrics:
+      - falcosecurity_falcosidekick_falco_events_total
+
 falco:  # @schema skipProperties: true; additionalProperties: true
   # ephemeral-storage bounds the rules/plugins/state emptyDirs (require-emptydir-requests-and-limits); cpu/memory come from upstream.
   resources:
@@ -78,10 +108,13 @@ falco:  # @schema skipProperties: true; additionalProperties: true
   webserver:
     enabled: true
     prometheus_metrics_enabled: true
+  # The platform scrapes Falco through the chart's own pair of ServiceMonitors, see `serviceMonitors.falco`.
+  # This upstream ServiceMonitor carries every series unfiltered. Enable it only as an extra for a
+  # Prometheus of your own, with the labels that Prometheus selects on. It must not carry the labels
+  # `observability.giantswarm.io/tenant` or `application.giantswarm.io/team`: the platform would scrape
+  # it too, and the security metrics would reach the operations tenant.
   serviceMonitor:
-    create: true
-    labels:
-      application.giantswarm.io/team: "shield"
+    create: false
 
   serviceAccount:
     # We set the service account name only so that we can use it for attaching a PSP.
@@ -120,10 +153,11 @@ falcosidekick:  # @schema skipProperties: true; additionalProperties: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/falcosidekick
+  # As for Falco: the platform scrapes Falcosidekick through the chart's own pair of ServiceMonitors,
+  # see `serviceMonitors.falcosidekick`. Enable this upstream one only as an extra for a Prometheus of
+  # your own, without the tenant and team labels (in `additionalLabels` and in `customLabels`).
   serviceMonitor:
-    enabled: true
-    additionalLabels:
-      application.giantswarm.io/team: "shield"
+    enabled: false
   # Lets falcosidekick run on Giant Swarm arm64 node pools, which carry this taint. All its images
   # (falcosidekick, falcosidekick-ui, redis-stack-server, curl) are multi-arch.
   tolerations:
@@ -160,6 +194,7 @@ k8s-metacollector:  # @schema skipProperties: true; additionalProperties: true
     interval: 60s
     labels:
       application.giantswarm.io/team: "shield"
+      observability.giantswarm.io/tenant: giantswarm
   # Lets k8s-metacollector run on Giant Swarm arm64 node pools, which carry this taint. Its image is multi-arch.
   tolerations:
     - effect: NoSchedule

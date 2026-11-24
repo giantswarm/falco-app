@@ -1,0 +1,372 @@
+suite: Falco metrics tenant split
+templates:
+  - templates/falco-servicemonitors.yaml
+  - charts/falco/templates/serviceMonitor.yaml
+  - charts/falcosidekick/templates/servicemonitor.yaml
+  - charts/k8s-metacollector/templates/servicemonitor.yaml
+release:
+  name: falco
+  namespace: giantswarm
+capabilities:
+  apiVersions:
+    - monitoring.coreos.com/v1
+tests:
+  # Falco serves operational metrics and rule match counters on one endpoint. The
+  # observability platform routes by a label on the ServiceMonitor, so one monitor can
+  # only feed one tenant: the endpoint is scraped by two monitors that split the series.
+  - it: sends only the security metrics to the security tenant
+    template: templates/falco-servicemonitors.yaml
+    documentSelector:
+      path: metadata.name
+      value: falco-security
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: metadata.namespace
+          value: giantswarm
+      - equal:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+          value: giantswarm_security_default
+      - equal:
+          path: metadata.labels["application.giantswarm.io/team"]
+          value: shield
+      - equal:
+          path: spec.endpoints[0].metricRelabelings
+          value:
+            - sourceLabels: [__name__]
+              regex: falcosecurity_falco_rules_matches_total
+              action: keep
+
+  - it: sends every other metric to the operations tenant
+    template: templates/falco-servicemonitors.yaml
+    documentSelector:
+      path: metadata.name
+      value: falco-operations
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+          value: giantswarm
+      - equal:
+          path: metadata.labels["application.giantswarm.io/team"]
+          value: shield
+      - equal:
+          path: spec.endpoints[0].metricRelabelings
+          value:
+            - sourceLabels: [__name__]
+              regex: falcosecurity_falco_rules_matches_total
+              action: drop
+
+  # Both filters come from one list, so a series lands in exactly one tenant.
+  - it: builds the keep and the drop filter from the same list
+    template: templates/falco-servicemonitors.yaml
+    set:
+      serviceMonitors.falco.securityMetrics:
+        - metric_a
+        - metric_b
+    asserts:
+      - equal:
+          path: spec.endpoints[0].metricRelabelings[0].regex
+          value: metric_a|metric_b
+        documentSelector:
+          path: metadata.name
+          value: falco-security
+      - equal:
+          path: spec.endpoints[0].metricRelabelings[0].regex
+          value: metric_a|metric_b
+        documentSelector:
+          path: metadata.name
+          value: falco-operations
+
+  # No documentSelector: every assert runs against both Falco monitors.
+  - it: scrapes the Falco metrics Service the same way in both monitors
+    template: templates/falco-servicemonitors.yaml
+    set:
+      serviceMonitors.falcosidekick.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 2
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            app.kubernetes.io/name: falco
+            app.kubernetes.io/instance: falco
+            type: falco-metrics
+      - equal:
+          path: spec.namespaceSelector.matchNames
+          value:
+            - giantswarm
+      - equal:
+          path: spec.endpoints[0].port
+          value: metrics
+      - equal:
+          path: spec.endpoints[0].path
+          value: /metrics
+      - equal:
+          path: spec.endpoints[0].interval
+          value: 15s
+      - equal:
+          path: spec.endpoints[0].scrapeTimeout
+          value: 10s
+      - equal:
+          path: spec.endpoints[0].honorLabels
+          value: true
+      # `pod` on these series is the Falco pod. The node is what tells where a rule matched.
+      - contains:
+          path: spec.endpoints[0].relabelings
+          content:
+            sourceLabels: [__meta_kubernetes_pod_node_name]
+            targetLabel: node
+
+  - it: renders exactly two monitors per component by default
+    template: templates/falco-servicemonitors.yaml
+    asserts:
+      - hasDocuments:
+          count: 4
+
+  # The upstream monitor cannot filter series, so it would send the security metrics
+  # to the operations tenant.
+  - it: does not render the upstream Falco ServiceMonitor
+    template: charts/falco/templates/serviceMonitor.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  # The platform picks up a ServiceMonitor that carries a tenant label, or a team label
+  # and no tenant label (legacy, default tenant). The upstream monitor with neither is
+  # invisible to it, so it stays available for a Prometheus of the customer's own.
+  - it: allows the upstream Falco ServiceMonitor as an extra the platform does not pick up
+    set:
+      falco.serviceMonitor.create: true
+      falco.serviceMonitor.labels:
+        release: customer-prometheus
+    asserts:
+      - hasDocuments:
+          count: 4
+        template: templates/falco-servicemonitors.yaml
+      - hasDocuments:
+          count: 1
+        template: charts/falco/templates/serviceMonitor.yaml
+      - equal:
+          path: metadata.labels.release
+          value: customer-prometheus
+        template: charts/falco/templates/serviceMonitor.yaml
+      - notExists:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+        template: charts/falco/templates/serviceMonitor.yaml
+      - notExists:
+          path: metadata.labels["application.giantswarm.io/team"]
+        template: charts/falco/templates/serviceMonitor.yaml
+      - notExists:
+          path: spec.endpoints[0].metricRelabelings
+        template: charts/falco/templates/serviceMonitor.yaml
+
+  - it: refuses an upstream Falco ServiceMonitor with a tenant label
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falco.serviceMonitor.create: true
+      falco.serviceMonitor.labels:
+        observability.giantswarm.io/tenant: giantswarm
+    asserts:
+      - failedTemplate:
+          errorPattern: falco.serviceMonitor.labels
+
+  - it: refuses an upstream Falco ServiceMonitor with a team label
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falco.serviceMonitor.create: true
+      falco.serviceMonitor.labels:
+        application.giantswarm.io/team: shield
+    asserts:
+      - failedTemplate:
+          errorPattern: falco.serviceMonitor.labels
+
+  - it: sends everything to the operations tenant when no security metric is listed
+    template: templates/falco-servicemonitors.yaml
+    set:
+      serviceMonitors.falco.securityMetrics: []
+      serviceMonitors.falcosidekick.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: metadata.name
+          value: falco-operations
+      - notExists:
+          path: spec.endpoints[0].metricRelabelings
+
+  - it: renders no Falco monitor when Falco metrics are disabled
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falco.metrics.enabled: false
+      serviceMonitors.falcosidekick.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders no Falco monitor when disabled
+    template: templates/falco-servicemonitors.yaml
+    set:
+      serviceMonitors.falco.enabled: false
+      serviceMonitors.falcosidekick.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders no Falco monitor when the Falco subchart is disabled
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falco.enabled: false
+      serviceMonitors.falcosidekick.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  # Falcosidekick counts Falco events per namespace and pod next to its own delivery
+  # counters, so its endpoint is split the same way.
+  - it: sends only the Falcosidekick event counter to the security tenant
+    template: templates/falco-servicemonitors.yaml
+    documentSelector:
+      path: metadata.name
+      value: falco-falcosidekick-security
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: metadata.namespace
+          value: giantswarm
+      - equal:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+          value: giantswarm_security_default
+      - equal:
+          path: metadata.labels["application.giantswarm.io/team"]
+          value: shield
+      - equal:
+          path: spec.endpoints[0].metricRelabelings
+          value:
+            - sourceLabels: [__name__]
+              regex: falcosecurity_falcosidekick_falco_events_total
+              action: keep
+
+  - it: sends every other Falcosidekick metric to the operations tenant
+    template: templates/falco-servicemonitors.yaml
+    documentSelector:
+      path: metadata.name
+      value: falco-falcosidekick-operations
+    asserts:
+      - equal:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+          value: giantswarm
+      - equal:
+          path: spec.endpoints[0].metricRelabelings
+          value:
+            - sourceLabels: [__name__]
+              regex: falcosecurity_falcosidekick_falco_events_total
+              action: drop
+
+  - it: scrapes the Falcosidekick Service and not its web UI
+    template: templates/falco-servicemonitors.yaml
+    documentSelector:
+      path: metadata.name
+      value: falco-falcosidekick-security
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            app.kubernetes.io/name: falcosidekick
+            app.kubernetes.io/instance: falco
+            app.kubernetes.io/component: core
+      - equal:
+          path: spec.namespaceSelector.matchNames
+          value:
+            - giantswarm
+      - equal:
+          path: spec.endpoints[0].port
+          value: http
+      # The Falcosidekick pod is not on the node the event came from: the series carry `hostname`.
+      - notExists:
+          path: spec.endpoints[0].relabelings
+      # Unset by default, as in the upstream monitor: the platform default applies.
+      - notExists:
+          path: spec.endpoints[0].honorLabels
+      - notExists:
+          path: spec.endpoints[0].interval
+      - notExists:
+          path: spec.endpoints[0].scrapeTimeout
+
+  - it: does not render the upstream Falcosidekick ServiceMonitor
+    template: charts/falcosidekick/templates/servicemonitor.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: allows the upstream Falcosidekick ServiceMonitor as an extra the platform does not pick up
+    set:
+      falcosidekick.serviceMonitor.enabled: true
+      falcosidekick.serviceMonitor.additionalLabels:
+        release: customer-prometheus
+    asserts:
+      - hasDocuments:
+          count: 4
+        template: templates/falco-servicemonitors.yaml
+      - hasDocuments:
+          count: 1
+        template: charts/falcosidekick/templates/servicemonitor.yaml
+      - notExists:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+        template: charts/falcosidekick/templates/servicemonitor.yaml
+      - notExists:
+          path: metadata.labels["application.giantswarm.io/team"]
+        template: charts/falcosidekick/templates/servicemonitor.yaml
+
+  - it: refuses an upstream Falcosidekick ServiceMonitor with a tenant label
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falcosidekick.serviceMonitor.enabled: true
+      falcosidekick.serviceMonitor.additionalLabels:
+        observability.giantswarm.io/tenant: giantswarm
+    asserts:
+      - failedTemplate:
+          errorPattern: falcosidekick.serviceMonitor.additionalLabels
+
+  # customLabels land on every Falcosidekick resource, its ServiceMonitor included.
+  - it: refuses an upstream Falcosidekick ServiceMonitor with a team label from customLabels
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falcosidekick.serviceMonitor.enabled: true
+      falcosidekick.customLabels:
+        application.giantswarm.io/team: shield
+    asserts:
+      - failedTemplate:
+          errorPattern: falcosidekick.customLabels
+
+  - it: renders no Falcosidekick monitor when Falcosidekick is disabled
+    template: templates/falco-servicemonitors.yaml
+    set:
+      falcosidekick.enabled: false
+      falco.falcosidekick.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 2
+      - matchRegex:
+          path: metadata.name
+          pattern: ^falco-(security|operations)$
+
+  - it: one pair of tenants applies to both components
+    template: templates/falco-servicemonitors.yaml
+    set:
+      serviceMonitors.securityTenant: other_security
+      serviceMonitors.operationsTenant: other_operations
+    asserts:
+      - matchRegex:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+          pattern: ^other_(security|operations)$
+
+  - it: routes k8s-metacollector metrics to the operations tenant
+    template: charts/k8s-metacollector/templates/servicemonitor.yaml
+    asserts:
+      - equal:
+          path: metadata.labels["observability.giantswarm.io/tenant"]
+          value: giantswarm

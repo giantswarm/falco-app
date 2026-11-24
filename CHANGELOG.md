@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Scrape Falco and Falcosidekick with two ServiceMonitors each, so that their security metrics go to the security tenant and all other metrics to the default tenant.
+- Add a `node` label to all Falco metrics.
+- Set the `giantswarm` observability tenant explicitly on the k8s-metacollector ServiceMonitor.
 - Move the PolicyExceptions from the `giantswarm` namespace to `kube-system` (`kyvernoPolicyExceptions.namespace`), as the `giantswarm` namespace is going away.
 - set size limits for emptyDir volumes
 - Updated `falco` to upstream version `v0.45.1`.
